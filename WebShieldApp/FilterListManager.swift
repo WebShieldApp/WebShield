@@ -3,6 +3,7 @@ import ContentBlockerConverter
 import Foundation
 import SafariServices
 
+@MainActor
 class FilterListManager: ObservableObject {
     @Published var filterLists: [FilterList] = []
     var contentBlockerState = ContentBlockerState(
@@ -114,76 +115,77 @@ class FilterListManager: ObservableObject {
         ]
     }
 
-    func applyChanges(completion: @escaping () -> Void) {
+    func applyChanges() async {
         let selectedLists = filterLists.filter { $0.isSelected }
-        convertFilterLists(selectedLists) {
-            completion()
-        }
+        await self.convertFilterLists(selectedLists)
     }
 
-    func refreshAndReloadContentBlocker(completion: @escaping () -> Void) {
-        reloadContentBlocker {
-            self.refreshContentBlocker {
-                completion()
-            }
-        }
+    func refreshAndReloadContentBlocker() {
+        reloadContentBlocker()
+        refreshContentBlocker()
     }
 
     func filterLists(for category: FilterListCategory) -> [FilterList]? {
         filterLists.filter { $0.category == category }
     }
 
-    private func refreshContentBlocker(completion: @escaping () -> Void) {
+    private func refreshContentBlocker() {
         print("Preparing to refresh content blocker...")
-        // Add a delay to ensure file writing is complete
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            print("Initiating content blocker refresh...")
-            self.contentBlockerState.refreshContentBlockerState()
-            completion()
-        }
+        // TODO: Add a delay to ensure file writing is complete
+        print("Initiating content blocker refresh...")
+        self.contentBlockerState.refreshContentBlockerState()
     }
 
-    private func convertFilterLists(
-        _ lists: [FilterList], completion: @escaping () -> Void
-    ) {
-        let dispatchGroup = DispatchGroup()
+    private func convertFilterLists(_ lists: [FilterList]) async {
         var allRules: [String] = []
 
-        for list in lists {
-            dispatchGroup.enter()
-            URLSession.shared.dataTask(with: list.url) {
-                data, response, error in
-                defer { dispatchGroup.leave() }
-
-                guard let data = data, error == nil else {
-                    print(
-                        "Error downloading \(list.name): \(error?.localizedDescription ?? "Unknown error")"
-                    )
-                    return
+        async let downloadedRules: [String] = await withTaskGroup(
+            of: [String].self
+        ) { group in
+            for list in lists {
+                group.addTask {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(
+                            from: list.url)
+                        let content = String(data: data, encoding: .utf8)
+                        if let content = content {
+                            let rules = await self.parseRules(content)
+                            return rules
+                        }
+                    } catch {
+                        print(
+                            "Error downloading \(list.name): \(error.localizedDescription)"
+                        )
+                    }
+                    return []
                 }
-
-                if let content = String(data: data, encoding: .utf8) {
-                    let rules = self.parseRules(content)
-                    allRules.append(contentsOf: rules)
-                }
-            }.resume()
-        }
-
-        dispatchGroup.notify(queue: .main) {
-            self.saveRulesToFile(allRules) {
-                completion()
             }
+
+            var allRules: [String] = []
+            for await rules in group {
+                allRules.append(contentsOf: rules)
+            }
+            return allRules
         }
+
+        allRules = await downloadedRules
+        self.saveRulesToFile(allRules)
     }
 
-    private func parseRules(_ content: String) -> [String] {
+    private func parseRules(_ content: String) async -> [String] {
         return content.components(separatedBy: .newlines)
             .filter { !$0.hasPrefix("!") && !$0.hasPrefix("[") && !$0.isEmpty }
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     }
 
+    func toggleFilterListSelection(id: UUID) {
+        if let index = filterLists.firstIndex(where: { $0.id == id }) {
+            filterLists[index].isSelected.toggle()
+        }
+    }
+
     private func saveRulesToFile(
-        _ rules: [String], completion: @escaping () -> Void
+        _ rules: [String]
     ) {
         print("Starting rule conversion and saving process...")
         do {
@@ -196,6 +198,7 @@ class FilterListManager: ObservableObject {
                 advancedBlocking: true
             )
             let converted = result.converted
+            let advanced = result.advancedBlocking
             print(
                 "Conversion completed. Converted rules count: \(result.convertedCount)"
             )
@@ -215,7 +218,7 @@ class FilterListManager: ObservableObject {
                     print(
                         "Writing advanced blocking rules to file: \(advancedBlockingFileURL.path)"
                     )
-                    try result.advancedBlocking!
+                    try advanced?
                         .write(
                             to: advancedBlockingFileURL, atomically: true,
                             encoding: .utf8)
@@ -236,9 +239,7 @@ class FilterListManager: ObservableObject {
                     }
 
                     // Reload the Content Blocker
-                    reloadContentBlocker {
-                        completion()
-                    }
+                    reloadContentBlocker()
                 } else {
                     print("ERROR: Unable to access shared container")
                 }
@@ -274,14 +275,11 @@ class FilterListManager: ObservableObject {
         }
     }
 
-    private func reloadContentBlocker(completion: @escaping () -> Void) {
+    private func reloadContentBlocker() {
         print("Preparing to reload content blocker...")
-        // Add a delay to ensure file writing is complete
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            print("Initiating content blocker reload...")
-            self.contentBlockerState.reloadContentBlocker()
-            completion()
-        }
+        // TODO: Add a delay to ensure file writing is complete
+        print("Initiating content blocker reload...")
+        self.contentBlockerState.reloadContentBlocker()
     }
 
     private func getSharedContainerURL() -> URL? {

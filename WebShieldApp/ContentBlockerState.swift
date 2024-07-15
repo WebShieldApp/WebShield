@@ -12,7 +12,7 @@ class ContentBlockerState: ObservableObject {
 
     init(withIdentifier identifier: String) {
         self.identifier = identifier
-//        refreshContentBlockerState()
+        //        refreshContentBlockerState()
     }
 
     let identifier: String

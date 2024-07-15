@@ -1,7 +1,7 @@
 import Foundation
 
 enum FilterListCategory: String, CaseIterable {
-    case ads, privacy, security, multipurpose, annoyances, other, experimental
+    case all = "All", ads = "Ads", privacy = "Privacy", security = "Security", multipurpose = "Multipurpose", annoyances = "Annoyances", experimental = "Experimental"
 }
 
 struct FilterList: Identifiable {
@@ -11,7 +11,10 @@ struct FilterList: Identifiable {
     let category: FilterListCategory
     var isSelected: Bool
 
-    init(name: String, url: URL, category: FilterListCategory, isSelected: Bool = false) {
+    init(
+        name: String, url: URL, category: FilterListCategory,
+        isSelected: Bool = false
+    ) {
         self.id = UUID()
         self.name = name
         self.url = url

@@ -1,146 +1,130 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var filterListManager = FilterListManager()
-    @State private var isFetching = false
-    @State private var progress: CGFloat = 0.0
+    @EnvironmentObject private var filterListManager: FilterListManager
+    @State private var isUpdating = false
+    @State private var progress: Float = 0
+    @State private var showMissingFiltersAlert = false
+    @State private var selectedFilter: FilterList?
+    @State private var showDescription = false
+    @State private var selectedCategory: FilterListCategory? = .all
 
     private var groupedFilterLists: [FilterListCategory: [FilterList]] {
         Dictionary(grouping: filterListManager.filterLists, by: { $0.category })
     }
-    @State private var expandedGroups: Set<FilterListCategory> = Set(FilterListCategory.allCases)
 
-    var body: some View {
-        NavigationView {
-            VStack {
+    public var body: some View {
+        NavigationSplitView(
+            sidebar: {
                 List {
-                    ForEach(FilterListCategory.allCases, id: \.self) { category in
-                        if let filterLists = groupedFilterLists[category] {
-                            CategoryDisclosureGroup(
-                                category: category,
-                                filterLists: filterLists,
-                                filterListManager: filterListManager,
-                                isExpanded: .constant(true)
-                            )
-                        }
+                    ForEach(FilterListCategory.allCases, id: \.self) {
+                        category in
+                        CategoryNav(
+                            category: category
+                        )
                     }
                 }
-                .listStyle(InsetListStyle())
-                HStack {
-                    Checkbox(isOn: .constant(false))
-                    Text("Advanced Blocking")
+                .listStyle(SidebarListStyle())
+            },
+            detail: {
+                // Right Column: Filter Lists
+                if let selectedCategory = selectedCategory {
+                    FilterListView(category: selectedCategory)
+                } else {
+                    Text("Select a category")
+                        .navigationTitle("Filter Lists")
                 }
-                if isFetching {
-                    ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(LinearProgressViewStyle())
-                        .padding()
-                }
-                
-                HStack {
-                    Button(action: {
-                        isFetching = true
-                        filterListManager.applyChanges {
-                            isFetching = false
-                        }
-                    }) {
-                        Label("Fetch & Apply Changes", systemImage: "checkmark.circle.fill")
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-
-                    Button(action: {
-                        isFetching = true
-                        filterListManager.refreshAndReloadContentBlocker {
-                            isFetching = false
-                        }
-                    }) {
-                        Label("Refresh & Reload", systemImage: "arrow.triangle.2.circlepath.circle.fill")
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                }
-                .padding()
             }
-            .navigationTitle("WebShield")
-        }
+        )
+    }
+
+    func updateFilters() {
+        isUpdating = true
+        progress = 0
+
+        // Add your updateFilters logic here
     }
 }
 
-struct PrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-
-struct SecondaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color.gray.opacity(0.2))
-            .foregroundColor(.blue)
-            .cornerRadius(8)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-    }
-}
-
-struct CategoryDisclosureGroup: View {
-    var category: FilterListCategory
-    @State var filterLists: [FilterList]
-    @ObservedObject var filterListManager: FilterListManager
-    @Binding var isExpanded: Bool
+struct CategoryNav: View {
+    let category: FilterListCategory
 
     var body: some View {
-        DisclosureGroup(isExpanded: $isExpanded) {
-            ForEach($filterLists) { $filterList in
-                if let index = filterListManager.filterLists.firstIndex(where: { $0.id == filterList.id }) {
-                    FilterListRow(filterList: $filterListManager.filterLists[index])
-                        .padding(.leading, 20)
-                }
-            }
-        } label: {
-            HStack {
-                Checkbox(isOn: .constant(filterLists.contains(where: { $0.isSelected })))
-                Text(category.rawValue.capitalized)
-                    .font(.headline)
-                Spacer()
-                Text("\(filterLists.filter { $0.isSelected }.count)/\(filterLists.count)")
-                    .foregroundColor(.gray)
-            }
+        NavigationLink(destination: FilterListView(category: category)) {
+            Label("\(category.rawValue)", systemImage: "circle.fill")
         }
     }
 }
 
-struct FilterListRow: View {
-    @Binding var filterList: FilterList
+struct FilterListView: View {
+    let category: FilterListCategory
+    @EnvironmentObject var filterListManager: FilterListManager
+
+    var body: some View {
+        List {
+            if category == .all {
+                ForEach(filterListManager.filterLists) {
+                    filterList in
+                    Toggle(
+                        filterList.name,
+                        isOn: Binding(
+                            get: { filterList.isSelected },
+                            set: { _, _ in
+                                filterListManager.toggleFilterListSelection(
+                                    id: filterList.id)
+                            }
+                        )
+                    ).toggleStyle(DefaultToggleStyle())
+                }
+            } else {
+                ForEach(
+                    filterListManager.filterLists.filter {
+                        $0.category == category
+                    }
+                ) { filterList in
+                    Toggle(
+                        filterList.name,
+                        isOn: Binding(
+                            get: { filterList.isSelected },
+                            set: { _, _ in
+                                filterListManager.toggleFilterListSelection(
+                                    id: filterList.id)
+                            }
+                        )
+                    ).toggleStyle(DefaultToggleStyle())
+                }
+            }
+        }
+        .navigationTitle(category.rawValue)
+        #if os(iOS)
+            .listStyle(InsetGroupedListStyle())
+        #else
+            .listStyle(DefaultListStyle())
+        #endif
+        ActionButtons(
+//                        isUpdating: $isUpdating,
+//                        progress: $progress,
+//                        updateFilters: updateFilters,
+            applyChanges: filterListManager.applyChanges
+        )
+    }
+}
+
+struct ActionButtons: View {
+//    @Binding var isUpdating: Bool
+//    @Binding var progress: Float
+//    let updateFilters: () -> Void
+    let applyChanges: @MainActor @Sendable () async -> Void
 
     var body: some View {
         HStack {
-            Checkbox(isOn: $filterList.isSelected)
-            Text(filterList.name)
-                .font(.body)
-            Spacer()
-            if filterList.isSelected {
-                Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
-            }
+//            Button("Update Filters", action: updateFilters)
+////                .disabled(
+////                    isUpdating
+////                )
+//                .padding()
+            Button("Download & Apply Filters", action: { Task { await applyChanges() } })
+                .padding()
         }
     }
 }
-
-struct Checkbox: View {
-    @Binding var isOn: Bool
-
-    var body: some View {
-        Button(action: {
-            isOn.toggle()
-        }) {
-            Image(systemName: isOn ? "checkmark.square.fill" : "square")
-                .foregroundColor(isOn ? .blue : .gray)
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
-

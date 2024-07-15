@@ -7,11 +7,10 @@
 
 import ContentBlockerEngine
 import Foundation
-import os.log
 
 class ContentBlockerEngineWrapper {
     private var contentBlockerEngine: ContentBlockerEngine
-    static let shared = ContentBlockerEngineWrapper()
+    @MainActor static let shared = ContentBlockerEngineWrapper()
     init() {
         let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
         let advancedBlockingURL: URL? = FileManager.default
@@ -24,16 +23,10 @@ class ContentBlockerEngineWrapper {
             contentsOf: advancedBlockingURL!,
             encoding: .utf8
         )
-        //        os_log("Contents: %{public}@", contents!)
         self.contentBlockerEngine = try! ContentBlockerEngine(json)
     }
 
     public func getData(url: URL) -> String {
-        let dat = try! self.contentBlockerEngine.getData(url: url)
-//        os_log(.default, "URL (getData): %{public}@", url.absoluteString)
-        os_log(
-            .default,
-            "Data (getData): %{public}@", dat)
-        return dat
+        return try! self.contentBlockerEngine.getData(url: url)
     }
 }

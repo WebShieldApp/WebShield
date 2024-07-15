@@ -21,7 +21,7 @@
 		0069595C2C427DC0008A6204 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069595B2C427DC0008A6204 /* script.js */; };
 		0069595E2C427DC0008A6204 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0069595D2C427DC0008A6204 /* ToolbarItemIcon.pdf */; };
 		006959612C427DC0008A6204 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 006959602C427DC0008A6204 /* Base */; };
-		006959662C427DC0008A6204 /* WebShieldScripts.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 006959542C427DC0008A6204 /* WebShieldScripts.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		006959662C427DC0008A6204 /* WebShieldExtra.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 006959542C427DC0008A6204 /* WebShieldExtra.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0069596B2C4286D9008A6204 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 0069596A2C4286D9008A6204 /* ContentBlockerConverter */; };
 		0069596D2C428AB3008A6204 /* advanced-script.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069596C2C428AAF008A6204 /* advanced-script.js */; };
 		0069596F2C428B14008A6204 /* extended-css.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069596E2C428B0D008A6204 /* extended-css.js */; };
@@ -58,7 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				006959662C427DC0008A6204 /* WebShieldScripts.appex in Embed Foundation Extensions */,
+				006959662C427DC0008A6204 /* WebShieldExtra.appex in Embed Foundation Extensions */,
 				00333FB72C3CC52E0031AEC6 /* WebShieldContentBlocker.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -80,14 +80,14 @@
 		00333FB32C3CC52E0031AEC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00333FB42C3CC52E0031AEC6 /* WebShieldContentBlocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebShieldContentBlocker.entitlements; sourceTree = "<group>"; };
 		00333FC32C3CC7A20031AEC6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		006959542C427DC0008A6204 /* WebShieldScripts.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldScripts.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		006959542C427DC0008A6204 /* WebShieldExtra.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldExtra.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		006959562C427DC0008A6204 /* SafariExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionHandler.swift; sourceTree = "<group>"; };
 		006959582C427DC0008A6204 /* SafariExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionViewController.swift; sourceTree = "<group>"; };
 		0069595B2C427DC0008A6204 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		0069595D2C427DC0008A6204 /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		006959602C427DC0008A6204 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SafariExtensionViewController.xib; sourceTree = "<group>"; };
 		006959622C427DC0008A6204 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		006959632C427DC0008A6204 /* WebShieldScripts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebShieldScripts.entitlements; sourceTree = "<group>"; };
+		006959632C427DC0008A6204 /* WebShieldExtra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebShieldExtra.entitlements; sourceTree = "<group>"; };
 		0069596C2C428AAF008A6204 /* advanced-script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "advanced-script.js"; sourceTree = "<group>"; };
 		0069596E2C428B0D008A6204 /* extended-css.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "extended-css.js"; sourceTree = "<group>"; };
 		006959702C428BBC008A6204 /* scriptlet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = scriptlet.js; sourceTree = "<group>"; };
@@ -133,9 +133,9 @@
 				00277B982C3BEBD90006E269 /* WebShieldApp.app */,
 				00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */,
 				00333FAE2C3CC52E0031AEC6 /* WebShieldContentBlocker */,
-				006959552C427DC0008A6204 /* WebShieldScripts */,
+				006959552C427DC0008A6204 /* WebShieldExtra */,
 				00333FBB2C3CC6D20031AEC6 /* Frameworks */,
-				006959542C427DC0008A6204 /* WebShieldScripts.appex */,
+				006959542C427DC0008A6204 /* WebShieldExtra.appex */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,7 +182,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		006959552C427DC0008A6204 /* WebShieldScripts */ = {
+		006959552C427DC0008A6204 /* WebShieldExtra */ = {
 			isa = PBXGroup;
 			children = (
 				006959562C427DC0008A6204 /* SafariExtensionHandler.swift */,
@@ -190,10 +190,10 @@
 				006959582C427DC0008A6204 /* SafariExtensionViewController.swift */,
 				0069595F2C427DC0008A6204 /* SafariExtensionViewController.xib */,
 				006959622C427DC0008A6204 /* Info.plist */,
-				006959632C427DC0008A6204 /* WebShieldScripts.entitlements */,
+				006959632C427DC0008A6204 /* WebShieldExtra.entitlements */,
 				0069595A2C427DC0008A6204 /* Resources */,
 			);
-			path = WebShieldScripts;
+			path = WebShieldExtra;
 			sourceTree = "<group>";
 		};
 		0069595A2C427DC0008A6204 /* Resources */ = {
@@ -252,9 +252,9 @@
 			productReference = 00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		006959532C427DC0008A6204 /* WebShieldScripts */ = {
+		006959532C427DC0008A6204 /* WebShieldExtra */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 006959692C427DC0008A6204 /* Build configuration list for PBXNativeTarget "WebShieldScripts" */;
+			buildConfigurationList = 006959692C427DC0008A6204 /* Build configuration list for PBXNativeTarget "WebShieldExtra" */;
 			buildPhases = (
 				006959502C427DC0008A6204 /* Sources */,
 				006959512C427DC0008A6204 /* Frameworks */,
@@ -264,12 +264,12 @@
 			);
 			dependencies = (
 			);
-			name = WebShieldScripts;
+			name = WebShieldExtra;
 			packageProductDependencies = (
 				0069596A2C4286D9008A6204 /* ContentBlockerConverter */,
 			);
 			productName = Test;
-			productReference = 006959542C427DC0008A6204 /* WebShieldScripts.appex */;
+			productReference = 006959542C427DC0008A6204 /* WebShieldExtra.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -311,7 +311,7 @@
 			targets = (
 				001848612C2956AC00EE2E7A /* WebShieldApp */,
 				00333FA92C3CC52E0031AEC6 /* WebShieldContentBlocker */,
-				006959532C427DC0008A6204 /* WebShieldScripts */,
+				006959532C427DC0008A6204 /* WebShieldExtra */,
 			);
 		};
 /* End PBXProject section */
@@ -392,7 +392,7 @@
 		};
 		006959652C427DC0008A6204 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 006959532C427DC0008A6204 /* WebShieldScripts */;
+			target = 006959532C427DC0008A6204 /* WebShieldExtra */;
 			targetProxy = 006959642C427DC0008A6204 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -578,7 +578,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -623,7 +623,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -661,7 +661,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -698,7 +698,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -706,7 +706,7 @@
 		006959672C427DC0008A6204 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WebShieldScripts/WebShieldScripts.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WebShieldExtra/WebShieldExtra.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -715,8 +715,8 @@
 				DOCC_EXTRACT_EXTENSION_SYMBOLS = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WebShieldScripts/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Scripts";
+				INFOPLIST_FILE = WebShieldExtra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Extra";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -729,20 +729,20 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.Scripts;
+				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.Extra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
 		006959682C427DC0008A6204 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WebShieldScripts/WebShieldScripts.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WebShieldExtra/WebShieldExtra.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -751,8 +751,8 @@
 				DOCC_EXTRACT_EXTENSION_SYMBOLS = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WebShieldScripts/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Scripts";
+				INFOPLIST_FILE = WebShieldExtra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Extra";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,13 +765,13 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.Scripts;
+				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.Extra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -805,7 +805,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		006959692C427DC0008A6204 /* Build configuration list for PBXNativeTarget "WebShieldScripts" */ = {
+		006959692C427DC0008A6204 /* Build configuration list for PBXNativeTarget "WebShieldExtra" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				006959672C427DC0008A6204 /* Debug */,

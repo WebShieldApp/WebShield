@@ -10,6 +10,8 @@ import SwiftUI
 
 @main
 struct WebShieldApp: App {
+    @StateObject private var blockListManager = FilterListManager()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self
@@ -27,7 +29,7 @@ struct WebShieldApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(blockListManager)
         }
         .modelContainer(sharedModelContainer)
     }

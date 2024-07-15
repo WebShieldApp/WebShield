@@ -10,9 +10,10 @@ import SafariServices
 import os.log
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
+    let logger = Logger()
     override func beginRequest(with context: NSExtensionContext) {
         guard let request = context.inputItems.first as? NSExtensionItem,
-            let _ = request.userInfo as? [String: Any]
+            request.userInfo as? [String: Any] != nil
         else {
             return
         }
@@ -22,39 +23,36 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         } else {
             profile = request.userInfo?["profile"] as? UUID
         }
-
-        os_log(
-            .default,
-            "The extension received a request for profile: %{public}@",
-            profile?.uuidString ?? "none")
+        self.logger.log(
+            level: .default,
+            "The extension received a request for profile: \(profile!.uuidString, privacy: .public)"
+        )
     }
 
-    override func messageReceived(
+    @MainActor override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
         userInfo: [String: Any]?
     ) {
         page.getPropertiesWithCompletionHandler { properties in
-            os_log(
-                .default,
-                "The extension received a message (%{public}@) from a script injected into (%{public}@) with userInfo (%{public}@)",
-                messageName, String(describing: properties?.url),
-                userInfo ?? [:])
+            self.logger.log(
+                level: .default,
+                "The extension received a message \(messageName, privacy: .public) from a script injected into \(String(describing: properties?.url), privacy: .public) with userInfo \(userInfo!, privacy: .public)"
+            )
         }
         // Content script requests scripts and css for current page
-        //        os_log(.default, "Message Name: %{public}@", messageName)
         if messageName == "getAdvancedBlockingData" {
             if userInfo == nil || userInfo!["url"] == nil {
-                os_log(.default, "Empty url passed with the message")
+                self.logger.log(
+                    level: .default, "Empty url passed with the message")
                 return
             }
-            //            os_log(.default, "Inside if Statement")
             let url = userInfo?["url"] as? String
-            //            os_log(.default, "Page url: %{public}@", url!)
 
             let pageUrl = URL(string: url!)!
             let data: [String: Any]? = [
                 "url": url!,
-                "data": ContentBlockerEngineWrapper.shared.getData(url: pageUrl),
+                "data": ContentBlockerEngineWrapper.shared.getData(
+                    url: pageUrl),
                 "verbose": true,
             ]
             page.dispatchMessageToScript(
@@ -74,7 +72,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         validationHandler(true, "")
     }
 
-    override func popoverViewController() -> SFSafariExtensionViewController {
+    @MainActor override func popoverViewController()
+        -> SFSafariExtensionViewController
+    {
         return SafariExtensionViewController.shared
     }
 

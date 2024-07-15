@@ -13,23 +13,23 @@
 			<dict>
 				<key>Script</key>
 				<string>script.js</string>
-            </dict>
-            <dict>
-                <key>Script</key>
-                <string>advanced-script.js</string>
-            </dict>
-            <dict>
-                <key>Script</key>
-                <string>extended-css.js</string>
-            </dict>
-            <dict>
-                <key>Script</key>
-                <string>scriptlet.js</string>
-            </dict>
-            <dict>
-                <key>Script</key>
-                <string>assistant.runner.js</string>
-            </dict>
+			</dict>
+			<dict>
+				<key>Script</key>
+				<string>advanced-script.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
+				<string>extended-css.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
+				<string>scriptlet.js</string>
+			</dict>
+			<dict>
+				<key>Script</key>
+				<string>assistant.runner.js</string>
+			</dict>
 		</array>
 		<key>SFSafariToolbarItem</key>
 		<dict>
@@ -49,6 +49,6 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableDescription</key>
-	<string>This is Test. You should tell us what your extension does here.</string>
+	<string>Advanced wide-spectrum content blocking.</string>
 </dict>
 </plist>
