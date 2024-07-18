@@ -29,7 +29,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         )
     }
 
-    @MainActor override func messageReceived(
+    override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
         userInfo: [String: Any]?
     ) {
@@ -72,7 +72,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         validationHandler(true, "")
     }
 
-    @MainActor override func popoverViewController()
+    override func popoverViewController()
         -> SFSafariExtensionViewController
     {
         return SafariExtensionViewController.shared

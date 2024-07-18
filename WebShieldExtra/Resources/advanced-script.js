@@ -57,6 +57,7 @@
      * @param verbose logging
      */
     const executeScripts = (scripts = [], verbose) => {
+        logMessage(verbose, "Executing scripts...")
         scripts.unshift('( function () { try {');
         // we use this script detect if the script was applied,
         // if the script tag was removed, then it means that code was applied,
@@ -82,7 +83,7 @@
         if (!scripts || scripts.length === 0) {
             return;
         }
-
+        logMessage(verbose, "Applying script injections...")
         logMessage(verbose, 'scripts length: ' + scripts.length);
         executeScripts(scripts.reverse(), verbose);
     };
@@ -152,7 +153,7 @@
         if (!styleSelectors || !styleSelectors.length) {
             return;
         }
-
+        logMessage(verbose, "Applying CSS stylesheets...")
         logMessage(verbose, `css length: ${styleSelectors.length}`);
 
         const styleElement = document.createElement('style');
@@ -176,7 +177,7 @@
         if (!extendedCss || !extendedCss.length) {
             return;
         }
-
+        logMessage(verbose, "Applying extended CSS stylesheets...")
         logMessage(verbose, `extended css length: ${extendedCss.length}`);
         const cssRules = extendedCss.filter((s) => s.length > 0)
                              .map((s) => s.trim())
@@ -199,7 +200,7 @@
         if (!scriptletsData || !scriptletsData.length) {
             return;
         }
-
+        logMessage(verbose, "Applying scriptlets...")
         logMessage(verbose, 'scriptlets length: ' + scriptletsData.length);
         const scriptletExecutableScripts = scriptletsData.map((s) => {
             const param = JSON.parse(s);
@@ -247,7 +248,7 @@
      */
     const logMessage = (verbose, message) => {
         if (verbose) {
-            console.log(`(WebShield Advanced Blocking) ${message}`);
+            console.log(`(WebShield Extra) ${message}`);
         }
     };
 
@@ -264,6 +265,9 @@
                 // As each frame listens to these events, we need to match
                 // frames and received events so here we check if url in event
                 // payload matches current location url.
+                logMessage(verbose, "Received advancedBlockingData message...")
+                logMessage(verbose, "Message Data (below):")
+                logMessage(verbose, data)
                 if (window.location.href === event.message['url']) {
                     applyAdvancedBlockingData(data, verbose);
                 }
@@ -284,6 +288,7 @@
             window.location.href.indexOf('http') === 0) {
             safari.self.addEventListener('message', handleMessage);
             // Request advanced blocking data
+            logMessage(true, "Sending getAdvancedBlockingData message...")
             safari.extension.dispatchMessage('getAdvancedBlockingData',
                                              {'url' : window.location.href});
         }

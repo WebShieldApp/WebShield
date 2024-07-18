@@ -10,12 +10,12 @@ import Foundation
 
 class ContentBlockerEngineWrapper {
     private var contentBlockerEngine: ContentBlockerEngine
-    @MainActor static let shared = ContentBlockerEngineWrapper()
+    static let shared = ContentBlockerEngineWrapper()
     init() {
         let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
         let advancedBlockingURL: URL? = FileManager.default
             .containerURL(
-                forSecurityApplicationGroupIdentifier: requiredPart)!.appending(
+                forSecurityApplicationGroupIdentifier: requiredPart)?.appending(
                 path: "advancedBlocking.json",
                 directoryHint: URL.DirectoryHint.notDirectory
             )

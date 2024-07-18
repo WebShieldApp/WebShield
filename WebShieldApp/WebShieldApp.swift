@@ -31,6 +31,7 @@ struct WebShieldApp: App {
         WindowGroup {
             ContentView().environmentObject(blockListManager)
         }
+        .windowResizability(.contentMinSize)
         .modelContainer(sharedModelContainer)
     }
 

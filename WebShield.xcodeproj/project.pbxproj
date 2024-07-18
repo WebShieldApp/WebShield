@@ -3,13 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00026E722C2B7BFB0087E1DA /* ContentBlockerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00026E712C2B7BFB0087E1DA /* ContentBlockerState.swift */; };
 		001848662C2956AC00EE2E7A /* WebShieldApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001848652C2956AC00EE2E7A /* WebShieldApp.swift */; };
-		001848682C2956AC00EE2E7A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001848672C2956AC00EE2E7A /* ContentView.swift */; };
 		0018486A2C2956AD00EE2E7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 001848692C2956AD00EE2E7A /* Assets.xcassets */; };
 		0018486E2C2956AD00EE2E7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0018486D2C2956AD00EE2E7A /* Preview Assets.xcassets */; };
 		00333FB02C3CC52E0031AEC6 /* blockerList.json in Resources */ = {isa = PBXBuildFile; fileRef = 00333FAF2C3CC52E0031AEC6 /* blockerList.json */; };
@@ -29,9 +27,6 @@
 		006959732C429A33008A6204 /* ContentBlockerEngineWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006959722C429A33008A6204 /* ContentBlockerEngineWrapper.swift */; };
 		0092D2B72C42BD7C00FAB742 /* assistant.runner.js in Resources */ = {isa = PBXBuildFile; fileRef = 0092D2B62C42BD7C00FAB742 /* assistant.runner.js */; };
 		00FE0E842C3B2DC20064A2C7 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 00FE0E832C3B2DC20064A2C7 /* ContentBlockerConverter */; };
-		00FE0E912C3B45670064A2C7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE0E902C3B45670064A2C7 /* Item.swift */; };
-		00FE0E932C3B46640064A2C7 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE0E922C3B46640064A2C7 /* FilterList.swift */; };
-		00FE0E952C3B46960064A2C7 /* FilterListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FE0E942C3B46960064A2C7 /* FilterListManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,10 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00026E712C2B7BFB0087E1DA /* ContentBlockerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerState.swift; sourceTree = "<group>"; };
 		00026E742C2B8E9E0087E1DA /* WebShield.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebShield.entitlements; sourceTree = "<group>"; };
 		001848652C2956AC00EE2E7A /* WebShieldApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebShieldApp.swift; sourceTree = "<group>"; };
-		001848672C2956AC00EE2E7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		001848692C2956AD00EE2E7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0018486D2C2956AD00EE2E7A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		00277B982C3BEBD90006E269 /* WebShieldApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShieldApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,10 +86,51 @@
 		006959702C428BBC008A6204 /* scriptlet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = scriptlet.js; sourceTree = "<group>"; };
 		006959722C429A33008A6204 /* ContentBlockerEngineWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerEngineWrapper.swift; sourceTree = "<group>"; };
 		0092D2B62C42BD7C00FAB742 /* assistant.runner.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = assistant.runner.js; sourceTree = "<group>"; };
-		00FE0E902C3B45670064A2C7 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		00FE0E922C3B46640064A2C7 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
-		00FE0E942C3B46960064A2C7 /* FilterListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		005894F52C47238E00F43E94 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentView.swift,
+				FilterList/FilterListToggle.swift,
+				FilterList/FilterListView.swift,
+				Navbar/ActionButtons.swift,
+				Navbar/CategoryNav.swift,
+				Navbar/DetailView.swift,
+				Navbar/SidebarView.swift,
+			);
+			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+		};
+		0087929D2C470FD0003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentViewModel.swift,
+				FilterList/FilterListManager.swift,
+				FilterList/FilterListViewModel.swift,
+			);
+			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+		};
+		0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentBlocker/ContentBlockerState.swift,
+				FilterList/FilterList.swift,
+				FilterList/FilterListCategory.swift,
+				FilterList/FilterListError.swift,
+				FilterList/FilterListSection.swift,
+				FilterListProvider.swift,
+				Item.swift,
+			);
+			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		005894F02C47238E00F43E94 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (005894F52C47238E00F43E94 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		0087929B2C470FB0003DCCE9 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		0087929C2C470FCA003DCCE9 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929D2C470FD0003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0018485F2C2956AC00EE2E7A /* Frameworks */ = {
@@ -142,13 +176,11 @@
 		001848642C2956AC00EE2E7A /* WebShieldApp */ = {
 			isa = PBXGroup;
 			children = (
+				0087929B2C470FB0003DCCE9 /* Models */,
+				005894F02C47238E00F43E94 /* Views */,
+				0087929C2C470FCA003DCCE9 /* ViewModels */,
 				00026E742C2B8E9E0087E1DA /* WebShield.entitlements */,
 				001848652C2956AC00EE2E7A /* WebShieldApp.swift */,
-				00FE0E902C3B45670064A2C7 /* Item.swift */,
-				00026E712C2B7BFB0087E1DA /* ContentBlockerState.swift */,
-				00FE0E942C3B46960064A2C7 /* FilterListManager.swift */,
-				001848672C2956AC00EE2E7A /* ContentView.swift */,
-				00FE0E922C3B46640064A2C7 /* FilterList.swift */,
 				001848692C2956AD00EE2E7A /* Assets.xcassets */,
 				0018486C2C2956AD00EE2E7A /* Preview Content */,
 			);
@@ -355,12 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00FE0E912C3B45670064A2C7 /* Item.swift in Sources */,
-				00FE0E932C3B46640064A2C7 /* FilterList.swift in Sources */,
-				001848682C2956AC00EE2E7A /* ContentView.swift in Sources */,
 				001848662C2956AC00EE2E7A /* WebShieldApp.swift in Sources */,
-				00026E722C2B7BFB0087E1DA /* ContentBlockerState.swift in Sources */,
-				00FE0E952C3B46960064A2C7 /* FilterListManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +664,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = G5S45S77DF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -647,6 +675,7 @@
 				INFOPLIST_FILE = WebShieldContentBlocker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -663,6 +692,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -674,6 +704,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = G5S45S77DF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -684,6 +715,7 @@
 				INFOPLIST_FILE = WebShieldContentBlocker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -700,6 +732,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -718,6 +751,7 @@
 				INFOPLIST_FILE = WebShieldExtra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Extra";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -733,9 +767,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -754,6 +792,7 @@
 				INFOPLIST_FILE = WebShieldExtra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Extra";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -769,9 +808,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
