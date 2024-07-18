@@ -4,20 +4,18 @@
 //
 //  Created by Arjun on 2024-07-13.
 //
-
 /* global safari, ExtendedCss */
-
 (() => {
     /**
-     * Executes code in the context of the page via new script tag and text
+     * Executes code in the context of the page via a new script tag and text
      * content.
-     * @param code String of scripts to be executed
+     * @param {string} code - String of scripts to be executed.
      * @returns {boolean} Returns true if code was executed, otherwise returns
-     *     false
+     *     false.
      */
     const executeScriptsViaTextContent = (code) => {
         const scriptTag = document.createElement('script');
-        scriptTag.setAttribute('type', 'text/javascript');
+        scriptTag.type = 'text/javascript';
         scriptTag.textContent = code;
         const parent = document.head || document.documentElement;
         parent.appendChild(scriptTag);
@@ -27,11 +25,10 @@
         }
         return true;
     };
-
     /**
-     * Executes code in the context of page via new script tag and blob. We use
-     * this way as fallback, if we fail to inject via textContent
-     * @param code String of scripts to be executed
+     * Executes code in the context of the page via a new script tag and blob.
+     * We use this way as a fallback if we fail to inject via textContent.
+     * @param {string} code - String of scripts to be executed.
      * @returns {boolean} Returns true if code was executed, otherwise returns
      *     false.
      */
@@ -49,22 +46,18 @@
         }
         return true;
     };
-
     /**
-     * Execute scripts in a page context and cleanup itself when execution
-     * completes
-     * @param scripts Array of scripts to execute
-     * @param verbose logging
+     * Execute scripts in a page context and clean up itself when execution
+     * completes.
+     * @param {string[]} scripts - Array of scripts to execute.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const executeScripts = (scripts = [], verbose) => {
-        logMessage(verbose, "Executing scripts...")
-        scripts.unshift('( function () { try {');
-        // we use this script detect if the script was applied,
-        // if the script tag was removed, then it means that code was applied,
-        // otherwise no
-        scripts.push(`;document.currentScript.remove();`);
+    const executeScripts = async (scripts = [], verbose) => {
+        logMessage(verbose, "Executing scripts...");
+        scripts.unshift('(function () { try {');
+        scripts.push(';document.currentScript.remove();');
         scripts.push(
-            "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();");
+                     "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();");
         const code = scripts.join('\r\n');
         if (!executeScriptsViaTextContent(code)) {
             logMessage(verbose, 'Unable to inject via text content');
@@ -73,142 +66,109 @@
             }
         }
     };
-
     /**
      * Applies JS injections.
-     * @param scripts Array with JS scripts
-     * @param verbose logging
+     * @param {string[]} scripts - Array with JS scripts.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const applyScripts = (scripts, verbose) => {
-        if (!scripts || scripts.length === 0) {
+    const applyScripts = async (scripts, verbose) => {
+        if (!scripts || scripts.length === 0)
             return;
-        }
-        logMessage(verbose, "Applying script injections...")
-        logMessage(verbose, 'scripts length: ' + scripts.length);
-        executeScripts(scripts.reverse(), verbose);
+        logMessage(verbose, "Applying script injections...");
+        logMessage(verbose, `scripts length: ${scripts.length}`);
+        await executeScripts(scripts.reverse(), verbose);
     };
-
     /**
-     * Protects specified style element from changes to the current document
-     * Add a mutation observer, which is adds our rules again if it was removed
-     *
-     * @param protectStyleEl protected style element
+     * Protects specified style element from changes to the current document.
+     * Adds a mutation observer, which re-adds our rules if they were removed.
+     * @param {HTMLElement} protectStyleEl - Protected style element.
      */
-    const protectStyleElementContent = function(protectStyleEl) {
+    const protectStyleElementContent = (protectStyleEl) => {
         const MutationObserver =
-            window.MutationObserver || window.WebKitMutationObserver;
-        if (!MutationObserver) {
+        window.MutationObserver || window.WebKitMutationObserver;
+        if (!MutationObserver)
             return;
-        }
-        /* observer, which observe protectStyleEl inner changes, without
-         * deleting styleEl */
-        const innerObserver = new MutationObserver(((mutations) => {
-            for (let i = 0; i < mutations.length; i += 1) {
-                const m = mutations[i];
+        const innerObserver = new MutationObserver((mutations) => {
+            for (const m of mutations) {
                 if (protectStyleEl.hasAttribute('mod') &&
                     protectStyleEl.getAttribute('mod') === 'inner') {
                     protectStyleEl.removeAttribute('mod');
                     break;
                 }
-
                 protectStyleEl.setAttribute('mod', 'inner');
                 let isProtectStyleElModified = false;
-
-                /**
-                 * further, there are two mutually exclusive situations: either
-                 * there were changes the text of protectStyleEl, either there
-                 * was removes a whole child "text" element of protectStyleEl
-                 * we'll process both of them
-                 */
                 if (m.removedNodes.length > 0) {
-                    for (let j = 0; j < m.removedNodes.length; j += 1) {
+                    for (const node of m.removedNodes) {
                         isProtectStyleElModified = true;
-                        protectStyleEl.appendChild(m.removedNodes[j]);
+                        protectStyleEl.appendChild(node);
                     }
                 } else if (m.oldValue) {
                     isProtectStyleElModified = true;
                     protectStyleEl.textContent = m.oldValue;
                 }
-
                 if (!isProtectStyleElModified) {
                     protectStyleEl.removeAttribute('mod');
                 }
             }
-        }));
-
+        });
         innerObserver.observe(protectStyleEl, {
-            'childList' : true,
-            'characterData' : true,
-            'subtree' : true,
-            'characterDataOldValue' : true,
+            childList : true,
+            characterData : true,
+            subtree : true,
+            characterDataOldValue : true,
         });
     };
-
     /**
-     * Applies css stylesheet
-     * @param styleSelectors Array of stylesheets or selectors
-     * @param verbose logging
+     * Applies CSS stylesheet.
+     * @param {string[]} styleSelectors - Array of stylesheets or selectors.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const applyCss = (styleSelectors, verbose) => {
-        if (!styleSelectors || !styleSelectors.length) {
+    const applyCss = async (styleSelectors, verbose) => {
+        if (!styleSelectors || !styleSelectors.length)
             return;
-        }
-        logMessage(verbose, "Applying CSS stylesheets...")
+        logMessage(verbose, "Applying CSS stylesheets...");
         logMessage(verbose, `css length: ${styleSelectors.length}`);
-
         const styleElement = document.createElement('style');
-        styleElement.setAttribute('type', 'text/css');
+        styleElement.type = 'text/css';
         (document.head || document.documentElement).appendChild(styleElement);
-
-        for (const selector of styleSelectors.map((s) => s.trim())) {
+        for (const selector of styleSelectors.map(s => s.trim())) {
             styleElement.sheet.insertRule(selector);
         }
-
         protectStyleElementContent(styleElement);
     };
-
     /**
-     * Applies Extended Css stylesheet
-     *
-     * @param extendedCss Array with ExtendedCss stylesheets
-     * @param verbose logging
+     * Applies Extended CSS stylesheet.
+     * @param {string[]} extendedCss - Array with ExtendedCss stylesheets.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const applyExtendedCss = (extendedCss, verbose) => {
-        if (!extendedCss || !extendedCss.length) {
+    const applyExtendedCss = async (extendedCss, verbose) => {
+        if (!extendedCss || !extendedCss.length)
             return;
-        }
-        logMessage(verbose, "Applying extended CSS stylesheets...")
+        logMessage(verbose, "Applying extended CSS stylesheets...");
         logMessage(verbose, `extended css length: ${extendedCss.length}`);
-        const cssRules = extendedCss.filter((s) => s.length > 0)
-                             .map((s) => s.trim())
-                             .map((s) => {
-                                 return s[s.length - 1] !== '}'
-                                            ? `${s} {display:none!important;}`
-                                            : s;
-                             });
+        const cssRules = extendedCss.filter(s => s.length > 0)
+        .map(s => s.trim())
+        .map(s => (s[s.length - 1] !== '}'
+                   ? `${s} {display:none!important;}`
+                   : s));
         const extCss = new ExtendedCss({cssRules});
         extCss.apply();
     };
-
     /**
-     * Applies scriptlets
-     *
-     * @param scriptletsData Array with scriptlets data
-     * @param verbose logging
+     * Applies scriptlets.
+     * @param {string[]} scriptletsData - Array with scriptlets data.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const applyScriptlets = (scriptletsData, verbose) => {
-        if (!scriptletsData || !scriptletsData.length) {
+    const applyScriptlets = async (scriptletsData, verbose) => {
+        if (!scriptletsData || !scriptletsData.length)
             return;
-        }
-        logMessage(verbose, "Applying scriptlets...")
-        logMessage(verbose, 'scriptlets length: ' + scriptletsData.length);
-        const scriptletExecutableScripts = scriptletsData.map((s) => {
+        logMessage(verbose, "Applying scriptlets...");
+        logMessage(verbose, `scriptlets length: ${scriptletsData.length}`);
+        const scriptletExecutableScripts = scriptletsData.map(s => {
             const param = JSON.parse(s);
             param.engine = "safari-extension";
-            if (!!verbose) {
+            if (verbose)
                 param.verbose = true;
-            }
-
             let code = '';
             try {
                 code = scriptlets && scriptlets.invoke(param);
@@ -217,80 +177,66 @@
             }
             return code;
         });
-
-        executeScripts(scriptletExecutableScripts, verbose);
+        await executeScripts(scriptletExecutableScripts, verbose);
     };
-
     /**
-     * Applies injected script and css
-     *
-     * @param data
-     * @param verbose
+     * Applies injected script and CSS.
+     * @param {Object} data - Data containing scripts and CSS to be applied.
+     * @param {boolean} verbose - Enable verbose logging.
      */
-    const applyAdvancedBlockingData = (data, verbose) => {
+    const applyAdvancedBlockingData = async (data, verbose) => {
         logMessage(verbose, 'Applying scripts and css..');
         logMessage(verbose, `Frame url: ${window.location.href}`);
-
-        applyScripts(data.scripts, verbose);
-        applyCss(data.cssInject, verbose);
-        applyExtendedCss(data.cssExtended, verbose);
-        applyScriptlets(data.scriptlets, verbose);
-
+        await Promise.all([
+            applyScripts(data.scripts, verbose),
+            applyCss(data.cssInject, verbose),
+            applyExtendedCss(data.cssExtended, verbose),
+            applyScriptlets(data.scriptlets, verbose)
+        ]);
         logMessage(verbose, 'Applying scripts and css - done');
         safari.self.removeEventListener('message', handleMessage);
     };
-
     /**
-     * Logs a message if verbose is true
-     *
-     * @param verbose
-     * @param message
+     * Logs a message if verbose is true.
+     * @param {boolean} verbose - Enable verbose logging.
+     * @param {string} message - Message to be logged.
      */
     const logMessage = (verbose, message) => {
         if (verbose) {
             console.log(`(WebShield Extra) ${message}`);
         }
     };
-
     /**
-     * Handles event from application
-     *
-     * @param event
+     * Handles event from application.
+     * @param {Event} event - Event to be handled.
      */
-    const handleMessage = (event) => {
+    const handleMessage = async (event) => {
         if (event.name === 'advancedBlockingData') {
             try {
-                const data = JSON.parse(event.message['data']);
-                const verbose = JSON.parse(event.message['verbose']);
-                // As each frame listens to these events, we need to match
-                // frames and received events so here we check if url in event
-                // payload matches current location url.
-                logMessage(verbose, "Received advancedBlockingData message...")
-                logMessage(verbose, "Message Data (below):")
-                logMessage(verbose, data)
-                if (window.location.href === event.message['url']) {
-                    applyAdvancedBlockingData(data, verbose);
+                const data = JSON.parse(event.message.data);
+                const verbose = JSON.parse(event.message.verbose);
+                logMessage(verbose, "Received advancedBlockingData message...");
+                logMessage(verbose, "Message Data (below):");
+                logMessage(verbose, data);
+                if (window.location.href === event.message.url) {
+                    await applyAdvancedBlockingData(data, verbose);
                 }
             } catch (e) {
                 console.error(e);
             }
         }
     };
-
     /**
-     * With the following limitation we fix some troubles with Gmail and
-     * scrolling on various websites
+     * Fixes some troubles with Gmail and scrolling on various websites.
      * https://github.com/AdguardTeam/AdGuardForSafari/issues/433
      * https://github.com/AdguardTeam/AdGuardForSafari/issues/441
      */
     if (document instanceof HTMLDocument) {
-        if (window.location.href &&
-            window.location.href.indexOf('http') === 0) {
+        if (window.location.href && window.location.href.startsWith('http')) {
             safari.self.addEventListener('message', handleMessage);
-            // Request advanced blocking data
-            logMessage(true, "Sending getAdvancedBlockingData message...")
+            logMessage(true, "Sending getAdvancedBlockingData message...");
             safari.extension.dispatchMessage('getAdvancedBlockingData',
-                                             {'url' : window.location.href});
+                                             {url : window.location.href});
         }
     }
-})();
+})()

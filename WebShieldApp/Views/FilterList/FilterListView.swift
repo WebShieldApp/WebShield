@@ -17,9 +17,12 @@ struct FilterListView: View {
                 ForEach(FilterListCategory.allCases.dropFirst(), id: \.self) {
                     category in
                     Section(header: Text(category.rawValue)) {
-                        ForEach(groupedFilterLists(category)) { filterList in
+                        //                        Section(header: Text("test")) {
+                        ForEach(groupedFilterLists(category)) {
+                            filterList in
                             FilterListToggle(filterList: filterList)
                         }
+                        //                        }
                     }
                 }
             } else {
@@ -49,7 +52,9 @@ struct FilterListView: View {
         }
     }
 
-    private func groupedFilterLists(_ category: FilterListCategory) -> [FilterList] {
+    private func groupedFilterLists(_ category: FilterListCategory)
+        -> [FilterList]
+    {
         return filterListManager.filterLists.filter {
             $0.category == category
         }

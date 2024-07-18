@@ -15,10 +15,7 @@ struct ActionButtons: View {
             Button("Disable") {
                 print("Toggle") // DUMMY
             }
-            Button("Fetch") {
-                print("Fetch") // DUMMY
-            }
-            Button("Apply Filters") {
+            Button("Refresh All") {
                 Task {
                     isUpdating = true
                     do {

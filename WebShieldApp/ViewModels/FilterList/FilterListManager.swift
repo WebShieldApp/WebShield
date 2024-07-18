@@ -40,16 +40,14 @@ import SafariServices
 
     func applyChanges() async {
         let selectedLists = filterLists.filter { $0.isSelected }
-        for list in selectedLists {
-            print(list.name)
-        }
         let totalSteps = selectedLists.count * 4  // Download, Parse, Convert, Write
         var completedSteps = 0
 
-        for list in selectedLists {
+        for (index, list) in selectedLists.enumerated() {
             do {
                 // Download
-                let data = try await downloadFilterList(from: list.url)
+                let data = try await downloadFilterList(
+                    from: list.url, name: list.name)
                 completedSteps += 1
                 await updateProgress(
                     Double(completedSteps) / Double(totalSteps))
@@ -67,10 +65,14 @@ import SafariServices
                     Double(completedSteps) / Double(totalSteps))
 
                 // Write
-                try await writeFilterListToFile(converted, for: list)
+                let isFirst = index == 0
+                let isLast = index == selectedLists.count - 1
+                try await writeFilterListToFile(
+                    converted, for: list, isFirst: isFirst, isLast: isLast)
                 completedSteps += 1
                 await updateProgress(
                     Double(completedSteps) / Double(totalSteps))
+
                 printConversionStatistics(converted)
             } catch {
                 print("Error processing filter list: \(error)")
@@ -80,8 +82,10 @@ import SafariServices
         await updateProgress(1.0)  // Ensure progress bar reaches 100%
     }
 
-    private func downloadFilterList(from url: URL) async throws -> Data {
-        print("Downloading Filter List URL: \(url.absoluteString)")
+    private func downloadFilterList(from url: URL, name: String) async throws
+        -> Data
+    {
+        print("Downloading Filter List: \(name) from URL: \(url.absoluteString)")
         let (data, _) = try await self.urlSession.data(from: url)
         return data
     }
@@ -100,7 +104,8 @@ import SafariServices
     }
 
     private func writeFilterListToFile(
-        _ result: ConversionResult, for list: FilterList
+        _ result: ConversionResult, for list: FilterList, isFirst: Bool,
+        isLast: Bool
     ) async throws {
         guard
             let containerURL = fileManager.containerURL(
@@ -112,11 +117,52 @@ import SafariServices
         print(
             "Writing to file (blockerList.json & advancedBlocking.json) in \(containerURL.absoluteString)"
         )
+
         try await writeRulesToFile(
-            result.converted, fileName: "blockerList.json", in: containerURL)
+            result.converted, fileName: "blockerList.json", in: containerURL,
+            isFirst: isFirst, isLast: isLast)
         if let advanced = result.advancedBlocking {
             try await writeRulesToFile(
-                advanced, fileName: "advancedBlocking.json", in: containerURL)
+                advanced, fileName: "advancedBlocking.json", in: containerURL,
+                isFirst: isFirst, isLast: isLast)
+        }
+    }
+
+    private func writeRulesToFile(
+        _ content: String, fileName: String, in containerURL: URL,
+        isFirst: Bool, isLast: Bool
+    ) async throws {
+        let fileURL = containerURL.appendingPathComponent(fileName)
+        var existingContent: [[String: Any]] = []
+
+        if fileManager.fileExists(atPath: fileURL.path) {
+            let data = try Data(contentsOf: fileURL)
+            existingContent =
+                try JSONSerialization.jsonObject(with: data, options: [])
+                as? [[String: Any]] ?? []
+        }
+
+        let newContent =
+            try JSONSerialization.jsonObject(
+                with: Data(content.utf8), options: []) as? [[String: Any]] ?? []
+
+        if isFirst {
+            existingContent = newContent
+        } else {
+            existingContent.append(contentsOf: newContent)
+        }
+
+        if isLast {
+            let combinedData = try JSONSerialization.data(
+                withJSONObject: existingContent, options: .prettyPrinted)
+            try combinedData.write(to: fileURL, options: .atomic)
+        }
+
+        let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
+        if let fileSize = attributes[.size] as? Int64, fileSize > 2_000_000 {
+            print(
+                "WARNING: \(fileName) size (\(fileSize) bytes) exceeds 2MB limit for Safari content blockers!"
+            )
         }
     }
 
@@ -135,26 +181,6 @@ import SafariServices
         filterLists = FilterListProvider.allFilterLists
     }
 
-    private func downloadAndParseRules(for lists: [FilterList]) async throws
-        -> [String]
-    {
-        try await withThrowingTaskGroup(of: [String].self) { group in
-            for list in lists {
-                let (data, _) = try await self.urlSession.data(
-                    from: list.url)
-                group.addTask {
-                    return try await self.parseRules(data)
-                }
-            }
-
-            var allRules: [String] = []
-            for try await rules in group {
-                allRules.append(contentsOf: rules)
-            }
-            return allRules
-        }
-    }
-
     private func parseRules(_ data: Data) async throws -> [String] {
         print("Parsing rules...")
         guard let content = String(data: data, encoding: .utf8) else {
@@ -164,47 +190,6 @@ import SafariServices
         return content.components(separatedBy: .newlines)
             .filter { !$0.hasPrefix("!") && !$0.hasPrefix("[") && !$0.isEmpty }
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-    }
-
-    private func convertAndSaveRules(_ rules: [String]) async throws {
-        guard
-            let containerURL = fileManager.containerURL(
-                forSecurityApplicationGroupIdentifier:
-                    "G5S45S77DF.me.arjuna.WebShield")
-        else {
-            throw FilterListError.containerNotFound
-        }
-
-        let result = ContentBlockerConverter().convertArray(
-            rules: rules,
-            safariVersion: .safari16_4,
-            optimize: true,
-            advancedBlocking: true,
-            advancedBlockingFormat: .json
-        )
-
-        try await writeRulesToFile(
-            result.converted, fileName: "blockerList.json", in: containerURL)
-        if let advanced = result.advancedBlocking {
-            try await writeRulesToFile(
-                advanced, fileName: "advancedBlocking.json", in: containerURL)
-        }
-
-        printConversionStatistics(result)
-    }
-
-    private func writeRulesToFile(
-        _ content: String, fileName: String, in containerURL: URL
-    ) async throws {
-        let fileURL = containerURL.appendingPathComponent(fileName)
-        try content.write(to: fileURL, atomically: true, encoding: .utf8)
-
-        let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
-        if let fileSize = attributes[.size] as? Int64, fileSize > 2_000_000 {
-            print(
-                "WARNING: \(fileName) size (\(fileSize) bytes) exceeds 2MB limit for Safari content blockers!"
-            )
-        }
     }
 
     private func printConversionStatistics(_ result: ConversionResult) {
