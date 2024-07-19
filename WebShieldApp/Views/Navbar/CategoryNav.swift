@@ -11,10 +11,12 @@ struct CategoryNav: View {
     let category: FilterListCategory
 
     var body: some View {
-        Label {
-            Text(category.rawValue)
-        } icon: {
-            Image(systemName: category.systemImage)
+        NavigationLink(destination: FilterListView(category: category)) {
+            Label {
+                Text(category.rawValue)
+            } icon: {
+                Image(systemName: category.systemImage)
+            }
         }
     }
 }

@@ -22,8 +22,9 @@ struct FilterListToggle: View {
         Toggle(isOn: $isOn) {
             VStack(alignment: .leading) {
                 Text(filterList.name).font(.headline).foregroundStyle(.primary)
-                Text("Description:").font(.caption2).foregroundColor(.secondary)
-                Text("Last Updated:")
+                Text(
+                    "Last Updated: \(filterListManager.getLastUpdateDate(filter: filterList))"
+                )
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

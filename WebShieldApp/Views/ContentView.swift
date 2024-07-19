@@ -6,11 +6,13 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            SidebarView(selectedCategory: $selectedCategory)
+            SidebarView()
         } detail: {
             NavigationStack {
                 if let category = selectedCategory {
-                    FilterListView(category: category)
+                    FilterListView(
+                        category: category
+                    )
                 } else {
                     Text("Select a category")
                 }

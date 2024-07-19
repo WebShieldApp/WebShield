@@ -1,19 +1,17 @@
-//
-//  ActionButtons.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-07-16.
-//
 import SwiftUI
 
 struct ActionButtons: View {
     let applyChanges: @MainActor @Sendable () async throws -> Void
+    @StateObject var contentBlockerState: ContentBlockerState = ContentBlockerState()
     @State private var isUpdating = false
 
     var body: some View {
         HStack {
-            Button("Disable") {
-                print("Toggle") // DUMMY
+            // TODO: BUG FIX, Toggling content blocker is messed up
+            Button(contentBlockerState.isEnabled ? "Disable" : "Enable") {
+                Task {
+                    await contentBlockerState.toggleContentBlocker()
+                }
             }
             Button("Refresh All") {
                 Task {
@@ -21,7 +19,6 @@ struct ActionButtons: View {
                     do {
                         try await applyChanges()
                     } catch {
-                        // Handle error
                         print("Error applying changes: \(error)")
                     }
                     isUpdating = false

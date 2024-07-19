@@ -1,5 +1,5 @@
 import Combine
-import ContentBlockerConverter
+@preconcurrency import ContentBlockerConverter
 import Foundation
 import SafariServices
 
@@ -13,21 +13,59 @@ import SafariServices
     private let urlSession: URLSession
 
     init(
-        contentBlockerIdentifier: String = "me.arjuna.WebShield.ContentBlocker",
         fileManager: FileManager = .default,
         urlSession: URLSession = .shared
     ) {
-        self.contentBlockerState = ContentBlockerState(
-            withIdentifier: contentBlockerIdentifier)
+        self.contentBlockerState = ContentBlockerState()
         self.fileManager = fileManager
         self.urlSession = urlSession
 
         loadFilterLists()
         filterLists = FilterListProvider.allFilterLists
+        if checkSelectedStateForAnyFilter() {
+            loadSelectedState()
+        }
+    }
+
+    private func checkSelectedStateForAnyFilter() -> Bool {
+        return filterLists.contains {
+            UserDefaults.exists(key: "filter_\($0.name)")
+        }
+    }
+
+    private func loadSelectedState() {
+        let defaults = UserDefaults.standard
+        filterLists.indices.forEach { index in
+            filterLists[index].isSelected = defaults.bool(
+                forKey: "filter_\(filterLists[index].name)")
+        }
+    }
+
+    private func saveSelectedState(filter: FilterList) {
+        UserDefaults.standard.set(
+            filter.isSelected, forKey: "filter_\(filter.name)")
+    }
+
+    private func saveLastUpdateDate(filter: FilterList) {
+        UserDefaults.standard.set(
+            Date(), forKey: "lastUpdateDate_\(filter.name)")
+    }
+
+    func getLastUpdateDate(filter: FilterList) -> String {
+        let defaults = UserDefaults.standard
+        guard
+            let date = defaults.object(forKey: "lastUpdateDate_\(filter.name)")
+                as? Date
+        else {
+            return "Never Updated!"
+        }
+        let df = DateFormatter()
+        df.dateStyle = .short
+        return df.string(from: date)
     }
 
     func isSelected(_ filterList: FilterList) -> Bool {
-        filterLists.first { $0.id == filterList.id }?.isSelected ?? false
+        return filterLists.first { $0.id == filterList.id }?.isSelected ?? false
     }
 
     func setSelection(for filterList: FilterList, isSelected: Bool) {
@@ -40,52 +78,44 @@ import SafariServices
 
     func applyChanges() async {
         let selectedLists = filterLists.filter { $0.isSelected }
-        let totalSteps = selectedLists.count * 4  // Download, Parse, Convert, Write
-        var completedSteps = 0
+        await withTaskGroup(of: Void.self) { group in
+            for (index, list) in selectedLists.enumerated() {
+                group.addTask {
+                    do {
+                        let data = try await self.downloadFilterList(
+                            from: list.url, name: list.name)
+                        let parsed = try await self.parseRules(data)
+                        let converted = try await self.convertToAdGuardFormat(
+                            parsed)
+                        let isFirst = index == 0
+                        let isLast = index == selectedLists.count - 1
+                        try await self.writeFilterListToFile(
+                            converted, for: list, isFirst: isFirst,
+                            isLast: isLast)
+                        await self.saveLastUpdateDate(filter: list)
+                        await self.printConversionStatistics(converted)
+                        await self.refreshAndReloadContentBlocker()
+                    } catch {
+                        print("Error processing filter list: \(error)")
+                    }
+                }
+            }
 
-        for (index, list) in selectedLists.enumerated() {
-            do {
-                // Download
-                let data = try await downloadFilterList(
-                    from: list.url, name: list.name)
-                completedSteps += 1
-                await updateProgress(
-                    Double(completedSteps) / Double(totalSteps))
-
-                // Parse
-                let parsed = try await parseRules(data)
-                completedSteps += 1
-                await updateProgress(
-                    Double(completedSteps) / Double(totalSteps))
-
-                // Convert
-                let converted = try await convertToAdGuardFormat(parsed)
-                completedSteps += 1
-                await updateProgress(
-                    Double(completedSteps) / Double(totalSteps))
-
-                // Write
-                let isFirst = index == 0
-                let isLast = index == selectedLists.count - 1
-                try await writeFilterListToFile(
-                    converted, for: list, isFirst: isFirst, isLast: isLast)
-                completedSteps += 1
-                await updateProgress(
-                    Double(completedSteps) / Double(totalSteps))
-
-                printConversionStatistics(converted)
-            } catch {
-                print("Error processing filter list: \(error)")
+            group.addTask {
+                for list in await self.filterLists {
+                    await self.saveSelectedState(filter: list)
+                }
             }
         }
 
-        await updateProgress(1.0)  // Ensure progress bar reaches 100%
+        await updateProgress(1.0)
     }
 
     private func downloadFilterList(from url: URL, name: String) async throws
         -> Data
     {
-        print("Downloading Filter List: \(name) from URL: \(url.absoluteString)")
+        print(
+            "Downloading Filter List: \(name) from URL: \(url.absoluteString)")
         let (data, _) = try await self.urlSession.data(from: url)
         return data
     }
@@ -132,7 +162,7 @@ import SafariServices
         _ content: String, fileName: String, in containerURL: URL,
         isFirst: Bool, isLast: Bool
     ) async throws {
-        let fileURL = containerURL.appendingPathComponent(fileName)
+        let fileURL = containerURL.appending(path: fileName)
         var existingContent: [[String: Any]] = []
 
         if fileManager.fileExists(atPath: fileURL.path) {
@@ -207,4 +237,16 @@ import SafariServices
         await contentBlockerState.refreshContentBlockerState()
         await contentBlockerState.reloadContentBlocker()
     }
+
+    func logMessage(_ message: String) {
+        var logs =
+            UserDefaults.standard.array(forKey: "logs") as? [String] ?? []
+        logs.append("\(Date()): \(message)")
+        UserDefaults.standard.set(logs, forKey: "logs")
+    }
+
+    func getLogs() -> [String] {
+        return UserDefaults.standard.array(forKey: "logs") as? [String] ?? []
+    }
+
 }

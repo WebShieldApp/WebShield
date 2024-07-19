@@ -5,7 +5,9 @@ struct FilterListView: View {
     @EnvironmentObject private var filterListManager: FilterListManager
     @StateObject private var viewModel: FilterListViewModel
 
-    init(category: FilterListCategory) {
+    init(
+        category: FilterListCategory
+    ) {
         self.category = category
         self._viewModel = StateObject(
             wrappedValue: FilterListViewModel(category: category))
@@ -17,46 +19,38 @@ struct FilterListView: View {
                 ForEach(FilterListCategory.allCases.dropFirst(), id: \.self) {
                     category in
                     Section(header: Text(category.rawValue)) {
-                        //                        Section(header: Text("test")) {
-                        ForEach(groupedFilterLists(category)) {
+                        ForEach(groupedFilterLists(for: category)) {
                             filterList in
                             FilterListToggle(filterList: filterList)
                         }
-                        //                        }
                     }
                 }
             } else {
                 Section {
-                    ForEach(filterListsForCategory) { filter in
-                        FilterListToggle(filterList: filter)
+                    ForEach(filterListsForCategory) { filterList in
+                        FilterListToggle(filterList: filterList)
                     }
                 }
             }
-
         }
         .formStyle(.grouped)
         .navigationTitle(category.rawValue)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                ActionButtons(applyChanges: filterListManager.applyChanges)
-            }
-        }
-    }
-    private var filterListsForCategory: [FilterList] {
-        if category == .all {
-            return filterListManager.filterLists
-        } else {
-            return filterListManager.filterLists.filter {
-                $0.category == category
+                ActionButtons(
+                    applyChanges: filterListManager.applyChanges
+                )
             }
         }
     }
 
-    private func groupedFilterLists(_ category: FilterListCategory)
+    private var filterListsForCategory: [FilterList] {
+        filterListManager.filterLists.filter { $0.category == category }
+    }
+
+    private func groupedFilterLists(for category: FilterListCategory)
         -> [FilterList]
     {
-        return filterListManager.filterLists.filter {
-            $0.category == category
-        }
+        filterListManager.filterLists.filter { $0.category == category }
     }
 }

@@ -108,6 +108,7 @@
 				ContentViewModel.swift,
 				FilterList/FilterListManager.swift,
 				FilterList/FilterListViewModel.swift,
+				UserDefaultsExtension.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
@@ -118,8 +119,8 @@
 				FilterList/FilterList.swift,
 				FilterList/FilterListCategory.swift,
 				FilterList/FilterListError.swift,
+				FilterList/FilterListProvider.swift,
 				FilterList/FilterListSection.swift,
-				FilterListProvider.swift,
 				Item.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
