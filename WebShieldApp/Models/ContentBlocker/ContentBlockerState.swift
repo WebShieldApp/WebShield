@@ -2,63 +2,24 @@ import Foundation
 @preconcurrency import SafariServices
 
 @MainActor class ContentBlockerState: ObservableObject {
-    let identifier: String
-
-    @Published private var state: Result<Bool, Error>?
-
-    var isEnabled: Bool {
-        guard case .success(let isEnabled) = state else { return false }
-        return isEnabled
-    }
+    private let identifier = "me.arjuna.WebShield.ContentBlocker"
+//    @Published private(set) var isEnabled: Bool = true
 
     init() {
-        self.identifier = "me.arjuna.WebShield.ContentBlocker"
+        Task {
+            await refreshContentBlockerState()
+        }
     }
 
     func refreshContentBlockerState() async {
         do {
             let state = try await SFContentBlockerManager.stateOfContentBlocker(
                 withIdentifier: identifier)
-            self.state = .success(state.isEnabled)
+//            self.isEnabled = state.isEnabled
         } catch {
-            self.state = .failure(error)
-        }
-    }
-
-    func toggleContentBlocker() async {
-        do {
-            let newState =
-                try await SFContentBlockerManager.stateOfContentBlocker(
-                    withIdentifier: identifier)
-
-            switch self.state {
-            case .success(let isEnabled):
-                // Toggle the current state
-                self.state = .success(!isEnabled)
-                
-                // If the new state doesn't match our toggle, log a warning
-                if newState.isEnabled == isEnabled {
-                    print(
-                        "Warning: Content blocker state didn't change as expected"
-                    )
-                }
-
-            case .failure, nil:
-                // If we had a failure or nil state before, use the new state
-                self.state = .success(newState.isEnabled)
-                print(
-                    "Content blocker state updated from previous failure or nil state"
-                )
-
-            }
-
-            // Attempt to reload the content blocker
-            await reloadContentBlocker()
-
-        } catch {
-            self.state = .failure(error)
             print(
-                "Error toggling content blocker: \(error.localizedDescription)")
+                "Error fetching content blocker state: \(error.localizedDescription)"
+            )
         }
     }
 

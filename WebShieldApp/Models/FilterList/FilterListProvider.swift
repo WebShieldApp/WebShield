@@ -67,7 +67,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/118_optimized.txt"
                 )!,
                 category: .privacy,
-                isSelected: true
+                isSelected: false
             ),
             FilterList(
                 name: "Online Malicious URL Blocklist",
@@ -187,7 +187,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/207_optimized.txt"
                 )!,
                 category: .multipurpose,
-                isSelected: true
+                isSelected: false
             ),
             FilterList(
                 name: "AdGuard – Experimental",
