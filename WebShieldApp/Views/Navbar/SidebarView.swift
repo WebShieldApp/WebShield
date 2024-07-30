@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SidebarView: View {
-//    @Binding var selectedCategory: FilterListCategory?
+    //    @Binding var selectedCategory: FilterListCategory?
 
     var body: some View {
         List {
