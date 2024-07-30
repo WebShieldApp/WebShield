@@ -7,7 +7,7 @@ struct FilterList: Identifiable, Equatable {
     let category: FilterListCategory
     var isSelected: Bool
     let desc: String
-
+    
     init(
         name: String, url: URL, category: FilterListCategory,
         isSelected: Bool = false,

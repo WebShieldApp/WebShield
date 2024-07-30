@@ -25,8 +25,8 @@ struct FilterListToggle: View {
                 Text(
                     "Last Updated: \(filterListManager.getLastUpdateDate(filter: filterList))"
                 )
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
         }
         .onChange(of: isOn) {

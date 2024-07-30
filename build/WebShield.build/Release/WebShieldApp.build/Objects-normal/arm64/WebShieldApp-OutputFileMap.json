@@ -1,0 +1,110 @@
+{
+  "" : {
+    "const-values" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master.swiftconstvalues",
+    "dependencies" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master.d",
+    "diagnostics" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master.dia",
+    "emit-module-dependencies" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master-emit-module.dia",
+    "swift-dependencies" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp-master.swiftdeps"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/ContentBlocker/ContentBlockerState.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentBlockerState.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentBlockerState.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentBlockerState.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/FilterList/FilterList.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterList.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterList.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterList.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/FilterList/FilterListCategory.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListCategory.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListCategory.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListCategory.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/FilterList/FilterListError.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListError.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListError.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListError.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/FilterList/FilterListProvider.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListProvider.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListProvider.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListProvider.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/FilterList/FilterListSection.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListSection.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListSection.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListSection.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Models/Item.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/Item.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/Item.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/Item.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/ViewModels/ContentViewModel.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentViewModel.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentViewModel.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentViewModel.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/ViewModels/FilterList/FilterListManager.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListManager.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListManager.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListManager.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/ViewModels/FilterList/FilterListViewModel.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListViewModel.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListViewModel.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListViewModel.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/ViewModels/UserDefaultsExtension.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/UserDefaultsExtension.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/UserDefaultsExtension.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/UserDefaultsExtension.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/ContentView.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/FilterList/FilterListToggle.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListToggle.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListToggle.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListToggle.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/FilterList/FilterListView.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListView.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListView.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/FilterListView.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/Navbar/ActionButtons.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ActionButtons.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ActionButtons.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/ActionButtons.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/Navbar/CategoryNav.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/CategoryNav.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/CategoryNav.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/CategoryNav.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/Navbar/DetailView.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/DetailView.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/DetailView.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/DetailView.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/Views/Navbar/SidebarView.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/SidebarView.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/SidebarView.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/SidebarView.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/WebShieldApp/WebShieldApp.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/WebShieldApp.o"
+  },
+  "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/a/ProgrammingProjects/WebShield/build/WebShield.build/Release/WebShieldApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  }
+}

@@ -7,16 +7,6 @@ struct ActionButtons: View {
     @State private var isUpdating = false
 
     var body: some View {
-//        HStack {
-//            // TODO: BUG FIX
-////            Text(
-////                contentBlockerState.isEnabled ?  "Disabled" : "Enabled"
-////            )
-////            .foregroundColor(
-////                contentBlockerState.isEnabled ? Color.red : Color.green
-////            )
-//            
-//        }
         Button("Refresh All") {
             Task {
                 isUpdating = true

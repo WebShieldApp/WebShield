@@ -23,6 +23,7 @@ struct WebShieldApp: App {
             return try ModelContainer(
                 for: schema, configurations: [modelConfiguration])
         } catch {
+            print("[WS ERROR] IN WSA MAIN")
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
@@ -31,8 +32,8 @@ struct WebShieldApp: App {
         WindowGroup {
             ContentView().environmentObject(blockListManager)
         }
-        .windowResizability(.contentMinSize)
         .modelContainer(sharedModelContainer)
+        //        .windowResizability(.contentMinSize)
     }
 
 }

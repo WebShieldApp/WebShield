@@ -67,7 +67,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/118_optimized.txt"
                 )!,
                 category: .privacy,
-                isSelected: false
+                isSelected: true
             ),
             FilterList(
                 name: "Online Malicious URL Blocklist",
@@ -76,7 +76,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/208_optimized.txt"
                 )!,
                 category: .security,
-                isSelected: true
+                isSelected: false
             ),
             FilterList(
                 name: "Phishing URL Blocklist",
@@ -94,7 +94,7 @@ enum FilterListProvider {
                         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.mini.txt"
                 )!,
                 category: .multipurpose,
-                isSelected: true
+                isSelected: false
             ),
             FilterList(
                 name: "Peter Lowe's Blocklist",
@@ -103,7 +103,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/204_optimized.txt"
                 )!,
                 category: .multipurpose,
-                isSelected: true
+                isSelected: false
             ),
             FilterList(
                 name: "d3Host List by d3ward",
@@ -120,8 +120,7 @@ enum FilterListProvider {
                     string:
                         "https://filters.adtidy.org/extension/safari/filters/18_optimized.txt"
                 )!,
-                category: .cookies,
-                isSelected: false
+                category: .cookies
             ),
             FilterList(
                 name: "EasyList – Cookie Notices",
@@ -129,8 +128,7 @@ enum FilterListProvider {
                     string:
                         "https://filters.adtidy.org/extension/safari/filters/18_optimized.txt"
                 )!,
-                category: .cookies,
-                isSelected: false
+                category: .cookies
             ),
             FilterList(
                 name: "AdGuard – Social Widgets",
@@ -187,7 +185,7 @@ enum FilterListProvider {
                         "https://filters.adtidy.org/extension/safari/filters/207_optimized.txt"
                 )!,
                 category: .multipurpose,
-                isSelected: false
+                isSelected: true
             ),
             FilterList(
                 name: "AdGuard – Experimental",
@@ -195,8 +193,7 @@ enum FilterListProvider {
                     string:
                         "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/platforms/extension/safari/filters/5_optimized.txt"
                 )!,
-                category: .experimental,
-                isSelected: false
+                category: .experimental
             ),
         ]
     }

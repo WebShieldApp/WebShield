@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master.swiftconstvalues",
+    "dependencies" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master.d",
+    "diagnostics" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master.dia",
+    "emit-module-dependencies" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master-emit-module.dia",
+    "swift-dependencies" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Shared-master.swiftdeps"
+  },
+  "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/Sources/Shared/Logger.swift" : {
+    "index-unit-output-path" : "/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Logger.o",
+    "llvm-bc" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Logger.bc",
+    "object" : "/Users/a/Library/Developer/Xcode/DerivedData/WebShield-emyrpizkclukdfgqmgnrdjuigxgn/SourcePackages/checkouts/SafariConverterLib/build/ContentBlockerConverter.build/Release/Shared.build/Objects-normal/arm64/Logger.o"
+  }
+}

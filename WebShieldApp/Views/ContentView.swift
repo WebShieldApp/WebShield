@@ -12,7 +12,7 @@ struct ContentView: View {
                 if let category = selectedCategory {
                     FilterListView(
                         category: category
-                    )
+                    ).environmentObject(filterListManager)
                 } else {
                     Text("Select a category")
                 }

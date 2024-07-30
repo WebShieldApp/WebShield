@@ -1,27 +1,8 @@
 import Foundation
-@preconcurrency import SafariServices
+import SafariServices
 
-@MainActor class ContentBlockerState: ObservableObject {
+actor ContentBlockerState: ObservableObject {
     private let identifier = "me.arjuna.WebShield.ContentBlocker"
-//    @Published private(set) var isEnabled: Bool = true
-
-    init() {
-        Task {
-            await refreshContentBlockerState()
-        }
-    }
-
-    func refreshContentBlockerState() async {
-        do {
-            let state = try await SFContentBlockerManager.stateOfContentBlocker(
-                withIdentifier: identifier)
-//            self.isEnabled = state.isEnabled
-        } catch {
-            print(
-                "Error fetching content blocker state: \(error.localizedDescription)"
-            )
-        }
-    }
 
     func reloadContentBlocker() async {
         do {
@@ -60,22 +41,17 @@ import Foundation
         switch code {
         case 1:
             print(
-                "SFErrorDomain error 1: A Content Blocker or Safari app extension with the specified bundle identifier was not found, or the bundle identifier specified an extension that was not owned by you."
+                "SFErrorDomain error 1: Content Blocker not found or not owned by you."
             )
             print("Bundle Identifier: \(self.identifier)")
             print(
-                "Please check that the JSON is valid and follows Safari's content blocker format."
-            )
-            print(
-                "Ensure that the file size is under 2MB and contains no more than 50,000 rules."
+                "Please check JSON validity and file size (max 2MB, 50,000 rules)."
             )
         case 2:
-            print(
-                "SFErrorDomain error 2: The Content Blocker extension returned an NSExtensionItem that did not include an attachment."
-            )
+            print("SFErrorDomain error 2: NSExtensionItem missing attachment.")
         case 3:
             print(
-                "SFErrorDomain error 3: There was an error loading the content blocker extension."
+                "SFErrorDomain error 3: Error loading content blocker extension."
             )
         default:
             print("Unknown SFErrorDomain error code: \(code)")
