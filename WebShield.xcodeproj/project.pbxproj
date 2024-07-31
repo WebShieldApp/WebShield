@@ -106,9 +106,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentViewModel.swift,
-				FilterList/FilterListManager.swift,
-				FilterList/FilterListViewModel.swift,
-				UserDefaultsExtension.swift,
+				FilterListViewModel.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
@@ -116,11 +114,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentBlocker/ContentBlockerState.swift,
+				Extension/UserDefaultsExtension.swift,
 				FilterList/FilterList.swift,
 				FilterList/FilterListCategory.swift,
 				FilterList/FilterListError.swift,
+				FilterList/FilterListManager.swift,
 				FilterList/FilterListProvider.swift,
 				FilterList/FilterListSection.swift,
+				FilterList/TotalStats.swift,
 				Item.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
@@ -128,9 +129,9 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		005894F02C47238E00F43E94 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (005894F52C47238E00F43E94 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
-		0087929B2C470FB0003DCCE9 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
-		0087929C2C470FCA003DCCE9 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929D2C470FD0003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+		005894F02C47238E00F43E94 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (005894F52C47238E00F43E94 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		0087929B2C470FB0003DCCE9 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
+		0087929C2C470FCA003DCCE9 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0087929D2C470FD0003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,9 +178,9 @@
 		001848642C2956AC00EE2E7A /* WebShieldApp */ = {
 			isa = PBXGroup;
 			children = (
-				0087929B2C470FB0003DCCE9 /* Models */,
-				005894F02C47238E00F43E94 /* Views */,
-				0087929C2C470FCA003DCCE9 /* ViewModels */,
+				0087929B2C470FB0003DCCE9 /* Model */,
+				005894F02C47238E00F43E94 /* View */,
+				0087929C2C470FCA003DCCE9 /* ViewModel */,
 				00026E742C2B8E9E0087E1DA /* WebShield.entitlements */,
 				001848652C2956AC00EE2E7A /* WebShieldApp.swift */,
 				001848692C2956AD00EE2E7A /* Assets.xcassets */,

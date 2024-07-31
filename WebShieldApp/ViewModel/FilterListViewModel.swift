@@ -7,7 +7,6 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 final class FilterListViewModel: ObservableObject {
     @Published var sections: [FilterListSection] = []
     private let category: FilterListCategory

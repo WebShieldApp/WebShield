@@ -7,11 +7,13 @@ struct FilterList: Identifiable, Equatable {
     let category: FilterListCategory
     var isSelected: Bool
     let desc: String
+    let isAdGuardAnnoyancesList: Bool
 
     init(
         name: String, url: URL, category: FilterListCategory,
         isSelected: Bool = false,
-        description: String = "Lorem ipsum description."
+        description: String = "Lorem ipsum description.",
+        isAdGuardAnnoyancesList: Bool = false
     ) {
         self.id = UUID()
         self.name = name
@@ -19,5 +21,6 @@ struct FilterList: Identifiable, Equatable {
         self.category = category
         self.isSelected = isSelected
         self.desc = description
+        self.isAdGuardAnnoyancesList = isAdGuardAnnoyancesList
     }
 }

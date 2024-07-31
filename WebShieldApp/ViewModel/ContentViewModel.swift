@@ -7,11 +7,11 @@
 
 import Foundation
 
-@MainActor
 final class ContentViewModel: ObservableObject {
     @Published var selectedCategory: FilterListCategory? = .all
     let filterListManager: FilterListManager
 
+    @MainActor
     init(filterListManager: FilterListManager = FilterListManager()) {
         self.filterListManager = filterListManager
     }

@@ -8,5 +8,4 @@
 enum FilterListError: Error {
     case invalidData
     case containerNotFound
-    case conversionFailed
 }

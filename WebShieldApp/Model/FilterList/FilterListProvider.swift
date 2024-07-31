@@ -139,6 +139,14 @@ enum FilterListProvider {
                 category: .social
             ),
             FilterList(
+                name: "Fanboy – Social Blocking",
+                url: URL(
+                    string:
+                        "https://filters.adtidy.org/extension/safari/filters/123_optimized.txt"
+                )!,
+                category: .social
+            ),
+            FilterList(
                 name: "Fanboy – Anti-Facebook",
                 url: URL(
                     string:
@@ -152,7 +160,44 @@ enum FilterListProvider {
                     string:
                         "https://filters.adtidy.org/extension/safari/filters/14_optimized.txt"
                 )!,
-                category: .annoyances
+                category: .annoyances,
+                isAdGuardAnnoyancesList: false
+            ),
+            FilterList(
+                name: "AdGuard – Mobile App Banners",
+                url: URL(
+                    string:
+                        "https://filters.adtidy.org/extension/safari/filters/20_optimized.txt"
+                )!,
+                category: .annoyances,
+                isAdGuardAnnoyancesList: true
+            ),
+            FilterList(
+                name: "AdGuard – Other Annoyances",
+                url: URL(
+                    string:
+                        "https://filters.adtidy.org/extension/safari/filters/21_optimized.txt"
+                )!,
+                category: .annoyances,
+                isAdGuardAnnoyancesList: true
+            ),
+            FilterList(
+                name: "AdGuard – Popup Overlays",
+                url: URL(
+                    string:
+                        "https://filters.adtidy.org/extension/safari/filters/19_optimized.txt"
+                )!,
+                category: .annoyances,
+                isAdGuardAnnoyancesList: true
+            ),
+            FilterList(
+                name: "AdGuard – Widgets",
+                url: URL(
+                    string:
+                        "https://filters.adtidy.org/extension/safari/filters/22_optimized.txt"
+                )!,
+                category: .annoyances,
+                isAdGuardAnnoyancesList: true
             ),
             FilterList(
                 name: "Fanboy's Annoyances filter",
