@@ -4,6 +4,9 @@ struct FilterListView: View {
     let category: FilterListCategory
     @EnvironmentObject private var filterListManager: FilterListManager
     @StateObject private var viewModel: FilterListViewModel
+    @State private var showingLogs = false
+    @State private var showingImport = false
+    @State private var isUpdating = false
 
     init(
         category: FilterListCategory
@@ -36,11 +39,46 @@ struct FilterListView: View {
         .formStyle(.grouped)
         .navigationTitle(category.rawValue)
         .toolbar {
+            //            ActionButtons(
+            //                applyChanges: filterListManager.applyChanges,
+            //                logsText: filterListManager.logs,
+            //                showingLogs: $showingLogs,
+            //                showingImport: $showingImport
+            //            )
             ToolbarItem(placement: .automatic) {
-                ActionButtons(
-                    applyChanges: filterListManager.applyChanges
-                )
+                Button("Show Logs") {
+                    showingLogs = true
+                }
             }
+            ToolbarItem(placement: .primaryAction) {
+                Button("Refresh All") {
+                    Task {
+                        isUpdating = true
+                        await filterListManager.applyChanges()
+                        isUpdating = false
+                    }
+                }
+                .disabled(isUpdating)
+            }
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    // button activates link
+                    showingImport.toggle()
+                }) {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .padding(6)
+                        .frame(width: 24, height: 24)
+                    //                    .foregroundColor(.white)
+                }
+            }
+
+        }
+        .sheet(isPresented: $showingLogs) {
+            LogsView(logs: Logger.logs)
+        }
+        .sheet(isPresented: $showingImport) {
+            ImportView()
         }
     }
 

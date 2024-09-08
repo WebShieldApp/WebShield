@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct WebShieldApp: App {
     @StateObject private var blockListManager = FilterListManager()
+    
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([

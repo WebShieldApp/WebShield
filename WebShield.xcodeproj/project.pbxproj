@@ -95,10 +95,12 @@
 				ContentView.swift,
 				FilterList/FilterListToggle.swift,
 				FilterList/FilterListView.swift,
-				Navbar/ActionButtons.swift,
 				Navbar/CategoryNav.swift,
 				Navbar/DetailView.swift,
 				Navbar/SidebarView.swift,
+				Navbar/Toolbar/ImportView.swift,
+				Navbar/Toolbar/LogsView.swift,
+				Navbar/Toolbar/NativeStyleTextEditor.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
@@ -113,6 +115,7 @@
 		0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Check&Create/CheckAndCreate.swift",
 				ContentBlocker/ContentBlockerState.swift,
 				Extension/UserDefaultsExtension.swift,
 				FilterList/FilterList.swift,
@@ -122,7 +125,10 @@
 				FilterList/FilterListProvider.swift,
 				FilterList/FilterListSection.swift,
 				FilterList/TotalStats.swift,
+				GroupContainerURL.swift,
+				Identifiers.swift,
 				Item.swift,
+				Logger.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
@@ -200,8 +206,8 @@
 		00333FAE2C3CC52E0031AEC6 /* WebShieldContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
-				00333FAF2C3CC52E0031AEC6 /* blockerList.json */,
 				00333FB12C3CC52E0031AEC6 /* ContentBlockerRequestHandler.swift */,
+				00333FAF2C3CC52E0031AEC6 /* blockerList.json */,
 				00333FB32C3CC52E0031AEC6 /* Info.plist */,
 				00333FB42C3CC52E0031AEC6 /* WebShieldContentBlocker.entitlements */,
 			);

@@ -22,11 +22,12 @@ final class FilterListManager: ObservableObject {
         self.contentBlockerState = ContentBlockerState()
         self.fileManager = fileManager
         self.urlSession = urlSession
-
+        
+        CheckAndCreate.checkAndCreateGroupFolder()
         loadFilterLists()
-        if checkSelectedStateForAnyFilter() {
-            loadSelectedState()
-        }
+        loadSelectedState()
+        // checkAndCreateBlockerList()
+        Logger.clearLogs()
     }
 
     private func checkSelectedStateForAnyFilter() -> Bool {
@@ -36,10 +37,12 @@ final class FilterListManager: ObservableObject {
     }
 
     private func loadSelectedState() {
-        let defaults = UserDefaults.standard
-        for index in filterLists.indices {
-            filterLists[index].isSelected = defaults.bool(
-                forKey: "filter_\(filterLists[index].name)")
+        if checkSelectedStateForAnyFilter() {
+            let defaults = UserDefaults.standard
+            for index in filterLists.indices {
+                filterLists[index].isSelected = defaults.bool(
+                    forKey: "filter_\(filterLists[index].name)")
+            }
         }
     }
 
@@ -95,7 +98,7 @@ final class FilterListManager: ObservableObject {
                             parsed)
                         return (converted, list)
                     } catch {
-                        await self.logMessage(
+                        await Logger.logMessage(
                             "Error processing filter list: \(error)")
                         return (
                             ConversionResult(
@@ -121,16 +124,16 @@ final class FilterListManager: ObservableObject {
 
                 self.saveLastUpdateDate(filter: list)
                 self.updateTotalStats(with: converted)
-                self.printConversionStatistics(converted)
+                self.logMessageConversionStatistics(converted)
             }
         }
 
         do {
             try await writeAllRulesToFile(allRules)
             await reloadContentBlocker()
-            printTotalConversionStatistics()
+            logMessageTotalConversionStatistics()
         } catch {
-            logMessage("Error writing rules to file: \(error)")
+            Logger.logMessage("Error writing rules to file: \(error)")
         }
 
         for list in filterLists {
@@ -148,7 +151,7 @@ final class FilterListManager: ObservableObject {
     private func downloadFilterList(from url: URL, name: String) async throws
         -> Data
     {
-        print(
+        Logger.logMessage(
             "Downloading Filter List: \(name) from URL: \(url.absoluteString)")
         let (data, _) = try await urlSession.data(from: url)
         return data
@@ -157,7 +160,7 @@ final class FilterListManager: ObservableObject {
     private func convertToAdGuardFormat(_ rules: [String]) async throws
         -> ConversionResult
     {
-        print("Converting to AdGuard format...")
+        Logger.logMessage("Converting to AdGuard format...")
         return ContentBlockerConverter().convertArray(
             rules: rules,
             safariVersion: .safari16_4,
@@ -169,21 +172,23 @@ final class FilterListManager: ObservableObject {
 
     private func writeAllRulesToFile(_ rules: [[String: Any]]) async throws {
         guard
-            let containerURL = fileManager.containerURL(
-                forSecurityApplicationGroupIdentifier:
-                    "G5S45S77DF.me.arjuna.WebShield")
+            let containerURL = GroupContainerURL.groupContainerURL()
         else {
             throw FilterListError.containerNotFound
         }
 
         let fileURL = containerURL.appending(path: "blockerList.json")
+        Logger
+            .logMessage(
+                "Writing to blockerList.json at \(fileURL.absoluteString)"
+            )
         let data = try JSONSerialization.data(
             withJSONObject: rules, options: .prettyPrinted)
         try data.write(to: fileURL, options: .atomic)
 
         let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
         if let fileSize = attributes[.size] as? Int64, fileSize > 2_000_000 {
-            print(
+            Logger.logMessage(
                 "WARNING: blockerList.json size (\(fileSize) bytes) exceeds 2MB limit for Safari content blockers!"
             )
         }
@@ -194,7 +199,7 @@ final class FilterListManager: ObservableObject {
     }
 
     private func parseRules(_ data: Data) throws -> [String] {
-        print("Parsing rules...")
+        Logger.logMessage("Parsing rules...")
         guard let content = String(data: data, encoding: .utf8) else {
             throw FilterListError.invalidData
         }
@@ -204,8 +209,8 @@ final class FilterListManager: ObservableObject {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     }
 
-    private func printTotalConversionStatistics() {
-        print(
+    private func logMessageTotalConversionStatistics() {
+        Logger.logMessage(
             """
             Total conversion statistics:
             - Total converted count: \(totalStats.totalConvertedCount)
@@ -215,8 +220,8 @@ final class FilterListManager: ObservableObject {
             """)
     }
 
-    private func printConversionStatistics(_ result: ConversionResult) {
-        print(
+    private func logMessageConversionStatistics(_ result: ConversionResult) {
+        Logger.logMessage(
             """
             Conversion statistics:
             - Total converted count: \(result.totalConvertedCount)
@@ -228,16 +233,5 @@ final class FilterListManager: ObservableObject {
 
     private func reloadContentBlocker() async {
         await contentBlockerState.reloadContentBlocker()
-    }
-
-    func logMessage(_ message: String) {
-        var logs =
-            UserDefaults.standard.array(forKey: "logs") as? [String] ?? []
-        logs.append("\(Date()): \(message)")
-        UserDefaults.standard.set(logs, forKey: "logs")
-    }
-
-    func getLogs() -> [String] {
-        return UserDefaults.standard.array(forKey: "logs") as? [String] ?? []
     }
 }
