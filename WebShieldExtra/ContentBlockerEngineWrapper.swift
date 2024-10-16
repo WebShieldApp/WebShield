@@ -10,7 +10,7 @@ import Foundation
 
 class ContentBlockerEngineWrapper {
     private var contentBlockerEngine: ContentBlockerEngine
-    static let shared = ContentBlockerEngineWrapper()
+    @MainActor static let shared = ContentBlockerEngineWrapper()
     init() {
         let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
         let advancedBlockingURL: URL? = FileManager.default

@@ -10,8 +10,8 @@ import SwiftUI
 
 @main
 struct WebShieldApp: App {
-    @StateObject private var blockListManager = FilterListManager()
-    
+    @StateObject private var filterListManager = FilterListManager()
+    @Environment(\.scenePhase) private var scenePhase
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -31,10 +31,14 @@ struct WebShieldApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(blockListManager)
+            ContentView()
+                .environmentObject(filterListManager)
         }
-        .modelContainer(sharedModelContainer)
-        //        .windowResizability(.contentMinSize)
+        .onChange(of: scenePhase) { newPhase, _ in
+            if newPhase == .background || newPhase == .inactive {
+                filterListManager.saveFilterLists()
+            }
+        }
     }
 
 }

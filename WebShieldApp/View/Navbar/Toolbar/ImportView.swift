@@ -10,29 +10,100 @@ import SwiftUI
 
 struct ImportView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var url = ""
+    @EnvironmentObject private var filterListManager: FilterListManager
+    @State private var urlsText: String = ""
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
 
     var body: some View {
-        Text("Import Filter List").font(.title).fontWeight(.bold).padding()
-        Text("One URL per line. Invalid URLs will be silently ignored.")
-            .padding()
-        NativeStyleTextEditor(
-            text: $url,
-            placeholder:
-                "One URL per line. Invalid URLs will be silently ignored."
-        )
-        .frame(minHeight: 200)
-        //        .font(.body)
-        //        .border(Color.gray, width: 1)
-        .padding()
-        HStack {
-            Button("OK", action: submit)
-            Button("Cancel") {
-                dismiss()
+        VStack(spacing: 16) {
+            Text("Import Filters")
+                .font(.largeTitle)
+                .padding(.top)
+
+            Text("Enter one URL per line:")
+                .font(.headline)
+
+            ScrollView {
+                TextEditor(text: $urlsText)
+                    .frame(minHeight: 150)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.secondary, lineWidth: 1)
+                    )
+                    .padding([.leading, .trailing])
             }
-        }.padding()
+
+            if !alertMessage.isEmpty {
+                Text(alertMessage)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .padding()
+            }
+
+            Spacer()
+
+            HStack {
+                Button("Cancel") {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+
+                Spacer()
+
+                Button("Import") {
+                    importFilterLists()
+                }
+                .disabled(
+                    urlsText.trimmingCharacters(in: .whitespacesAndNewlines)
+                        .isEmpty
+                )
+                .keyboardShortcut(.defaultAction)
+            }
+            .padding()
+        }
+        .padding()
+        .frame(minWidth: 400, minHeight: 300)
+        .alert("Import Results", isPresented: $showingAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(alertMessage)
+        }
     }
-    func submit() {
-        print("You entered \(url)")
+    private func importFilterLists() {
+        let lines =
+            urlsText
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+
+        var validURLs: [URL] = []
+        var invalidURLs: [String] = []
+
+        for line in lines {
+            if let url = URL(string: line),
+                url.scheme == "http" || url.scheme == "https"
+            {
+                validURLs.append(url)
+            } else {
+                invalidURLs.append(line)
+            }
+        }
+
+        if !validURLs.isEmpty {
+            filterListManager.addCustomFilterLists(urls: validURLs)
+        }
+
+        if !invalidURLs.isEmpty {
+            alertMessage =
+                "Some URLs were invalid and were not imported:\n"
+                + invalidURLs.joined(separator: "\n")
+        } else {
+            alertMessage = "All URLs imported successfully!"
+        }
+
+        showingAlert = true
+        dismiss()
     }
 }

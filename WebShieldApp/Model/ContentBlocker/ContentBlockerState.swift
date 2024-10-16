@@ -1,3 +1,9 @@
+//
+//  ContentBlockerState.swift
+//  WebShieldApp
+//
+//
+
 import Foundation
 import SafariServices
 

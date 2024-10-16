@@ -1,3 +1,8 @@
+//
+//  ContentView.swift
+//  WebShieldApp
+//
+
 import SwiftUI
 
 struct ContentView: View {
@@ -7,9 +12,10 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             SidebarView()
+                .environmentObject(filterListManager)
         } detail: {
-            DetailView(selectedCategory: selectedCategory).environmentObject(
-                filterListManager)
+            DetailView(selectedCategory: selectedCategory)
+                .environmentObject(filterListManager)
         }
     }
 }

@@ -1,3 +1,9 @@
+//
+//  DetailView.swift
+//  WebShieldApp
+//
+
+
 import SwiftUI
 
 struct DetailView: View {

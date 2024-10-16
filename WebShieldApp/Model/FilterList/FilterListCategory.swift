@@ -1,6 +1,12 @@
+//
+//  FilterListCategory.swift
+//  WebShieldApp
+//
+
 import SwiftUI
 
-enum FilterListCategory: String, CaseIterable, Identifiable {
+// Add Codable conformance
+enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
     case all = "All"
     case ads = "Ads"
     case privacy = "Privacy"

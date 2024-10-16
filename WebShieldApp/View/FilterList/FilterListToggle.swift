@@ -2,36 +2,87 @@
 //  FilterListToggle.swift
 //  WebShieldApp
 //
-//  Created by Arjun on 2024-07-16.
-//
 
-import Foundation
 import SwiftUI
 
 struct FilterListToggle: View {
-    @EnvironmentObject private var filterListManager: FilterListManager
-    @State private var isOn: Bool
-    let filterList: FilterList
+    @EnvironmentObject var filterListManager: FilterListManager
+    @ObservedObject var filterList: FilterList
+    let deleteAction: (() -> Void)?
 
-    init(filterList: FilterList) {
+    init(filterList: FilterList, deleteAction: (() -> Void)? = nil) {
         self.filterList = filterList
-        self._isOn = State(initialValue: filterList.isSelected)
+        self.deleteAction = deleteAction
     }
 
     var body: some View {
-        Toggle(isOn: $isOn) {
-            VStack(alignment: .leading) {
-                Text(filterList.name).font(.headline).foregroundStyle(.primary)
-                Text(
-                    "Last Updated: \(filterListManager.getLastUpdateDate(filter: filterList))"
-                )
-                .font(.caption)
-                .foregroundColor(.secondary)
+        if let children = filterList.children, !children.isEmpty {
+            DisclosureGroup(isExpanded: $filterList.isExpanded) {
+                ForEach(children) { child in
+                    FilterListToggle(filterList: child)
+                        .padding(.leading)
+                        .onChange(of: child.isSelected) {
+                            filterList.updateSelectionBasedOnChildren()
+                        }
+                }
+            } label: {
+                Toggle(
+                    isOn: Binding(
+                        get: { filterList.isSelected },
+                        set: { newValue in
+                            filterList.isSelected = newValue
+                            filterList.updateChildrenSelection(
+                                isSelected: newValue)
+                        }
+                    )
+                ) {
+                    VStack(alignment: .leading) {
+                        Text(filterList.name)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        if let version = filterList.version {
+                            Text("Version: \(version)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        Text(filterList.desc)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Text(
+                            "Last Updated: \(filterListManager.getLastUpdateDate(filter: filterList))"
+                        )
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                    }
+                }
             }
-        }
-        .onChange(of: isOn) {
-            filterListManager.setSelection(
-                for: filterList, isSelected: isOn)
+        } else {
+            HStack {
+                Toggle(isOn: $filterList.isSelected) {
+                    VStack(alignment: .leading) {
+                        Text(filterList.name)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        if let version = filterList.version {
+                            Text("Version: \(version)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        Text(filterList.desc)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .contextMenu {
+                if filterList.category == .custom {
+                    Button(role: .destructive) {
+                        deleteAction?()
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            }
         }
     }
 }

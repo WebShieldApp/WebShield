@@ -1,3 +1,9 @@
+//
+//  SidebarView.swift
+//  WebShieldApp
+//
+
+
 import SwiftUI
 
 struct SidebarView: View {

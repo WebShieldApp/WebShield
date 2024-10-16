@@ -16,7 +16,7 @@ struct NativeStyleTextEditor: View {
         ZStack(alignment: .topLeading) {
             if text.isEmpty {
                 Text(placeholder)
-                    .foregroundColor(Color(.placeholderTextColor))
+//                    .foregroundColor(Color(.placeholderTextColor))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 12)
             }
@@ -28,6 +28,6 @@ struct NativeStyleTextEditor: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color(.systemGray), lineWidth: 1)
         )
-        .background(Color(.textBackgroundColor))
+//        .background(Color(.textBackgroundColor))
     }
 }

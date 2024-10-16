@@ -1,94 +1,131 @@
+//
+//  FilterListView.swift
+//  WebShieldApp
+//
+
 import SwiftUI
 
 struct FilterListView: View {
     let category: FilterListCategory
     @EnvironmentObject private var filterListManager: FilterListManager
-    @StateObject private var viewModel: FilterListViewModel
     @State private var showingLogs = false
     @State private var showingImport = false
     @State private var isUpdating = false
+    @Environment(\.editMode) private var editMode
 
-    init(
-        category: FilterListCategory
-    ) {
-        self.category = category
-        self._viewModel = StateObject(
-            wrappedValue: FilterListViewModel(category: category))
-    }
+    // State variable for animation
+    @State private var pulsate = false
 
     var body: some View {
-        Form {
-            if category == .all {
-                ForEach(FilterListCategory.allCases.dropFirst(), id: \.self) {
-                    category in
-                    Section(header: Text(category.rawValue)) {
-                        ForEach(groupedFilterLists(for: category)) {
-                            filterList in
-                            FilterListToggle(filterList: filterList)
+        VStack {
+            if isUpdating {
+                ProgressView(value: filterListManager.progress)
+                    .progressViewStyle(LinearProgressViewStyle())
+                    .padding()
+            }
+
+            List {
+                if category == .all {
+                    ForEach(FilterListCategory.allCases.dropFirst(), id: \.self)
+                    { category in
+                        Section(header: Text(category.rawValue)) {
+                            ForEach(filterListsForCategory(category)) {
+                                filterList in
+                                FilterListToggle(filterList: filterList) {
+                                    filterListManager.removeCustomFilterList(
+                                        filterList)
+                                }
+                            }
                         }
                     }
-                }
-            } else {
-                Section {
-                    ForEach(filterListsForCategory) { filterList in
-                        FilterListToggle(filterList: filterList)
+                } else {
+                    Section(header: Text(category.rawValue)) {
+                        ForEach(filterListsForCategory(category)) {
+                            filterList in
+                            FilterListToggle(filterList: filterList) {
+                                filterListManager.removeCustomFilterList(
+                                    filterList)
+                            }
+                        }
+                        .onDelete(perform: deleteCustomFilterLists)
+                        .onMove(perform: moveCustomFilterLists)
                     }
                 }
             }
+            .listStyle(.automatic)
         }
-        .formStyle(.grouped)
-        .navigationTitle(category.rawValue)
         .toolbar {
-            //            ActionButtons(
-            //                applyChanges: filterListManager.applyChanges,
-            //                logsText: filterListManager.logs,
-            //                showingLogs: $showingLogs,
-            //                showingImport: $showingImport
-            //            )
-            ToolbarItem(placement: .automatic) {
-                Button("Show Logs") {
+            ToolbarItemGroup(placement: .automatic) {
+                Button(action: {
                     showingLogs = true
+                }) {
+                    Image(systemName: "doc.text.magnifyingglass")
+                        .imageScale(.large)
                 }
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button("Refresh All") {
+                .help("Show Logs")
+
+                Button(action: {
                     Task {
                         isUpdating = true
                         await filterListManager.applyChanges()
                         isUpdating = false
                     }
+                }) {
+                    Image(
+                        systemName: filterListManager.hasUnsavedChanges
+                            ? "arrow.clockwise.circle.fill" : "arrow.clockwise"
+                    )
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(
+                        filterListManager.hasUnsavedChanges ? .white : .primary
+                    )
+                    .background(
+                        filterListManager.hasUnsavedChanges
+                            ? Color.blue : Color.clear
+                    )
+                    .clipShape(Circle())
                 }
+                .buttonStyle(PlainButtonStyle())
                 .disabled(isUpdating)
-            }
-            ToolbarItem(placement: .automatic) {
+                .animation(
+                    .easeInOut(duration: 0.8).repeatForever(autoreverses: true),
+                    value: filterListManager.hasUnsavedChanges
+                )
+                .help("Refresh All Filters")
                 Button(action: {
-                    // button activates link
                     showingImport.toggle()
                 }) {
                     Image(systemName: "plus")
-                        .resizable()
-                        .padding(6)
-                        .frame(width: 24, height: 24)
-                    //                    .foregroundColor(.white)
+                        .imageScale(.large)
                 }
+                .help("Import Filters")
             }
-
         }
         .sheet(isPresented: $showingLogs) {
             LogsView(logs: Logger.logs)
         }
         .sheet(isPresented: $showingImport) {
             ImportView()
+                .environmentObject(filterListManager)
         }
     }
-
-    private var filterListsForCategory: [FilterList] {
-        filterListManager.filterLists.filter { $0.category == category }
+    private func deleteCustomFilterLists(at offsets: IndexSet) {
+        filterListManager.removeCustomFilterList(at: offsets, in: category)
     }
 
-    private func groupedFilterLists(for category: FilterListCategory)
+    private func moveCustomFilterLists(
+        from source: IndexSet, to destination: Int
+    ) {
+        filterListManager.moveCustomFilterList(
+            fromOffsets: source, toOffset: destination)
+    }
+
+    private func filterListsForCategory(_ category: FilterListCategory)
         -> [FilterList]
     {
-        filterListManager.filterLists.filter { $0.category == category }
+        filterListManager.filterLists.filter {
+            $0.category == category && !$0.isChild
+        }
     }
 }

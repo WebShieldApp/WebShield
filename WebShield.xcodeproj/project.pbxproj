@@ -12,14 +12,14 @@
 		0018486E2C2956AD00EE2E7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0018486D2C2956AD00EE2E7A /* Preview Assets.xcassets */; };
 		00333FB02C3CC52E0031AEC6 /* blockerList.json in Resources */ = {isa = PBXBuildFile; fileRef = 00333FAF2C3CC52E0031AEC6 /* blockerList.json */; };
 		00333FB22C3CC52E0031AEC6 /* ContentBlockerRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00333FB12C3CC52E0031AEC6 /* ContentBlockerRequestHandler.swift */; };
-		00333FB72C3CC52E0031AEC6 /* WebShieldContentBlocker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00333FB72C3CC52E0031AEC6 /* WebShieldContentBlocker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */; platformFilters = (ios, macos, xros, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00333FC42C3CC7A20031AEC6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00333FC32C3CC7A20031AEC6 /* Cocoa.framework */; platformFilters = (macos, ); };
 		006959572C427DC0008A6204 /* SafariExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006959562C427DC0008A6204 /* SafariExtensionHandler.swift */; };
 		006959592C427DC0008A6204 /* SafariExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006959582C427DC0008A6204 /* SafariExtensionViewController.swift */; };
 		0069595C2C427DC0008A6204 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069595B2C427DC0008A6204 /* script.js */; };
 		0069595E2C427DC0008A6204 /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0069595D2C427DC0008A6204 /* ToolbarItemIcon.pdf */; };
 		006959612C427DC0008A6204 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 006959602C427DC0008A6204 /* Base */; };
-		006959662C427DC0008A6204 /* WebShieldExtra.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 006959542C427DC0008A6204 /* WebShieldExtra.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		006959662C427DC0008A6204 /* WebShieldExtra.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 006959542C427DC0008A6204 /* WebShieldExtra.appex */; platformFilters = (ios, macos, xros, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0069596B2C4286D9008A6204 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 0069596A2C4286D9008A6204 /* ContentBlockerConverter */; };
 		0069596D2C428AB3008A6204 /* advanced-script.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069596C2C428AAF008A6204 /* advanced-script.js */; };
 		0069596F2C428B14008A6204 /* extended-css.js in Resources */ = {isa = PBXBuildFile; fileRef = 0069596E2C428B0D008A6204 /* extended-css.js */; };
@@ -101,6 +101,7 @@
 				Navbar/Toolbar/ImportView.swift,
 				Navbar/Toolbar/LogsView.swift,
 				Navbar/Toolbar/NativeStyleTextEditor.swift,
+				PulsatingEffect.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
@@ -108,15 +109,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentViewModel.swift,
-				FilterListViewModel.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
 		};
 		0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Check&Create/CheckAndCreate.swift",
 				ContentBlocker/ContentBlockerState.swift,
+				Extension/ColorExtension.swift,
+				Extension/EditMode.swift,
+				Extension/FilterListManagerExtension.swift,
 				Extension/UserDefaultsExtension.swift,
 				FilterList/FilterList.swift,
 				FilterList/FilterListCategory.swift,
@@ -422,11 +424,21 @@
 /* Begin PBXTargetDependency section */
 		00333FB62C3CC52E0031AEC6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				ios,
+				macos,
+				xros,
+			);
 			target = 00333FA92C3CC52E0031AEC6 /* WebShieldContentBlocker */;
 			targetProxy = 00333FB52C3CC52E0031AEC6 /* PBXContainerItemProxy */;
 		};
 		006959652C427DC0008A6204 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				ios,
+				macos,
+				xros,
+			);
 			target = 006959532C427DC0008A6204 /* WebShieldExtra */;
 			targetProxy = 006959642C427DC0008A6204 /* PBXContainerItemProxy */;
 		};
@@ -480,7 +492,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -505,7 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos xrsimulator xros macosx";
+				SUPPORTED_PLATFORMS = "xrsimulator xros macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -549,7 +561,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -567,7 +579,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos xrsimulator xros macosx";
+				SUPPORTED_PLATFORMS = "xrsimulator xros macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 6.0;
@@ -577,6 +589,7 @@
 		001848722C2956AD00EE2E7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShield.entitlements;
@@ -609,9 +622,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = macosx15.0;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos xrsimulator xros";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -622,6 +635,7 @@
 		001848732C2956AD00EE2E7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShield.entitlements;
@@ -654,9 +668,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = macosx15.0;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos xrsimulator xros";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -693,7 +707,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.ContentBlocker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx15.0;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -733,7 +747,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield.ContentBlocker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx15.0;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -779,7 +793,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -820,7 +834,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
