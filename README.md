@@ -2,11 +2,11 @@
 
 This repo & branch is my staging area where I develop WebShield (WS or ws if you're lazy) locally. The branch **ldev** stands for **local development**. Since WS is currently in a pre-stable (somewhere along the pre-alpha/alpha/beta timeline) state, I'm moving fast & breaking things. But here is a list of things I want to do:
 
-- Update codebase to Swift 6 where needed & required. Eventually I want the whole codebase to be in Swift 6.
+- ~~Update codebase to Swift 6 where needed & required. Eventually I want the whole codebase to be in Swift 6.~~ DONE
 - Use as much concurrency as required & needed.
-- Add support for importing lists from the net.
-- Give users more granular control over specific AdGuard annoyances lists.
-- Specifically enhance `FilterListManager` to use concurrency when `applyChanges()` (the function called when refresh is hit) is executed.
+- ~~Add support for importing lists from the net.~~ DONE
+- ~~Give users more granular control over specific AdGuard annoyances lists.~~ DONE
+- ~~Specifically enhance `FilterListManager` to use concurrency when `applyChanges()` (the function called when refresh is hit) is executed.~~ DONE IIRC
 - Longer term plans: fork SafariConverterLib to use Swift 6 / concurrency & add support for uBlock Origin rules.
 
 In short: build the best ad blocker for Safari out there. Free & open source forever.
