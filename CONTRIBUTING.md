@@ -110,8 +110,8 @@ This means:
 
 If you have any questions or need further clarification, please don't hesitate to reach out to the maintainers:
 
-- [Arjun](https://example.com)
-- [Discord](https://discord.gg)
+- Arjun: [ap2045202@gmail.com](mailto:ap2045202@gmail.com)
+- [Discord](https://discord.gg): TODO
 
 Thank you for your interest in improving WebShield. We look forward to your contributions!
 
