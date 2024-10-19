@@ -4,7 +4,7 @@ Thank you for using WebShield! Before submitting an issue, please take a moment 
 
 ## Types of Issues to Report
 
-### 1. **Bug Reports**
+### **Bug Reports**
 We handle issues related to WebShield itself (e.g., performance, incorrect rule application, crashes) but **do not maintain filter lists**. If you are experiencing problems with specific websites (ads not being blocked or incorrect blocking), the issue might lie with the **filter list**, and you should report it to the respective filter list maintainer (e.g., [EasyList](https://easylist.to)). Ensure that the only extension being used is WebShield, and you are using Safari **not** Safari TP.
 
 Examples of WebShield-related bugs:
@@ -12,10 +12,8 @@ Examples of WebShield-related bugs:
 - Filter rules are not being applied properly (e.g., syntax errors or rule implementation issues).
 - UI or configuration issues (e.g., adding/removing filter lists not working as expected).
 
-### 2. **Feature Requests**
+### **Feature Requests**
 If you have an idea for improving WebShield, we’d love to hear about it! Please ensure that your request is aligned with the project's goals and current scope (Safari ad-blocking, privacy protection, and performance).
-
----
 
 ## Before Submitting an Issue
 
@@ -24,8 +22,6 @@ Please complete the following checklist before opening an issue:
 - [ ] **Check for duplicates**: Search the [issue tracker](https://github.com/user/webshield/issues) to see if the issue has already been reported or addressed.
 - [ ] **Update to the latest version**: Ensure you are using the latest version of WebShield. Issues reported for outdated versions may be closed.
 - [ ] **Verify the issue is related to WebShield**: If the issue is specific to a filter list (e.g., ads not being blocked), it should be reported to the list maintainer, not WebShield.
-
----
 
 ## Bug Report Template
 
@@ -61,8 +57,6 @@ Please include any relevant logs, screenshots, or screen recordings that may hel
 2. Navigate to **Preferences** > **Debug**.
 3. Copy the log output and paste it here.
 
----
-
 ## Feature Request Template
 
 We are always open to considering new features that improve WebShield. Please follow this template to submit a feature request:
@@ -80,17 +74,13 @@ How should this feature work? Be as detailed as possible.
 **Alternatives Considered**:
 List any alternative solutions you have considered, if applicable.
 
----
-
 ## Where to Report Filter List Issues
 
 Since WebShield does not host or maintain filter lists, please report filter list-related issues directly to the maintainers of those lists.
 
 If the issue is due to an ad-blocking rule not being applied correctly due to a bug in WebShield, feel free to open an issue here and include relevant details.
 
----
-
 ## Additional Resources
 
-- **WebShield Documentation**: [Link to documentation](https://github.com/user/webshield/wiki)
-- **GitHub Discussions**: [Join the conversation](https://github.com/user/webshield/discussions)
+- **WebShield Documentation**: [Link to documentation](https://github.com/webshieldapp/webshield/wiki)
+- **GitHub Discussions**: [Join the conversation](https://github.com/webshieldapp/webshield/discussions)
