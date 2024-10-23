@@ -35,7 +35,7 @@ Introducing WebShield, the cutting-edge, lightweight adblocker crafted exclusive
 
 ### App Store (Coming Soon)
 
-1. Download and install WebShield from the [App Store](https://appstore.link).
+1. Download and install WebShield from the [App Store](https://example.com) (Coming Soong).
 2. Open Safari and navigate to **Preferences** > **Extensions**.
 3. Enable WebShield and its content blockers.
 
