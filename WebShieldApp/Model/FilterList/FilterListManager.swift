@@ -44,7 +44,8 @@ final class FilterListManager: ObservableObject {
 
         // Initialize initialSelectedStates
         for filterList in filterLists {
-            initialSelectedStates[filterList.id] = filterList.isSelected
+            initialSelectedStates[UUID(uuidString: filterList.id)!] =
+                filterList.isSelected
         }
     }
 
@@ -235,8 +236,67 @@ final class FilterListManager: ObservableObject {
         }
     }
 
+    nonisolated func processFilterLists(
+        selectedLists: [FilterListData],
+        urlSession: URLSession
+    ) async -> [(ConversionResult, String)] {
+        var results = [(ConversionResult, String)]()
+        let processor = FilterListProcessor(urlSession: urlSession)
+        await withTaskGroup(of: (ConversionResult, String).self) { group in
+            for listData in selectedLists {
+                let listURL = listData.urlString
+                let listName = listData.name
+                group.addTask {
+                    do {
+                        guard let url = URL(string: listURL) else {
+                            throw URLError(.badURL)
+                        }
+                        let data = try await processor.downloadFilterList(
+                            from: url, name: listName)
+                        let parsed = try processor.parseRules(data)
+                        let converted =
+                            try await processor.convertToAdGuardFormat(parsed)
+                        return (converted, listData.id)
+                    } catch {
+                        // Log error on main actor
+                        await MainActor.run {
+                            Logger.logMessage(
+                                "Error processing filter list: \(error)")
+                        }
+                        return (
+                            ConversionResult(
+                                entries: [],
+                                limit: 0,
+                                errorsCount: 0,
+                                message: ""
+                            ), UUID().uuidString
+                        )
+                    }
+                }
+            }
+
+            // Collect results from the task group
+            for await result in group {
+                results.append(result)
+            }
+        }
+        return results
+    }
+
+    @MainActor
     func applyChanges() async {
         let selectedLists = filterLists.filter { $0.isSelected }
+        // Convert to FilterListData array to ensure Sendable
+        let selectedListData = selectedLists.map { filterList in
+            FilterListData(
+                name: filterList.name,
+                urlString: filterList.url.absoluteString,
+                category: filterList.category,
+                isSelected: filterList.isSelected,
+                description: filterList.desc,
+                isAdGuardAnnoyancesList: filterList.isAdGuardAnnoyancesList
+            )
+        }
         var allRules: [[String: Any]] = []
         totalStats = .init()  // Reset total stats
 
@@ -244,80 +304,37 @@ final class FilterListManager: ObservableObject {
         let totalLists = selectedLists.count
         var processedLists = 0
 
-        await withTaskGroup(of: (ConversionResult, UUID).self) { group in
-            for list in selectedLists {
-                let listID = list.id
-                let listURL = list.url
-                let listName = list.name
-                group.addTask {
-                    do {
-                        let (data, content) = try await self.downloadFilterList(
-                            from: listURL, name: listName)
-                        let parsed = try await self.parseRules(data)
-                        let converted = try await self.convertToAdGuardFormat(
-                            parsed)
+        // Run processFilterLists() in a detached task
+        let results = await Task.detached {
+            () -> [(ConversionResult, String)] in
+            await self.processFilterLists(
+                selectedLists: selectedListData, urlSession: self.urlSession)
+        }.value
 
-                        // Parse metadata
-                        let metadata = await self.parseMetadata(from: content)
-                        if let filterList = await self.filterLists.first(
-                            where: {
-                                $0.id == listID
-                            })
-                        {
-                            // Ensure updates happen on the main thread
-                            await MainActor.run {
-                                if let title = metadata.title {
-                                    filterList.name = title
-                                }
-                                if let description = metadata.description {
-                                    filterList.desc = description
-                                }
-                                if let version = metadata.version {
-                                    filterList.version = version
-                                }
-                            }
-                        }
+        Logger.logMessage("Number of results received: \(results.count)")
 
-                        return (converted, listID)
-                    } catch {
-                        await Logger.logMessage(
-                            "Error processing filter list: \(error)")
-                        return (
-                            ConversionResult(
-                                entries: [],
-                                limit: 0,
-                                errorsCount: 0,
-                                message: ""
-                            ),
-                            listID
-                        )
-                    }
-                }
+        // Process results on the main actor
+        for (converted, listID) in results {
+            if let newRules = try? JSONSerialization.jsonObject(
+                with: Data(converted.converted.utf8), options: []
+            ) as? [[String: Any]] {
+                allRules.append(contentsOf: newRules)
             }
 
-            for await (converted, listID) in group {
-                if let newRules = try? JSONSerialization.jsonObject(
-                    with: Data(converted.converted.utf8), options: [])
-                    as? [[String: Any]]
-                {
-                    allRules.append(contentsOf: newRules)
-                }
-
-                if let list = self.filterLists.first(where: { $0.id == listID })
-                {
-                    await MainActor.run {
-                        self.saveLastUpdateDate(filter: list)
-                    }
-                }
-
-                self.updateTotalStats(with: converted)
-                self.logMessageConversionStatistics(converted)
-
-                // Update progress
-                processedLists += 1
-                self.progress = Double(processedLists) / Double(totalLists)
+            // Save last update date
+            if let list = self.filterLists.first(where: { $0.id == listID }) {
+                self.saveLastUpdateDate(filter: list)
             }
+
+            self.updateTotalStats(with: converted)
+            self.logMessageConversionStatistics(converted)
+
+            // Update progress
+            processedLists += 1
+            self.progress = Double(processedLists) / Double(totalLists)
         }
+
+        Logger.logMessage("Total rules collected: \(allRules.count)")
 
         do {
             try await writeAllRulesToFile(allRules)
@@ -327,22 +344,12 @@ final class FilterListManager: ObservableObject {
             Logger.logMessage("Error writing rules to file: \(error)")
         }
 
+        // Save selected state
         for list in filterLists {
             saveSelectedState(filter: list)
         }
-        hasUnsavedChanges = false
         // Reset progress
         progress = 1.0
-
-        await MainActor.run {
-            // Update initialSelectedStates
-            for filterList in filterLists {
-                initialSelectedStates[filterList.id] = filterList.isSelected
-            }
-            hasUnsavedChanges = false
-            saveFilterLists()
-        }
-
     }
 
     private func getDocumentsDirectory() -> URL {
@@ -383,28 +390,6 @@ final class FilterListManager: ObservableObject {
         totalStats.convertedCount += result.convertedCount
         totalStats.errorsCount += result.errorsCount
         totalStats.overLimit += result.overLimit ? 1 : 0
-    }
-
-    private func downloadFilterList(from url: URL, name: String) async throws
-        -> Data
-    {
-        Logger.logMessage(
-            "Downloading Filter List: \(name) from URL: \(url.absoluteString)")
-        let (data, _) = try await urlSession.data(from: url)
-        return data
-    }
-
-    private func convertToAdGuardFormat(_ rules: [String]) async throws
-        -> ConversionResult
-    {
-        Logger.logMessage("Converting to AdGuard format...")
-        return ContentBlockerConverter().convertArray(
-            rules: rules,
-            safariVersion: .safari16_4,
-            optimize: true,
-            advancedBlocking: true,
-            advancedBlockingFormat: .json
-        )
     }
 
     private func writeAllRulesToFile(_ rules: [[String: Any]]) async throws {
@@ -481,7 +466,9 @@ final class FilterListManager: ObservableObject {
 
     private func checkForUnsavedChanges() {
         for filterList in filterLists {
-            if initialSelectedStates[filterList.id] != filterList.isSelected {
+            if initialSelectedStates[UUID(uuidString: filterList.id)!]
+                != filterList.isSelected
+            {
                 hasUnsavedChanges = true
                 return
             }
@@ -491,17 +478,6 @@ final class FilterListManager: ObservableObject {
 
     // Add a Set to hold AnyCancellable references
     //    private var cancellables = Set<AnyCancellable>()
-
-    private func parseRules(_ data: Data) throws -> [String] {
-        Logger.logMessage("Parsing rules...")
-        guard let content = String(data: data, encoding: .utf8) else {
-            throw FilterListError.invalidData
-        }
-
-        return content.components(separatedBy: .newlines)
-            .filter { !$0.hasPrefix("!") && !$0.hasPrefix("[") && !$0.isEmpty }
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-    }
 
     private func logMessageTotalConversionStatistics() {
         Logger.logMessage(
@@ -528,4 +504,34 @@ final class FilterListManager: ObservableObject {
     private func reloadContentBlocker() async {
         await contentBlockerState.reloadContentBlocker()
     }
+
+    func parseMetadata(from content: String) -> (
+        title: String?, description: String?, version: String?
+    ) {
+        var title: String?
+        var description: String?
+        var version: String?
+
+        let lines = content.components(separatedBy: .newlines)
+        for line in lines {
+            if line.hasPrefix("! Title:") {
+                title = line.replacingOccurrences(of: "! Title:", with: "")
+                    .trimmingCharacters(in: .whitespaces)
+            } else if line.hasPrefix("! Description:") {
+                description = line.replacingOccurrences(
+                    of: "! Description:", with: ""
+                ).trimmingCharacters(in: .whitespaces)
+            } else if line.hasPrefix("! Version:") {
+                version = line.replacingOccurrences(of: "! Version:", with: "")
+                    .trimmingCharacters(in: .whitespaces)
+            }
+
+            if title != nil && description != nil && version != nil {
+                break
+            }
+        }
+
+        return (title, description, version)
+    }
+
 }

@@ -46,12 +46,12 @@ struct FilterListToggle: View {
                                 .foregroundColor(.secondary)
                         }
                         Text(filterList.desc)
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundColor(.secondary)
                         Text(
                             "Last Updated: \(filterListManager.getLastUpdateDate(filter: filterList))"
                         )
-                        .font(.caption2)
+                        .font(.caption)
                         .foregroundColor(.secondary)
                     }
                 }

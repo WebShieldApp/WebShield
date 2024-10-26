@@ -64,35 +64,22 @@ struct FilterListView: View {
                 }
                 .help("Show Logs")
 
-                Button(action: {
-                    Task {
-                        isUpdating = true
-                        await filterListManager.applyChanges()
-                        isUpdating = false
+                if isUpdating {
+                    ProgressView().scaledToFit()
+                } else {
+                    Button(action: {
+                        Task {
+                            isUpdating = true
+                            await filterListManager.applyChanges()
+                            isUpdating = false
+                        }
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .imageScale(.large)
                     }
-                }) {
-                    Image(
-                        systemName: filterListManager.hasUnsavedChanges
-                            ? "arrow.clockwise.circle.fill" : "arrow.clockwise"
-                    )
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(
-                        filterListManager.hasUnsavedChanges ? .white : .primary
-                    )
-                    .background(
-                        filterListManager.hasUnsavedChanges
-                            ? Color.blue : Color.clear
-                    )
-                    .clipShape(Circle())
+                    .help("Refresh All Filters")
                 }
-                .buttonStyle(PlainButtonStyle())
-                .disabled(isUpdating)
-                .animation(
-                    .easeInOut(duration: 0.8).repeatForever(autoreverses: true),
-                    value: filterListManager.hasUnsavedChanges
-                )
-                .help("Refresh All Filters")
+
                 Button(action: {
                     showingImport.toggle()
                 }) {

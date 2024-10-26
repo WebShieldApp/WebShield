@@ -28,7 +28,7 @@ enum FilterListProvider {
     }
     static let filterListData: [FilterListData] = [
         FilterListData(
-            name: "AdGuard Base filter (Optimized)",
+            name: "AdGuard – Ads",
             urlString:
                 "https://filters.adtidy.org/extension/safari/filters/2_optimized.txt",
             category: .ads,
@@ -249,7 +249,7 @@ enum FilterListProvider {
     }
 }
 
-struct FilterListData {
+struct FilterListData: Sendable {
     let name: String
     let urlString: String
     let category: FilterListCategory
@@ -257,6 +257,7 @@ struct FilterListData {
     let description: String
     let isAdGuardAnnoyancesList: Bool
     let childrenNames: [String]?  // For hierarchy
+    let id: String
 
     init(
         name: String, urlString: String, category: FilterListCategory,
@@ -270,5 +271,6 @@ struct FilterListData {
         self.description = description
         self.isAdGuardAnnoyancesList = isAdGuardAnnoyancesList
         self.childrenNames = childrenNames
+        self.id = UUID().uuidString
     }
 }

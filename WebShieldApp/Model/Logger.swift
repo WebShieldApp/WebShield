@@ -23,7 +23,8 @@ class Logger {
         let fileURL = containerURL.appendingPathComponent("logs.txt")
 
         do {
-            try Logger.logs.write(to: fileURL, atomically: true, encoding: .utf8)
+            try Logger.logs.write(
+                to: fileURL, atomically: true, encoding: .utf8)
         } catch {
             Logger.logMessage("Error saving logs: \(error)")
         }

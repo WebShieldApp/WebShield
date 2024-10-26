@@ -8,7 +8,7 @@
 import Foundation
 
 final class ContentViewModel: ObservableObject {
-    @Published var selectedCategory: FilterListCategory? = .all
+    @Published var selectedCategory: FilterListCategory = .all
     let filterListManager: FilterListManager
 
     @MainActor

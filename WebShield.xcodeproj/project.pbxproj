@@ -66,7 +66,7 @@
 		001848652C2956AC00EE2E7A /* WebShieldApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebShieldApp.swift; sourceTree = "<group>"; };
 		001848692C2956AD00EE2E7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0018486D2C2956AD00EE2E7A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		00277B982C3BEBD90006E269 /* WebShieldApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShieldApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00277B982C3BEBD90006E269 /* WebShield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShield.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldContentBlocker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		00333FAF2C3CC52E0031AEC6 /* blockerList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = blockerList.json; sourceTree = "<group>"; };
 		00333FB12C3CC52E0031AEC6 /* ContentBlockerRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequestHandler.swift; sourceTree = "<group>"; };
@@ -101,16 +101,15 @@
 				Navbar/Toolbar/ImportView.swift,
 				Navbar/Toolbar/LogsView.swift,
 				Navbar/Toolbar/NativeStyleTextEditor.swift,
-				PulsatingEffect.swift,
 			);
-			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+			target = 001848612C2956AC00EE2E7A /* WebShield */;
 		};
 		0087929D2C470FD0003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentViewModel.swift,
 			);
-			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+			target = 001848612C2956AC00EE2E7A /* WebShield */;
 		};
 		0087929E2C470FDA003DCCE9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -118,12 +117,14 @@
 				ContentBlocker/ContentBlockerState.swift,
 				Extension/ColorExtension.swift,
 				Extension/EditMode.swift,
-				Extension/FilterListManagerExtension.swift,
 				Extension/UserDefaultsExtension.swift,
 				FilterList/FilterList.swift,
 				FilterList/FilterListCategory.swift,
+				FilterList/FilterListCollection.swift,
+				FilterList/FilterListConductor.swift,
 				FilterList/FilterListError.swift,
 				FilterList/FilterListManager.swift,
+				FilterList/FilterListProcessor.swift,
 				FilterList/FilterListProvider.swift,
 				FilterList/FilterListSection.swift,
 				FilterList/TotalStats.swift,
@@ -132,7 +133,7 @@
 				Item.swift,
 				Logger.swift,
 			);
-			target = 001848612C2956AC00EE2E7A /* WebShieldApp */;
+			target = 001848612C2956AC00EE2E7A /* WebShield */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -174,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				001848642C2956AC00EE2E7A /* WebShieldApp */,
-				00277B982C3BEBD90006E269 /* WebShieldApp.app */,
+				00277B982C3BEBD90006E269 /* WebShield.app */,
 				00333FAA2C3CC52E0031AEC6 /* WebShieldContentBlocker.appex */,
 				00333FAE2C3CC52E0031AEC6 /* WebShieldContentBlocker */,
 				006959552C427DC0008A6204 /* WebShieldExtra */,
@@ -254,9 +255,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		001848612C2956AC00EE2E7A /* WebShieldApp */ = {
+		001848612C2956AC00EE2E7A /* WebShield */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 001848712C2956AD00EE2E7A /* Build configuration list for PBXNativeTarget "WebShieldApp" */;
+			buildConfigurationList = 001848712C2956AD00EE2E7A /* Build configuration list for PBXNativeTarget "WebShield" */;
 			buildPhases = (
 				0018485E2C2956AC00EE2E7A /* Sources */,
 				0018485F2C2956AC00EE2E7A /* Frameworks */,
@@ -269,12 +270,12 @@
 				00333FB62C3CC52E0031AEC6 /* PBXTargetDependency */,
 				006959652C427DC0008A6204 /* PBXTargetDependency */,
 			);
-			name = WebShieldApp;
+			name = WebShield;
 			packageProductDependencies = (
 				00FE0E832C3B2DC20064A2C7 /* ContentBlockerConverter */,
 			);
 			productName = WebShield;
-			productReference = 00277B982C3BEBD90006E269 /* WebShieldApp.app */;
+			productReference = 00277B982C3BEBD90006E269 /* WebShield.app */;
 			productType = "com.apple.product-type.application";
 		};
 		00333FA92C3CC52E0031AEC6 /* WebShieldContentBlocker */ = {
@@ -351,7 +352,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				001848612C2956AC00EE2E7A /* WebShieldApp */,
+				001848612C2956AC00EE2E7A /* WebShield */,
 				00333FA92C3CC52E0031AEC6 /* WebShieldContentBlocker */,
 				006959532C427DC0008A6204 /* WebShieldExtra */,
 			);
@@ -611,10 +612,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MODULE_NAME = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
@@ -623,8 +624,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos xrsimulator xros";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -657,10 +658,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MODULE_NAME = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
@@ -669,8 +670,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos xrsimulator xros";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -852,7 +853,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		001848712C2956AD00EE2E7A /* Build configuration list for PBXNativeTarget "WebShieldApp" */ = {
+		001848712C2956AD00EE2E7A /* Build configuration list for PBXNativeTarget "WebShield" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				001848722C2956AD00EE2E7A /* Debug */,

@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "001848612C2956AC00EE2E7A"
-               BuildableName = "WebShieldApp.app"
-               BlueprintName = "WebShieldApp"
+               BuildableName = "WebShield.app"
+               BlueprintName = "WebShield"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "001848612C2956AC00EE2E7A"
-            BuildableName = "WebShieldApp.app"
-            BlueprintName = "WebShieldApp"
+            BuildableName = "WebShield.app"
+            BlueprintName = "WebShield"
             ReferencedContainer = "container:WebShield.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "001848612C2956AC00EE2E7A"
-            BuildableName = "WebShieldApp.app"
-            BlueprintName = "WebShieldApp"
+            BuildableName = "WebShield.app"
+            BlueprintName = "WebShield"
             ReferencedContainer = "container:WebShield.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

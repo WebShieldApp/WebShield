@@ -11,6 +11,8 @@ import os.log
 
 class SafariExtensionHandler: SFSafariExtensionHandler {
     let logger = Logger()
+    let contentBlockerEngineWrapper = ContentBlockerEngineWrapper()
+    @MainActor let safariExtensionViewController = SafariExtensionViewController()
     override func beginRequest(with context: NSExtensionContext) {
         guard let request = context.inputItems.first as? NSExtensionItem,
             request.userInfo as? [String: Any] != nil
@@ -29,7 +31,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         )
     }
 
-    @MainActor override func messageReceived(
+    override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
         userInfo: [String: Any]?
     ) {
@@ -51,7 +53,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
             let pageUrl = URL(string: url!)!
             let data: [String: Any]? = [
                 "url": url!,
-                "data": ContentBlockerEngineWrapper.shared.getData(
+                "data": contentBlockerEngineWrapper.getData(
                     url: pageUrl),
                 "verbose": true,
             ]
@@ -72,10 +74,10 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         validationHandler(true, "")
     }
 
-    @MainActor override func popoverViewController()
+    override func popoverViewController()
         -> SFSafariExtensionViewController
     {
-        return SafariExtensionViewController.shared
+        return safariExtensionViewController.shared
     }
 
 }

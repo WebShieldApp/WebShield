@@ -10,8 +10,9 @@ import Foundation
 
 class ContentBlockerEngineWrapper {
     private var contentBlockerEngine: ContentBlockerEngine
-    @MainActor static let shared = ContentBlockerEngineWrapper()
-    init() {
+    let shared = ContentBlockerEngineWrapper()
+
+    init() {  // init is already main actor isolated
         let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
         let advancedBlockingURL: URL? = FileManager.default
             .containerURL(
@@ -23,6 +24,7 @@ class ContentBlockerEngineWrapper {
             contentsOf: advancedBlockingURL!,
             encoding: .utf8
         )
+
         self.contentBlockerEngine = try! ContentBlockerEngine(json)
     }
 
