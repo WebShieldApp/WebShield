@@ -8,7 +8,9 @@
 import Foundation
 
 struct FilterListSection: Identifiable {
-    let id = UUID()
     let title: String
     let filterLists: [FilterList]
+    let category: FilterListCategory
+    var id: String { title }
 }
+

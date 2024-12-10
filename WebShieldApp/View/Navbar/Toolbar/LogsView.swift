@@ -1,143 +1,130 @@
+// LogsView.swift
+
+import ContentBlockerConverter
+import Foundation
 import SwiftUI
 
+@MainActor
 struct LogsView: View {
-    let logs: String
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @State private var showCopyAlert = false
+
+    static let shared = LogsView()
+    private static var logEntries: [String] = []
 
     var body: some View {
-        #if os(iOS) || os(tvOS) || os(visionOS)
-            NavigationView {
-                content
-                    .navigationTitle("Logs")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        // Close button
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Close") {
-                                dismiss()
-                            }
-                        }
-                        // Copy button
-                        if hasLogs {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button(action: {
-                                    copyLogsToClipboard()
-                                }) {
-                                    Image(systemName: "doc.on.doc")
-                                }
-                            }
-                        }
-                    }
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
-        #endif
-        //        #else
-        //            VStack {
-        //                content
-        //                HStack {
-        //                    Spacer()
-        //                    Button("Close") {
-        //                        dismiss()
-        //                    }
-        //                    .padding()
-        //                }
-        //            }
-        //            .frame(minWidth: 400, minHeight: 300)
-        //            .toolbar {
-        //                if hasLogs {
-        //                    ToolbarItem {
-        //                        Button(action: {
-        //                            copyLogsToClipboard()
-        //                        }) {
-        //                            Image(systemName: "doc.on.doc")
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        #endif
-        #if os(macOS)
-            VStack {
-                content
-                HStack {
-                    Button(action: {
-                        copyLogsToClipboard()
-                    }) {
-                        Image(systemName: "doc.on.doc")
-                    }
-                    Spacer()
-                    Button("Close") {
-                        dismiss()
-                    }
-                }
-                .padding()
-            }
-            .frame(minWidth: 400, minHeight: 300)
-        #endif
-    }
-
-    private var content: some View {
         VStack(spacing: 0) {
-            // Search bar
+            // Header
             HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                TextField("Search logs", text: $searchText)
+                Text("Logs")
+                    .font(.headline)
+                Spacer()
+                Button(action: copyLogs) {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+                .buttonStyle(.borderless)
+                Button("Done") {
+                    dismiss()
+                }
+                .buttonStyle(.borderless)
             }
-            .padding(8)
-            .background(Color.secondary.opacity(0.1))
-            .cornerRadius(8)
             .padding()
+            .background(Color(.windowBackgroundColor))
 
-            // Logs content
-            if hasLogs {
-                ScrollView {
-                    Text(filteredLogs)
-                        .font(.system(.body, design: .monospaced))
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .textSelection(.enabled)
-                }
-                .background(Color(Color.background))
-            } else {
-                VStack(spacing: 16) {
-                    Image(systemName: "doc.text")
-                        .font(.system(size: 60))
-                        .foregroundColor(.secondary)
-                    Text("No Logs")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding()
-                .multilineTextAlignment(.center)  // Center the text
+            Divider()
+
+            // Log content
+            ScrollView {
+                Text(Self.logEntries.joined(separator: "\n"))
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
             }
+            .background(Color(.textBackgroundColor))
         }
+        .frame(width: 600, height: 400, alignment: .top)
     }
 
-    private var filteredLogs: String {
-        if searchText.isEmpty {
-            return logs
-        } else {
-            return logs.split(separator: "\n")
-                .filter { $0.localizedCaseInsensitiveContains(searchText) }
-                .joined(separator: "\n")
-        }
-    }
-
-    private var hasLogs: Bool {
-        !filteredLogs.isEmpty
-    }
-
-    private func copyLogsToClipboard() {
-        #if os(iOS)
-            UIPasteboard.general.string = filteredLogs
-        #elseif os(macOS)
-            let pasteboard = NSPasteboard.general
-            pasteboard.clearContents()
-            pasteboard.setString(filteredLogs, forType: .string)
+    private func copyLogs() {
+        #if os(macOS)
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(
+                Self.logEntries.joined(separator: "\n"),
+                forType: .string
+            )
+        #else
+            UIPasteboard.general.string = Self.logEntries.joined(separator: "\n")
         #endif
-        showCopyAlert = true
     }
+
+    // Static methods to add logs
+    @MainActor
+    static func logConversionStatistics(
+        totalConvertedCount: Int,
+        convertedCount: Int,
+        errorsCount: Int,
+        overLimit: Bool,
+        for listName: String
+    ) {
+        let message = """
+
+            Conversion statistics for \(listName):
+            - Total converted count: \(totalConvertedCount)
+            - Converted count: \(convertedCount)
+            - Errors count: \(errorsCount)
+            - Over limit: \(overLimit)
+
+            """
+        addLog(message)
+    }
+
+    @MainActor
+    static func logTotalStatistics(_ stats: TotalStats) {
+        let message = """
+
+            Total conversion statistics:
+            - Total converted count: \(stats.totalConvertedCount)
+            - Converted count: \(stats.convertedCount)
+            - Errors count: \(stats.errorsCount)
+            - Lists over limit: \(stats.overLimit)
+            
+            """
+        addLog(message)
+    }
+
+    @MainActor
+    static func logProcessingStep(_ step: String, for listName: String) {
+        let timestamp = DateFormatter.localizedString(
+            from: Date(),
+            dateStyle: .none,
+            timeStyle: .medium
+        )
+        addLog("[\(timestamp)] \(listName): \(step)")
+    }
+
+    @MainActor
+    static func logRefreshStart() {
+        let message = """
+        
+        
+        ==========================================
+                    STARTING REFRESH
+        ==========================================
+        
+        """
+        addLog(message)
+    }
+
+    @MainActor
+    private static func addLog(_ message: String) {
+        logEntries.append(message)
+        if logEntries.count > 1000 {
+            logEntries.removeFirst(logEntries.count - 1000)
+        }
+    }
+}
+
+#Preview {
+    LogsView()
 }

@@ -1,118 +1,159 @@
-//
-//  FilterListView.swift
-//  WebShieldApp
-//
-
+import SwiftData
 import SwiftUI
 
 struct FilterListView: View {
-    let category: FilterListCategory
-    @EnvironmentObject private var filterListManager: FilterListManager
-    @State private var showingLogs = false
-    @State private var showingImport = false
-    @State private var isUpdating = false
-    @Environment(\.editMode) private var editMode
+    var category: FilterListCategory
+    @Query(sort: \FilterList.order, order: .forward) private var filterLists:
+        [FilterList]
+    @Environment(\.modelContext) private var modelContext
 
-    // State variable for animation
-    @State private var pulsate = false
+    private var filteredLists: [FilterList] {
+        filterLists.filter { category == .all || $0.category == category }
+    }
+
+    private var enabledCount: Int {
+        filteredLists.filter { $0.isEnabled }.count
+    }
+
+    private var totalRules: Int {
+        filteredLists.filter { $0.isEnabled }.reduce(0) {
+            $0 + $1.totalRuleCount
+        }
+    }
 
     var body: some View {
-        VStack {
-            if isUpdating {
-                ProgressView(value: filterListManager.progress)
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .padding()
+        List {
+            if !filteredLists.isEmpty {
+                Section {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(.blue.opacity(0.15))
+                                .frame(width: 36, height: 36)
+
+                            Image(systemName: "shield")
+                                .imageScale(.medium)
+                                .foregroundStyle(.blue)
+                                .fontWeight(.semibold)
+                        }
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                                Text("\(enabledCount)")
+                                    .font(.title2)
+                                    .bold()
+                                    .frame(width: 45, alignment: .leading)
+                                    .padding(.horizontal)
+                                //                                Text("•")
+                                //                                    .font(.title2)
+                                //                                    .foregroundStyle(.secondary)
+                                //                                    .frame(width: 32, alignment: .center)
+                                Text("\(totalRules)")
+                                    .font(.title2)
+                                    .bold()
+                                    .frame(alignment: .leading)
+                            }
+
+                            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                                Text("Enabled")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 45, alignment: .leading)
+                                    .padding(.horizontal)
+                                //                                Text("•")
+                                //                                    .font(.subheadline)
+                                //                                    .foregroundStyle(.secondary)
+                                //                                    .frame(width: 32, alignment: .center)
+                                Text("Rules")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .frame(alignment: .leading)
+                            }
+                        }
+
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
+                }
             }
 
-            List {
-                if category == .all {
-                    ForEach(FilterListCategory.allCases.dropFirst(), id: \.self)
-                    { category in
-                        Section(header: Text(category.rawValue)) {
-                            ForEach(filterListsForCategory(category)) {
-                                filterList in
-                                FilterListToggle(filterList: filterList) {
-                                    filterListManager.removeCustomFilterList(
-                                        filterList)
+            ForEach(groupedFilterLists, id: \.id) { section in
+                Section {
+                    ForEach(section.filterLists) { filterList in
+                        FilterListRow(filterList: filterList)
+                            .swipeActions(
+                                edge: .trailing, allowsFullSwipe: true
+                            ) {
+                                if filterList.category == .custom {
+                                    Button(role: .destructive) {
+                                        withAnimation {
+                                            deleteFilterList(filterList)
+                                        }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
-                        }
                     }
-                } else {
-                    Section(header: Text(category.rawValue)) {
-                        ForEach(filterListsForCategory(category)) {
-                            filterList in
-                            FilterListToggle(filterList: filterList) {
-                                filterListManager.removeCustomFilterList(
-                                    filterList)
-                            }
-                        }
-                        .onDelete(perform: deleteCustomFilterLists)
-                        .onMove(perform: moveCustomFilterLists)
-                    }
+                } header: {
+                    Text(section.title)
+                        .font(.headline)
+                        .textCase(.none)
+                        .foregroundStyle(.primary)
                 }
             }
-            .listStyle(.automatic)
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .automatic) {
-                Button(action: {
-                    showingLogs = true
-                }) {
-                    Image(systemName: "doc.text.magnifyingglass")
-                        .imageScale(.large)
-                }
-                .help("Show Logs")
+        .listStyle(.automatic)
+    }
 
-                if isUpdating {
-                    ProgressView().scaledToFit()
-                } else {
-                    Button(action: {
-                        Task {
-                            isUpdating = true
-                            await filterListManager.applyChanges()
-                            isUpdating = false
-                        }
-                    }) {
-                        Image(systemName: "arrow.clockwise")
-                            .imageScale(.large)
-                    }
-                    .help("Refresh All Filters")
-                }
+    private var groupedFilterLists: [FilterListSection] {
+        let sortedLists = filteredLists.sorted { $0.order < $1.order }
+        var sections: [FilterListCategory: [FilterList]] = [:]
 
-                Button(action: {
-                    showingImport.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .imageScale(.large)
-                }
-                .help("Import Filters")
+        for list in sortedLists {
+            if let category = list.category {
+                sections[category, default: []].append(list)
             }
         }
-        .sheet(isPresented: $showingLogs) {
-            LogsView(logs: Logger.logs)
+
+        // Define category order with custom at the end
+        let categoryOrder: [FilterListCategory] = [
+            .ads, .privacy, .security, .multipurpose,
+            .social, .cookies, .annoyances, .regional,
+            .experimental,
+        ]
+
+        var orderedSections = categoryOrder.compactMap { category in
+            if let lists = sections[category], !lists.isEmpty {
+                return FilterListSection(
+                    title: category.rawValue,
+                    filterLists: lists,
+                    category: category
+                )
+            }
+            return nil
         }
-        .sheet(isPresented: $showingImport) {
-            ImportView()
-                .environmentObject(filterListManager)
+
+        // Add custom section at the end if it exists
+        if let customLists = sections[.custom], !customLists.isEmpty {
+            orderedSections.append(
+                FilterListSection(
+                    title: FilterListCategory.custom.rawValue,
+                    filterLists: customLists,
+                    category: .custom
+                )
+            )
         }
-    }
-    private func deleteCustomFilterLists(at offsets: IndexSet) {
-        filterListManager.removeCustomFilterList(at: offsets, in: category)
+
+        return orderedSections
     }
 
-    private func moveCustomFilterLists(
-        from source: IndexSet, to destination: Int
-    ) {
-        filterListManager.moveCustomFilterList(
-            fromOffsets: source, toOffset: destination)
-    }
-
-    private func filterListsForCategory(_ category: FilterListCategory)
-        -> [FilterList]
-    {
-        filterListManager.filterLists.filter {
-            $0.category == category && !$0.isChild
+    private func deleteFilterList(_ filterList: FilterList) {
+        modelContext.delete(filterList)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete filter list: \(error)")
         }
     }
 }

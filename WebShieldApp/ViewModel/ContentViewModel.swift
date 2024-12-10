@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import SwiftData
 
 final class ContentViewModel: ObservableObject {
     @Published var selectedCategory: FilterListCategory = .all
-    let filterListManager: FilterListManager
 
     @MainActor
-    init(filterListManager: FilterListManager = FilterListManager()) {
-        self.filterListManager = filterListManager
+    init(context: ModelContext) {
+
     }
 }

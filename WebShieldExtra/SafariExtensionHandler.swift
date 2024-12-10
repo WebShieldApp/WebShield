@@ -12,7 +12,8 @@ import os.log
 class SafariExtensionHandler: SFSafariExtensionHandler {
     let logger = Logger()
     let contentBlockerEngineWrapper = ContentBlockerEngineWrapper()
-    @MainActor let safariExtensionViewController = SafariExtensionViewController()
+    @MainActor let safariExtensionViewController =
+        SafariExtensionViewController()
     override func beginRequest(with context: NSExtensionContext) {
         guard let request = context.inputItems.first as? NSExtensionItem,
             request.userInfo as? [String: Any] != nil

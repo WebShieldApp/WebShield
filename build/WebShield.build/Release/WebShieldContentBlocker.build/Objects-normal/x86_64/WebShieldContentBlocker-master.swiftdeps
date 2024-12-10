@@ -1,6 +1,0 @@
-version: "Apple Swift version 6.0 (swiftlang-6.0.0.3.300 clang-1600.0.20.10)"
-options: "2202dc2fc0f91c81406ff394d2861a152d8b8cbc0073de031a901d2ffea3351c"
-build_start_time: [1722291497, 935231000]
-build_end_time: [1722291500, 259008000]
-inputs:
-  "/Users/a/ProgrammingProjects/WebShield/WebShieldContentBlocker/ContentBlockerRequestHandler.swift": [1721162316, 967563219]

@@ -1,5 +1,0 @@
----
-triple:          'x86_64-apple-darwin'
-binary-path:     '/Users/a/ProgrammingProjects/WebShield/build/Release/WebShieldContentBlocker.appex/Contents/MacOS/WebShieldContentBlocker'
-relocations:     []
-...
