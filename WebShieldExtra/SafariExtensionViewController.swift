@@ -1,19 +1,11 @@
-// WebShieldExtra/SafariExtensionViewController.swift
-//
-//  SafariExtensionViewController.swift
-//  Test
-//
-//  Created by Arjun on 2024-07-13.
-//
-
 import SafariServices
+import os.log
 
-class SafariExtensionViewController: SFSafariExtensionViewController {
+final class SafariExtensionViewController: SFSafariExtensionViewController {
 
-    let shared: SafariExtensionViewController = {
+    static let shared: SafariExtensionViewController = {
         let shared = SafariExtensionViewController()
-        shared.preferredContentSize = NSSize(width: 320, height: 240)
+        shared.preferredContentSize = NSSize(width: 240, height: 150)
         return shared
     }()
-
 }

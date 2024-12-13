@@ -86,6 +86,13 @@ struct FilterListRow: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
+
+                // Add the last updated date
+                Text(
+                    "Last Updated: \(filterList.lastUpdated, formatter: itemFormatter)"
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             }
             .padding(.vertical, 8)
 
@@ -106,3 +113,11 @@ struct FilterListRow: View {
         }
     }
 }
+
+// Date formatter for a more readable date
+private let itemFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter
+}()

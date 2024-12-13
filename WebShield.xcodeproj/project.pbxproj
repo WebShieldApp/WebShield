@@ -117,6 +117,7 @@
 				Extension/ColorExtension.swift,
 				Extension/EditMode.swift,
 				Extension/ModelContextExtension.swift,
+				Extension/StringExtension.swift,
 				Extension/UserDefaultsExtension.swift,
 				FilterList/FilterList.swift,
 				FilterList/FilterListCategory.swift,
@@ -128,8 +129,7 @@
 				FilterList/TotalStats.swift,
 				GroupContainerURL.swift,
 				Identifiers.swift,
-				Item.swift,
-				Logger.swift,
+				WSLogger.swift,
 			);
 			target = 001848612C2956AC00EE2E7A /* WebShield */;
 		};
@@ -227,8 +227,8 @@
 			isa = PBXGroup;
 			children = (
 				006959562C427DC0008A6204 /* SafariExtensionHandler.swift */,
-				006959722C429A33008A6204 /* ContentBlockerEngineWrapper.swift */,
 				006959582C427DC0008A6204 /* SafariExtensionViewController.swift */,
+				006959722C429A33008A6204 /* ContentBlockerEngineWrapper.swift */,
 				0069595F2C427DC0008A6204 /* SafariExtensionViewController.xib */,
 				006959622C427DC0008A6204 /* Info.plist */,
 				006959632C427DC0008A6204 /* WebShieldExtra.entitlements */,

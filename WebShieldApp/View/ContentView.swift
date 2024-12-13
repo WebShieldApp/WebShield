@@ -15,9 +15,11 @@ struct ContentView: View {
     @State private var currentList: Int = 0
     @State private var totalLists: Int = 0
     private let filterListProcessor = FilterListProcessor()
+    @State private var columnVisibility = NavigationSplitViewVisibility
+        .all
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             List(selection: $selectedCategory) {
                 Section {
                     let categories: [FilterListCategory] = [
@@ -36,6 +38,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("WebShield")
+            .toolbar(removing: .sidebarToggle)
         } detail: {
             VStack(spacing: 0) {
                 if isUpdating {
@@ -87,15 +90,36 @@ struct ContentView: View {
     }
 
     private var totalRuleCount: Int {
-        // Read the blockerList.json to get the actual rule count
-        if let url = GroupContainerURL.groupContainerURL()?
+        // Read both blockerList.json and advancedBlocking.json to get the combined rule count
+
+        var combinedRuleCount = 0
+
+        // Read blockerList.json (regular rules)
+        if let blockerListURL = GroupContainerURL.groupContainerURL()?
             .appendingPathComponent("blockerList.json"),
-            let data = try? Data(contentsOf: url),
-            let rules = try? JSONDecoder().decode([String].self, from: data)
+            let blockerListData = try? Data(contentsOf: blockerListURL)
         {
-            return rules.count
+            if let rules = try? JSONDecoder().decode(
+                [Rule].self, from: blockerListData)
+            {
+                combinedRuleCount += rules.count
+            }
         }
-        return 0
+
+        // Read advancedBlocking.json (advanced rules)
+        if let advancedBlockingURL = GroupContainerURL.groupContainerURL()?
+            .appendingPathComponent("advancedBlocking.json"),
+            let advancedBlockingData = try? Data(
+                contentsOf: advancedBlockingURL)
+        {
+            if let rules = try? JSONDecoder().decode(
+                [ContentBlockerRule].self, from: advancedBlockingData
+            ) {
+                combinedRuleCount += rules.count
+            }
+        }
+
+        return combinedRuleCount
     }
 
     private func shouldShowSection(_ category: FilterListCategory) -> Bool {
@@ -167,12 +191,12 @@ struct ContentView: View {
             }
 
             totalLists = enabledLists.count
-            var allConversionResults: [ConversionResult] = []
+            var allConversionResults: [ProcessedConversionResult] = []
 
             for (index, enabledList) in enabledLists.enumerated() {
                 do {
                     let (conversionResult, version, homepage):
-                        (ConversionResult, String, String?)
+                        (ProcessedConversionResult, String, String?)
 
                     if let providerData = FilterListProvider.filterListData
                         .first(where: {
@@ -232,12 +256,15 @@ struct ContentView: View {
 
             // Save conversion results
             do {
-                let blockerListURL = GroupContainerURL.groupContainerURL()!
+                let blockerListURL = GroupContainerURL.groupContainerURL()?
                     .appendingPathComponent("blockerList.json")
-                try filterListProcessor.saveContentBlockerRules(
-                    to: blockerListURL,
-                    conversionResults: allConversionResults
-                )
+
+                if let url = blockerListURL {
+                    try await filterListProcessor.saveContentBlockerRules(
+                        to: url,
+                        conversionResults: allConversionResults
+                    )
+                }
 
                 // Save the changes to SwiftData
                 try modelContext.save()

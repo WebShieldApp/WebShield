@@ -3,6 +3,7 @@
 import ContentBlockerConverter
 import Foundation
 import SwiftUI
+import os.log
 
 @MainActor
 struct LogsView: View {
@@ -54,12 +55,12 @@ struct LogsView: View {
                 forType: .string
             )
         #else
-            UIPasteboard.general.string = Self.logEntries.joined(separator: "\n")
+            UIPasteboard.general.string = Self.logEntries.joined(
+                separator: "\n")
         #endif
     }
 
     // Static methods to add logs
-    @MainActor
     static func logConversionStatistics(
         totalConvertedCount: Int,
         convertedCount: Int,
@@ -79,7 +80,6 @@ struct LogsView: View {
         addLog(message)
     }
 
-    @MainActor
     static func logTotalStatistics(_ stats: TotalStats) {
         let message = """
 
@@ -88,12 +88,11 @@ struct LogsView: View {
             - Converted count: \(stats.convertedCount)
             - Errors count: \(stats.errorsCount)
             - Lists over limit: \(stats.overLimit)
-            
+
             """
         addLog(message)
     }
 
-    @MainActor
     static func logProcessingStep(_ step: String, for listName: String) {
         let timestamp = DateFormatter.localizedString(
             from: Date(),
@@ -103,28 +102,23 @@ struct LogsView: View {
         addLog("[\(timestamp)] \(listName): \(step)")
     }
 
-    @MainActor
     static func logRefreshStart() {
         let message = """
-        
-        
-        ==========================================
-                    STARTING REFRESH
-        ==========================================
-        
-        """
+
+
+            ==========================================
+                        STARTING REFRESH
+            ==========================================
+
+            """
         addLog(message)
     }
 
-    @MainActor
     private static func addLog(_ message: String) {
+        print("\(message)")
         logEntries.append(message)
         if logEntries.count > 1000 {
             logEntries.removeFirst(logEntries.count - 1000)
         }
     }
-}
-
-#Preview {
-    LogsView()
 }

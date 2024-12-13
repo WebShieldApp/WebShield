@@ -92,34 +92,44 @@ struct ImportView: View {
             defer { isImporting = false }
 
             let validUrls = urls.filter { !$0.isEmpty }
-                .compactMap { URL(string: $0.trimmingCharacters(in: .whitespaces)) }
+                .compactMap {
+                    URL(string: $0.trimmingCharacters(in: .whitespaces))
+                }
 
             for url in validUrls {
                 do {
                     // Download and extract metadata
-                    let data = try await filterListProcessor.downloadFilterList(from: url)
-                    guard let content = String(data: data, encoding: .utf8) else {
+                    let data = try await filterListProcessor.downloadFilterList(
+                        from: url)
+                    guard let content = String(data: data, encoding: .utf8)
+                    else {
                         throw FilterListError.invalidData
                     }
-                    
+
                     // Extract metadata
                     var title = url.lastPathComponent
                     var version = "0.0.0"
                     var description = "Imported filter list"
-                    
+
                     for line in content.components(separatedBy: .newlines) {
                         if line.hasPrefix("! Title:") {
-                            title = line.replacingOccurrences(of: "! Title:", with: "")
-                                .trimmingCharacters(in: .whitespaces)
+                            title = line.replacingOccurrences(
+                                of: "! Title:", with: ""
+                            )
+                            .trimmingCharacters(in: .whitespaces)
                         } else if line.hasPrefix("! Version:") {
-                            version = line.replacingOccurrences(of: "! Version:", with: "")
-                                .trimmingCharacters(in: .whitespaces)
+                            version = line.replacingOccurrences(
+                                of: "! Version:", with: ""
+                            )
+                            .trimmingCharacters(in: .whitespaces)
                         } else if line.hasPrefix("! Description:") {
-                            description = line.replacingOccurrences(of: "! Description:", with: "")
-                                .trimmingCharacters(in: .whitespaces)
+                            description = line.replacingOccurrences(
+                                of: "! Description:", with: ""
+                            )
+                            .trimmingCharacters(in: .whitespaces)
                         }
                     }
-                    
+
                     // Create new filter list
                     let filterList = FilterList(
                         name: title,
@@ -129,38 +139,34 @@ struct ImportView: View {
                         isEnabled: true
                     )
                     filterList.urlString = url.absoluteString
-                    
+
                     modelContext.insert(filterList)
                     LogsView.logProcessingStep(
-                        "Added new filter list: \(title)", 
+                        "Added new filter list: \(title)",
                         for: "Import"
                     )
                 } catch {
                     LogsView.logProcessingStep(
-                        "Failed to import: \(error.localizedDescription)", 
+                        "Failed to import: \(error.localizedDescription)",
                         for: url.absoluteString
                     )
                 }
             }
-            
+
             do {
                 try modelContext.save()
                 LogsView.logProcessingStep(
-                    "Successfully imported \(validUrls.count) filter lists", 
+                    "Successfully imported \(validUrls.count) filter lists",
                     for: "Import"
                 )
             } catch {
                 LogsView.logProcessingStep(
-                    "Failed to save filter lists: \(error.localizedDescription)", 
+                    "Failed to save filter lists: \(error.localizedDescription)",
                     for: "Import"
                 )
             }
-            
+
             dismiss()
         }
     }
-}
-
-#Preview {
-    ImportView()
 }
