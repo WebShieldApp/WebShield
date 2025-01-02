@@ -23,7 +23,7 @@ Introducing WebShield, the cutting-edge, lightweight adblocker crafted exclusive
 - 🌍 **Cross-Platform Support**: Unified app design works seamlessly on macOS, iOS, iPadOS, and visionOS.
 - 📦 **Customizable Filter Lists**: Supports custom filter lists like EasyList, EasyPrivacy, and more.
 - 🔧 **User-Friendly**: Native SwiftUI interface provides a smooth, platform-consistent user experience, allowing effortless management of filters and block rules.
-- 🔓 **Open Source**: First fully free & source-available Safari adblocker with AdGuard technology integration.
+- 🔓 **Open Source**: First fully free & open-source Safari adblocker with AdGuard technology integration. Although we might be tied with wBlock.
 
 ## System Requirements
 
@@ -75,21 +75,30 @@ For detailed guidelines, please see our [CONTRIBUTING.md](CONTRIBUTING.md) file 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU GPLv3 License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
 If you need help or have any questions, you can reach out through:
 
 - [GitHub Discussions](https://github.com/WebShieldApp/WebShield/discussions)
+- [Discord](http://discord.com/invite/gQ4ygPKyur)
 - Email: [ap2045202@gmail.com](mailto:ap2045202@gmail.com)
-- Discord: TODO
 
 ## Acknowledgments
 
 WebShield was inspired by projects like uBlock Origin and Safari's focus on privacy and performance. Special thanks to the open-source community for filter lists like EasyList and EasyPrivacy.
 
 Special thanks to @0xCube for the ongoing collaboration and liaison between our projects.
+
+## Donate
+If you would like to donate to me to support this project here are a few links:
+- Ko-Fi: [@imarjuna](https://ko-fi.com/imarjuna)
+- Buy Me a Coffee: [@imarjuna](https://buymeacoffee.com/imarjuna)
+- GitHub Sponsors: [@arjpar](https://github.com/sponsors/arjpar)
+- LiberaPay: [@imarjuna](https://liberapay.com/imarjuna/)
+
+Please keep in mind that donation is optional, and will always be optional. There are no special perks (so far) you get main features wise if you donate. I want WebShield to remain and be free for all, with no critical features under a paywall. Donation is always your choice. Please consider donating if you have the means, desire and disposable funds to do so. You will support an independent developer working to make the web cleaner for all Safari users.
 
 ---
 
