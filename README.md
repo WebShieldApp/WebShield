@@ -98,7 +98,7 @@ If you would like to donate to me to support this project here are a few links:
 - GitHub Sponsors: [@arjpar](https://github.com/sponsors/arjpar)
 - LiberaPay: [@imarjuna](https://liberapay.com/imarjuna/)
 
-Please keep in mind that donation is optional, and will always be optional. There are no special perks (so far) you get main features wise if you donate. I want WebShield to remain and be free for all, with no critical features under a paywall. Donation is always your choice. Please consider donating if you have the means, desire and disposable funds to do so. You will support an independent developer working to make the web cleaner for all Safari users.
+Please keep in mind that donation is optional, and will always be optional. There are no special perks (so far) you get main features wise if you donate. I want WebShield to remain and be free for all, with no critical features under a paywall. Donating is always your choice. I (solely) work on WebShield as a full time student, and pay with my free time. Please consider donating if you have the means, desire and disposable funds to do so. You will support an independent developer working to make the web cleaner for all Safari users.
 
 ---
 
