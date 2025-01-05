@@ -1,41 +1,34 @@
 > [!TIP]
 > * [Here](https://github.com/arjpar/WebShield-staging/tree/ldev) is my code.
-> * [Here](https://github.com/WebShieldApp/WebShield/discussions/) are updates (devlog).
+> * [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
+> * [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
+> * You can [donate](#Donate) to me if you want me to ship WebShield faster for TestFlight release to meet the $100/yr Apple Developer License. WebShield is 100% funded by its users; no ads and no third party deals ever.
 
 # WebShield - Safari Adblocker
 
-[![Build Status](https://img.shields.io/github/workflow/status/user/webshield/CI)](https://github.com/user/webshield/actions)
-![Version](https://img.shields.io/badge/version-0.0.0--alpha.0-blue)
-[![License](https://img.shields.io/github/license/user/webshield)](LICENSE)
+### Introduction
 
-### The Ultimate Adblocker for Safari, Designed for Performance & Privacy
-
-Introducing WebShield, the cutting-edge, lightweight adblocker crafted exclusively for Safari. Experience lightning-fast, clutter-free browsing across iOS, iPadOS, and macOS with our unified, native SwiftUI interface. WebShield harnesses the full potential of Safari's content blocking API and integrates AdGuard's advanced scriptlets and extended CSS library, delivering unparalleled ad-blocking precision. Say goodbye to unwanted ads, trackers, and pop-ups, and hello to a cleaner, faster, and more private web experience. WebShield isn't just an adblocker – it's your shield against digital distractions, fine-tuned for Apple's ecosystem.
+WebShield is a wide-spectrum content blocker, akin to uBlock Origin, specifically for Safari.
 
 > [!IMPORTANT]
-> **Note:** WebShield is currently in early alpha (version 0.0.0-alpha.0). Features and documentation are subject to change as we continue to develop and improve the project.
+> **Note:** WebShield is currently in a beta stage of maturity. Features and documentation are subject to change as we continue to develop and improve the project.
 
 ## Features
 
-- 🚀 **Blazing Fast**: Utilizes Safari's content blocking API for high-performance, efficient ad blocking.
-- 🛡️ **Comprehensive Ad Blocking**: Incorporates AdGuard's scriptlets and extended CSS library for enhanced blocking capabilities, handling all major ad networks and trackers with ease.
-- 🔒 **Privacy First**: No data collection, fully compliant with Safari's privacy policies.
-- 🌍 **Cross-Platform Support**: Unified app design works seamlessly on macOS, iOS, iPadOS, and visionOS.
-- 📦 **Customizable Filter Lists**: Supports custom filter lists like EasyList, EasyPrivacy, and more.
-- 🔧 **User-Friendly**: Native SwiftUI interface provides a smooth, platform-consistent user experience, allowing effortless management of filters and block rules.
-- 🔓 **Open Source**: First fully free & open-source Safari adblocker with AdGuard technology integration. Although we might be tied with wBlock.
+WebShield can block ads, trackers, cookie notices, and more. You can also import custom filter lists. WebShield supports Safari's Content Blocking API as well as scriptlets & extended css for more advanced, targeted blocking.
 
 ## System Requirements
 
-- macOS 14 or later
-- iOS 17 or later
-- visionOS 1 or later
+These requirements are tentative and due to change. I will try to support older OSes as much as I can.
+- macOS 15 or later
+- iOS 18 or later
+- visionOS 2 or later
 
 ## Installation
 
 ### App Store (Coming Soon)
 
-1. Download and install WebShield from the [App Store](https://example.com) (Coming Soong).
+1. Download and install WebShield from the [App Store](https://example.com) (Coming Soon).
 2. Open Safari and navigate to **Preferences** > **Extensions**.
 3. Enable WebShield and its content blockers.
 
@@ -54,14 +47,7 @@ For developers and advanced users who want to build from source:
 
 ## Usage
 
-Once installed and enabled, WebShield will automatically start blocking ads and trackers in Safari. To manage filters or customize the blocking rules:
-
-1. Open WebShield to add, remove, or update filter lists.
-
-To add a new filter list manually:
-- Click "Add Filter List" and paste the URL of the filter list (e.g., EasyList).
-
-*Usage examples and screenshots will be provided in future updates.*
+There will be documentation on usage soon.
 
 ## Contributing
 
@@ -81,15 +67,13 @@ This project is licensed under the GNU GPLv3 License - see the [LICENSE](LICENSE
 
 If you need help or have any questions, you can reach out through:
 
-- [GitHub Discussions](https://github.com/WebShieldApp/WebShield/discussions)
 - [Discord](http://discord.com/invite/gQ4ygPKyur)
+- [GitHub Discussions](https://github.com/WebShieldApp/WebShield/discussions)
 - Email: [ap2045202@gmail.com](mailto:ap2045202@gmail.com)
 
 ## Acknowledgments
 
-WebShield was inspired by projects like uBlock Origin and Safari's focus on privacy and performance. Special thanks to the open-source community for filter lists like EasyList and EasyPrivacy.
-
-Special thanks to @0xCube for the ongoing collaboration and liaison between our projects.
+WebShield draws inspiration from privacy and performance-focused projects like uBlock Origin. This project wouldn't be possible without the dedication of filter list maintainers who work tirelessly to keep the web clean. I'm deeply grateful to stand on the shoulders of these projects and their contributors. Special thanks to AdGuard, whose tools—particularly SafariConverterLib and Scriptlets/ExtendedCSS—have been instrumental to WebShield's development. I'd also like to thank @0xCube for our ongoing collaboration and the valuable connection between our projects.
 
 ## Donate
 If you would like to donate to me to support this project here are a few links:
@@ -98,7 +82,24 @@ If you would like to donate to me to support this project here are a few links:
 - GitHub Sponsors: [@arjpar](https://github.com/sponsors/arjpar)
 - LiberaPay: [@imarjuna](https://liberapay.com/imarjuna/)
 
-Please keep in mind that donation is optional, and will always be optional. There are no special perks (so far) you get main features wise if you donate. I want WebShield to remain and be free for all, with no critical features under a paywall. Donating is always your choice. I (solely) work on WebShield as a full time student, and pay with my free time. Please consider donating if you have the means, desire and disposable funds to do so. You will support an independent developer working to make the web cleaner for all Safari users.
+WebShield is and will always remain free, with all core ad-blocking functionality available to everyone. We believe in keeping the web clean and accessible, without hiding essential features behind paywalls.
+
+As an independent, self-funded project, WebShield relies exclusively on user donations to sustain its development. This funding model is intentional—it ensures our incentives align perfectly with our users' interests. By choosing this path over revenue from ads, tracking, or deals with ad companies, we maintain our independence and stay true to our privacy-first principles.
+
+WebShield+ offers a tiered support system: the more you contribute, the greater your influence on WebShield's future development. Your level of support directly correlates with the weight your voice carries in shaping our roadmap and future features.
+
+For a modest contribution (starting at $1 either monthly or as a one-time payment), WebShield+ offers:
+* Early access to release candidate versions and experimental features
+* Direct communication with the development team
+* Influence on WebShield's roadmap (scaled with contribution level)
+* A special badge on Discord
+* The satisfaction of supporting a truly independent ad-blocker
+
+I develop WebShield as a full-time student, dedicating and paying with my free time to create the best possible ad-blocking experience for Safari users. While supporting the project is entirely optional, every donation directly funds our continued development and independence. This user-supported model allows us to maintain our unwavering focus on privacy and performance, free from the compromises that come with alternative funding sources.
+
+Our commitment to providing a powerful, free ad-blocker for all Safari users remains unchanged. We believe in creating a product valuable enough that users choose to support it, rather than forcing their hand through paywalls or compromising with "acceptable ads."
+
+Together, we can redefine ad-blocking for Safari, prioritizing user privacy, performance, and a cleaner web experience for everyone.
 
 ---
 
