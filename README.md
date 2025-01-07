@@ -69,6 +69,7 @@ If you need help or have any questions, you can reach out through:
 
 - [Discord](http://discord.com/invite/gQ4ygPKyur)
 - [GitHub Discussions](https://github.com/WebShieldApp/WebShield/discussions)
+- Bluesky: [@gudaakesha.bsky.social](https://bsky.app/profile/gudaakesha.bsky.social)
 - Email: [ap2045202@gmail.com](mailto:ap2045202@gmail.com)
 
 ## Acknowledgments
