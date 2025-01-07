@@ -2,7 +2,7 @@
 > * [Here](https://github.com/arjpar/WebShield-staging/tree/ldev) is my code.
 > * [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
 > * [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
-> * You can [donate](#Donate) to me if you want to support the project. WebShield is 100% funded by its users; no ads and no third party deals ever.
+> * You can [donate](#Donate) to me if you want to support the project. WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever.
 
 # WebShield - Safari Adblocker
 
