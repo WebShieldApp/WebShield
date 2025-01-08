@@ -1,10 +1,3 @@
-//
-//  ContentBlockerEngineWrapper.swift
-//  WebShieldScripts
-//
-//  Created by Arjun on 2024-07-13.
-//
-
 @preconcurrency import ContentBlockerEngine
 import Foundation
 import os.log
@@ -13,66 +6,66 @@ final class ContentBlockerEngineWrapper: Sendable {
     private let contentBlockerEngine: ContentBlockerEngine
     static let shared = ContentBlockerEngineWrapper()
     private let logger = Logger(
-        subsystem: "me.arjuna.WebShield",
+        subsystem: "dev.arjuna.WebShield",
         category: "ContentBlockerEngineWrapper")
 
     private init() {
-        let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
+        let requiredPart: String = "group.dev.arjuna.WebShield"
         let advancedBlockingURL =
-            ContentBlockerEngineWrapper.getAdvancedBlockingURL(
-                forGroupIdentifier: requiredPart)
+        ContentBlockerEngineWrapper.getAdvancedBlockingURL(
+            forGroupIdentifier: requiredPart)
 
-        // Log the URL
+            // Log the URL
         logger.log(
             "advancedBlocking.json URL: \(advancedBlockingURL.absoluteString, privacy: .public)"
         )
 
-        // Load and parse JSON, or use empty rules as a fallback
+            // Load and parse JSON, or use empty rules as a fallback
         let json = ContentBlockerEngineWrapper.loadJSON(
             fromURL: advancedBlockingURL, logger: logger)
 
-        // Attempt to create the engine or log an error
+            // Attempt to create the engine or log an error
         self.contentBlockerEngine =
-            ContentBlockerEngineWrapper.createContentBlockerEngine(
-                withJSON: json, logger: logger)
+        ContentBlockerEngineWrapper.createContentBlockerEngine(
+            withJSON: json, logger: logger)
     }
 
-    // Helper method to get the URL for advancedBlocking.json
+        // Helper method to get the URL for advancedBlocking.json
     private static func getAdvancedBlockingURL(
         forGroupIdentifier identifier: String
     )
-        -> URL
+    -> URL
     {
-        guard
-            let url = FileManager.default
-                .containerURL(
-                    forSecurityApplicationGroupIdentifier: identifier)?
-                .appending(
-                    path: "advancedBlocking.json",
-                    directoryHint: URL.DirectoryHint.notDirectory
-                )
-        else {
-            fatalError(
-                "Could not construct URL for advancedBlocking.json")
-        }
-        return url
+    guard
+        let url = FileManager.default
+            .containerURL(
+                forSecurityApplicationGroupIdentifier: identifier)?
+            .appending(
+                path: "advancedBlocking.json",
+                directoryHint: URL.DirectoryHint.notDirectory
+            )
+    else {
+        fatalError(
+            "Could not construct URL for advancedBlocking.json")
+    }
+    return url
     }
 
-    // Helper method to load and parse JSON from a file
+        // Helper method to load and parse JSON from a file
     private static func loadJSON(fromURL url: URL, logger: Logger) -> String {
         logger.log("Attempting to read advancedBlocking.json")
 
-        // Check if the file exists
+            // Check if the file exists
         let fileExists = FileManager.default.fileExists(atPath: url.path)
         logger.log(
             "advancedBlocking.json exists at \(url.path, privacy: .public): \(fileExists, privacy: .public)"
         )
 
-        // Get file attributes for debugging
+            // Get file attributes for debugging
         if let attributes = try? FileManager.default.attributesOfItem(
             atPath: url.path)
         {
-            logger.log("File attributes: \(attributes, privacy: .public)")
+        logger.log("File attributes: \(attributes, privacy: .public)")
         }
 
         guard fileExists else {
@@ -83,19 +76,19 @@ final class ContentBlockerEngineWrapper: Sendable {
             return "[]"  // Fallback: empty rules
         }
 
-        // Simplified file reading for debugging (bypassing potential String encoding issues)
+            // Simplified file reading for debugging (bypassing potential String encoding issues)
         if let data = try? Data(contentsOf: url),
-            let loadedJson = String(data: data, encoding: .utf8)
+           let loadedJson = String(data: data, encoding: .utf8)
         {
-            logger.debug("Successfully loaded advanced blocking rules")
-            return loadedJson
+            //            logger.debug("Successfully loaded advanced blocking rules")
+        return loadedJson
         } else {
-            logger.error("Failed to read or decode advancedBlocking.json")
+                //            logger.error("Failed to read or decode advancedBlocking.json")
             return "[]"  // Fallback to empty rules
         }
     }
 
-    // Helper method to create the ContentBlockerEngine
+        // Helper method to create the ContentBlockerEngine
     private static func createContentBlockerEngine(
         withJSON json: String, logger: Logger
     ) -> ContentBlockerEngine {
@@ -108,7 +101,7 @@ final class ContentBlockerEngineWrapper: Sendable {
             logger.error(
                 "Failed to initialize content blocker: \(error.localizedDescription, privacy: .public)"
             )
-            // Fallback to empty rules
+                // Fallback to empty rules
             do {
                 let engine = try ContentBlockerEngine("[]")
                 logger.warning(
@@ -124,7 +117,7 @@ final class ContentBlockerEngineWrapper: Sendable {
     }
 
     public func getData(url: URL) -> String? {
-        // Ensure ContentBlockerEngine is initialized
+            // Ensure ContentBlockerEngine is initialized
         let engine = contentBlockerEngine
 
         logger.log(

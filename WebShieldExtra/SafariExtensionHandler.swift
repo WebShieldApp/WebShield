@@ -1,17 +1,10 @@
-//
-//  SafariExtensionHandler.swift
-//  Test
-//
-//  Created by Arjun on 2024-07-13.
-//
-
 import ContentBlockerEngine
 import SafariServices
 import os
 
-class SafariExtensionHandler: SFSafariExtensionHandler {
+final class SafariExtensionHandler: SFSafariExtensionHandler {
     private let logger = Logger(
-        subsystem: "me.arjuna.WebShield",
+        subsystem: "dev.arjuna.WebShield",
         category: "ContentBlockerEngineWrapper")
     override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
@@ -25,26 +18,26 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
         if messageName == "getAdvancedBlockingData" {
             guard let userInfo = userInfo,
-                let urlString = userInfo["url"] as? String,
-                let pageUrl = URL(string: urlString)
+                  let urlString = userInfo["url"] as? String,
+                  let pageUrl = URL(string: urlString)
             else {
                 logger.info("Invalid message or URL")
                 return
             }
 
-            // Test method call to trigger further initialization
+                // Test method call to trigger further initialization
             if let mainData = ContentBlockerEngineWrapper.shared.getData(
                 url: pageUrl)
             {
-                let data: [String: Any] = [
-                    "url": urlString,
-                    "data": mainData,
-                    "verbose": true,
-                ]
-                logger.info("Data received: (\(mainData, privacy: .public))")
+            let data: [String: Any] = [
+                "url": urlString,
+                "data": mainData,
+                "verbose": true,
+            ]
+            logger.info("Data received: (\(mainData, privacy: .public))")
 
-                page.dispatchMessageToScript(
-                    withName: "advancedBlockingData", userInfo: data)
+            page.dispatchMessageToScript(
+                withName: "advancedBlockingData", userInfo: data)
             } else {
                 logger.error(
                     "Failed to get data for URL: \(pageUrl.absoluteString, privacy: .public)"
@@ -64,7 +57,7 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         validationHandler(true, "")
     }
 
-    //    override func popoverViewController() -> SFSafariExtensionViewController {
-    //        SafariExtensionViewController.shared
-    //    }
+        //    override func popoverViewController() -> SFSafariExtensionViewController {
+        //        SafariExtensionViewController.shared
+        //    }
 }

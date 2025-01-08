@@ -1,13 +1,7 @@
 
-// WebShieldApp/Model/ContentBlocker/ContentBlockerState.swift
-//
-//  ContentBlockerState.swift
-//  WebShieldApp
-//
-//
-
-import Foundation
+// WebShieldApp/Model/ContentBlockerState.swift
 import SafariServices
+import SwiftUI
 
 actor ContentBlockerState: ObservableObject {
     private let identifier = "me.arjuna.WebShield.ContentBlocker"
@@ -68,13 +62,7 @@ actor ContentBlockerState: ObservableObject {
 }
 
 // WebShieldApp/Model/Extension/ColorExtension.swift
-//
-//  ColorExtension.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-10-10.
-//
-
+import Foundation
 import SwiftUI
 
 extension Color {
@@ -92,13 +80,6 @@ extension Color {
 }
 
 // WebShieldApp/Model/Extension/EditMode.swift
-//
-//  EditMode.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-10-11.
-//
-
 // Documentation comments are copied from the official documentation for iOS.
 
 import SwiftUI
@@ -177,13 +158,6 @@ extension Optional where Wrapped == Binding<EditMode> {
 }
 
 // WebShieldApp/Model/Extension/ModelContextExtension.swift
-//
-//  ModelContextExtension.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-11-26.
-//
-
 import Foundation
 import SwiftData
 
@@ -197,14 +171,16 @@ extension ModelContext {
     }
 }
 
-// WebShieldApp/Model/Extension/UserDefaultsExtension.swift
-//
-//  UserDefaultsExtension.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-07-19.
-//
+// WebShieldApp/Model/Extension/StringExtension.swift
+// Helper extension for String truncation
+extension String {
+    func truncated(to length: Int, trailing: String = "...") -> String {
+        return self.count > length
+            ? String(self.prefix(length)) + trailing : self
+    }
+}
 
+// WebShieldApp/Model/Extension/UserDefaultsExtension.swift
 import Foundation
 
 extension UserDefaults {
@@ -281,11 +257,6 @@ extension FilterList {
 }
 
 // WebShieldApp/Model/FilterList/FilterListCategory.swift
-//
-//  FilterListCategory.swift
-//  WebShieldApp
-//
-
 import SwiftUI
 
 // Add Codable conformance
@@ -321,14 +292,8 @@ enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListData.swift
-//
-//  FilterListData.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-11-25.
-//
 
+// WebShieldApp/Model/FilterList/FilterListData.swift
 import Foundation
 
 struct FilterListData {
@@ -340,7 +305,7 @@ struct FilterListData {
     let description: String
     let homepageURL: String?
     let informationURL: String?
-    
+
     init(
         id: String,
         name: String,
@@ -363,13 +328,6 @@ struct FilterListData {
 }
 
 // WebShieldApp/Model/FilterList/FilterListError.swift
-//
-//  FilterListError.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-07-16.
-//
-
 import Foundation
 
 enum FilterListError: LocalizedError {
@@ -397,23 +355,81 @@ import ContentBlockerConverter
 import Foundation
 import SwiftData
 
-// Helper extension for String truncation
-extension String {
-    func truncated(to length: Int, trailing: String = "...") -> String {
-        return self.count > length
-            ? String(self.prefix(length)) + trailing : self
+struct ProcessedConversionResult {
+    let totalConvertedCount: Int
+    let convertedCount: Int
+    let errorsCount: Int
+    let overLimit: Bool
+    let converted: String?
+    let advancedBlocking: [ContentBlockerRule]?
+    let message: String?
+}
+
+struct Rule: Encodable, Decodable {
+    let trigger: Trigger
+    let action: Action
+
+    struct Trigger: Encodable, Decodable {
+        let urlFilter: String
+        let urlFilterIsCaseSensitive: Bool?
+        let resourceType: [String]?
+        let ifDomain: [String]?
+        let unlessDomain: [String]?
+        let ifTopURL: [String]?
+        let unlessTopURL: [String]?
+        let loadType: [String]?
+
+        // CodingKeys to match JSON keys if different from property names
+        enum CodingKeys: String, CodingKey {
+            case urlFilter = "url-filter"
+            case urlFilterIsCaseSensitive = "url-filter-is-case-sensitive"
+            case resourceType = "resource-type"
+            case ifDomain = "if-domain"
+            case unlessDomain = "unless-domain"
+            case ifTopURL = "if-top-url"
+            case unlessTopURL = "unless-top-url"
+            case loadType = "load-type"
+        }
+    }
+
+    struct Action: Encodable, Decodable {
+        let type: String
+        let selector: String?
+        let subject: String?
+
+        // CodingKeys if needed
+        enum CodingKeys: String, CodingKey {
+            case type, selector, subject
+        }
     }
 }
 
 struct ContentBlockerRule: Codable {
     let trigger: Trigger
     let action: Action
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(trigger, forKey: .trigger)
+        try container.encode(action, forKey: .action)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case trigger, action
+    }
 }
 
 struct Trigger: Codable {
     let urlFilter: String
     let ifDomain: [String]?
-    let unlessDomain: [String]?  // Optional, for exception domains
+    let unlessDomain: [String]?
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(urlFilter, forKey: .urlFilter)
+        try container.encodeIfPresent(ifDomain, forKey: .ifDomain)
+        try container.encodeIfPresent(unlessDomain, forKey: .unlessDomain)
+    }
 
     enum CodingKeys: String, CodingKey {
         case urlFilter = "url-filter"
@@ -424,19 +440,57 @@ struct Trigger: Codable {
 
 struct Action: Codable {
     let type: String
-    let script: String?  // For "script" type
-    let css: String?  // For "css-inject" and related types
-    let scriptlet: String?  // For "scriptlet" type
-    let scriptletParam: String?  // For "scriptlet" parameters
+    let script: String?
+    let css: String?
+    let scriptlet: String?
+    let scriptletParam: String?
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type, forKey: .type)
+        try container.encodeIfPresent(script, forKey: .script)
+        try container.encodeIfPresent(css, forKey: .css)
+        try container.encodeIfPresent(scriptlet, forKey: .scriptlet)
+        try container.encodeIfPresent(scriptletParam, forKey: .scriptletParam)
+    }
 
     enum CodingKeys: String, CodingKey {
-        case type
-        case script
-        case css
-        case scriptlet
-        case scriptletParam
+        case type, script, css, scriptlet, scriptletParam
     }
 }
+
+extension ContentBlockerRule {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        trigger = try container.decode(Trigger.self, forKey: .trigger)
+        action = try container.decode(Action.self, forKey: .action)
+    }
+}
+
+extension Trigger {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        urlFilter = try container.decode(String.self, forKey: .urlFilter)
+        ifDomain = try container.decodeIfPresent(
+            [String].self, forKey: .ifDomain)
+        unlessDomain = try container.decodeIfPresent(
+            [String].self, forKey: .unlessDomain)
+    }
+}
+
+extension Action {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.decode(String.self, forKey: .type)
+        script = try container.decodeIfPresent(String.self, forKey: .script)
+        css = try container.decodeIfPresent(String.self, forKey: .css)
+        scriptlet = try container.decodeIfPresent(
+            String.self, forKey: .scriptlet)
+        scriptletParam = try container.decodeIfPresent(
+            String.self, forKey: .scriptletParam)
+    }
+}
+
 @MainActor
 struct FilterListProcessor {
     let urlSession: URLSession
@@ -452,7 +506,7 @@ struct FilterListProcessor {
 
     func downloadAndParse(
         from url: URL, id: String, name: String, existingHomepage: String? = nil
-    ) async throws -> (ConversionResult, String, String?) {
+    ) async throws -> (ProcessedConversionResult, String, String?) {
         LogsView.logProcessingStep("Starting download", for: name)
 
         let data = try await downloadData(from: url, for: name)
@@ -478,6 +532,8 @@ struct FilterListProcessor {
 
         LogsView.logProcessingStep(
             "Starting conversion of \(rules.count) rules", for: name)
+
+        // Update here to use ProcessedConversionResult
         let result = try await convertRulesToAdGuardFormat(rules, for: name)
 
         logConversionStatistics(from: result, for: name)
@@ -525,7 +581,7 @@ struct FilterListProcessor {
     }
 
     func convertToAdGuardFormat(_ rules: [String]) async throws
-        -> ConversionResult
+        -> ProcessedConversionResult
     {
         LogsView.logProcessingStep(
             "Converting rules with ContentBlockerConverter", for: "Converter")
@@ -543,38 +599,39 @@ struct FilterListProcessor {
                 "Conversion had \(result.errorsCount) errors", for: "Converter")
         }
 
-        // Example: Manually adding a script action if needed
-        // Adjust this based on how ContentBlockerConverter works
-        var advancedBlockingRules = result.advancedBlocking ?? ""
-        let scriptRule = """
-            {
-                "trigger": {
-                    "url-filter": ".*"
-                },
-                "action": {
-                    "type": "script",
-                    "script": "var AG_onLoad=function(func){if(document.readyState===\\"complete\\"||document.readyState===\\"interactive\\")func();else if(document.addEventListener)document.addEventListener(\\"DOMContentLoaded\\",func);else if(document.attachEvent)document.attachEvent(\\"DOMContentLoaded\\",func)};"
-                }
+        // Decode advancedBlocking into an array of ContentBlockerRule
+        var advancedRules: [ContentBlockerRule] = []
+        if let advancedBlockingString = result.advancedBlocking,
+            let data = advancedBlockingString.data(using: .utf8)
+        {
+            do {
+                let rules = try JSONDecoder().decode(
+                    [ContentBlockerRule].self, from: data)
+                advancedRules = rules
+            } catch {
+                LogsView.logProcessingStep(
+                    "Failed to decode advancedBlocking JSON: \(error.localizedDescription)",
+                    for: "Converter"
+                )
             }
-            """
-        advancedBlockingRules +=
-            (advancedBlockingRules.isEmpty ? "" : ",") + scriptRule
-        let updatedAdvancedBlocking = "[\(advancedBlockingRules)]"
-        let updatedResult = ConversionResult(
+        }
+
+        // Create a ProcessedConversionResult
+        let processedResult = ProcessedConversionResult(
             totalConvertedCount: result.totalConvertedCount,
             convertedCount: result.convertedCount,
             errorsCount: result.errorsCount,
             overLimit: result.overLimit,
             converted: result.converted,
-            advancedBlocking: updatedAdvancedBlocking,
+            advancedBlocking: advancedRules,
             message: result.message
         )
 
-        return updatedResult
+        return processedResult
     }
 
     private func logConversionStatistics(
-        from result: ConversionResult, for name: String
+        from result: ProcessedConversionResult, for name: String
     ) {
         LogsView.logConversionStatistics(
             totalConvertedCount: result.totalConvertedCount,
@@ -585,9 +642,19 @@ struct FilterListProcessor {
         )
     }
 
+    func updateFilterListRuleCounts(
+        filterList: FilterList,
+        result: ProcessedConversionResult  // Update type here
+    ) {
+        filterList.standardRuleCount = result.convertedCount
+        filterList.advancedRuleCount = result.advancedBlocking?.count ?? 0
+        filterList.lastUpdated = Date()
+    }
+
     private func convertRulesToAdGuardFormat(
         _ rules: [String], for name: String
-    ) async throws -> ConversionResult {
+            // Update here to use ProcessedConversionResult
+    ) async throws -> ProcessedConversionResult {
         do {
             let result = try await convertToAdGuardFormat(rules)
             LogsView.logProcessingStep("Conversion completed", for: name)
@@ -667,7 +734,7 @@ struct FilterListProcessor {
     }
 
     func saveContentBlockerRules(
-        to url: URL, conversionResults: [ConversionResult]
+        to url: URL, conversionResults: [ProcessedConversionResult]
     ) async throws {
         let baseURL = url.deletingLastPathComponent()
         let blockerListURL = baseURL.appendingPathComponent("blockerList.json")
@@ -692,26 +759,65 @@ struct FilterListProcessor {
     }
 
     private func saveRegularRules(
-        to url: URL, conversionResults: [ConversionResult]
+        to url: URL, conversionResults: [ProcessedConversionResult]
     ) async throws {
-        let mergedRules: [String] = conversionResults.compactMap {
-            $0.converted
+        var allRules: [Rule] = []
+
+        for result in conversionResults {
+            if let convertedString = result.converted,
+                let convertedData = convertedString.data(using: .utf8)
+            {
+                do {
+                    // Decode the JSON data into an array of dictionaries
+                    if let jsonArray = try JSONSerialization.jsonObject(
+                        with: convertedData, options: []) as? [[String: Any]]
+                    {
+                        // Convert each dictionary to a Rule and append to allRules
+                        let rules = jsonArray.compactMap { ruleDict -> Rule? in
+                            guard
+                                let triggerDict = ruleDict["trigger"]
+                                    as? [String: Any],
+                                let actionDict = ruleDict["action"]
+                                    as? [String: Any],
+                                let trigger = try? JSONDecoder().decode(
+                                    Rule.Trigger.self,
+                                    from: JSONSerialization.data(
+                                        withJSONObject: triggerDict)),
+                                let action = try? JSONDecoder().decode(
+                                    Rule.Action.self,
+                                    from: JSONSerialization.data(
+                                        withJSONObject: actionDict))
+                            else {
+                                return nil
+                            }
+                            return Rule(trigger: trigger, action: action)
+                        }
+                        allRules.append(contentsOf: rules)
+                    }
+                } catch {
+                    LogsView.logProcessingStep(
+                        "Failed to decode JSON array from string: \(error.localizedDescription)",
+                        for: "FilterListProcessor"
+                    )
+                }
+            }
         }
 
-        guard !mergedRules.isEmpty else {
+        guard !allRules.isEmpty else {
             LogsView.logProcessingStep(
                 "No regular rules to write.", for: "FilterListProcessor")
             return
         }
 
+        // Encode and save the rules
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted  // For readability
+        encoder.outputFormatting = .prettyPrinted
 
         do {
-            let jsonData = try encoder.encode(mergedRules)
+            let jsonData = try encoder.encode(allRules)
             try jsonData.write(to: url)
             LogsView.logProcessingStep(
-                "Successfully wrote \(mergedRules.count) regular rules to \(url.absoluteString)",
+                "Successfully wrote \(allRules.count) regular rules to \(url.absoluteString)",
                 for: "FilterListProcessor"
             )
         } catch {
@@ -724,10 +830,12 @@ struct FilterListProcessor {
     }
 
     private func saveAdvancedBlockingRules(
-        to url: URL, conversionResults: [ConversionResult]
+        to url: URL, conversionResults: [ProcessedConversionResult]  // Update type here
     ) async throws {
-        // 1. Extract and Validate Advanced Rules
-        let advancedRules = try extractAdvancedRules(from: conversionResults)
+        // 1. Extract Advanced Rules
+        let advancedRules = conversionResults.flatMap {
+            $0.advancedBlocking ?? []  // Access advancedBlocking directly
+        }
 
         // 2. Handle Empty Rules Case
         guard !advancedRules.isEmpty else {
@@ -746,46 +854,6 @@ struct FilterListProcessor {
             "Successfully wrote advanced blocking rules to \(url.absoluteString)",
             for: "FilterListProcessor"
         )
-    }
-
-    // Helper function to extract and validate advanced rules
-    private func extractAdvancedRules(
-        from conversionResults: [ConversionResult]
-    ) throws -> [ContentBlockerRule] {
-
-        var validRules: [ContentBlockerRule] = []
-
-        for jsonString in conversionResults.compactMap({ $0.advancedBlocking })
-        {
-
-            // Log the truncated JSON string
-            LogsView.logProcessingStep(
-                "Processing advancedBlocking JSON String (truncated): \(jsonString.truncated(to: 200))",
-                for: "FilterListProcessor"
-            )
-
-            guard let data = jsonString.data(using: .utf8) else {
-                LogsView.logProcessingStep(
-                    "Failed to convert advancedBlocking string to Data.",
-                    for: "FilterListProcessor"
-                )
-                continue
-            }
-
-            do {
-                // Decode each JSON string into an array of ContentBlockerRule
-                let rules = try JSONDecoder().decode(
-                    [ContentBlockerRule].self, from: data)
-                validRules.append(contentsOf: rules)
-            } catch {
-                LogsView.logProcessingStep(
-                    "Failed to decode advancedBlocking JSON: \(error.localizedDescription)",
-                    for: "FilterListProcessor"
-                )
-            }
-        }
-
-        return validRules
     }
 
     // Helper function to encode and save rules to a file
@@ -808,8 +876,9 @@ struct FilterListProcessor {
         }
     }
 
-    private func logTotalStatistics(from conversionResults: [ConversionResult])
-    {
+    private func logTotalStatistics(
+        from conversionResults: [ProcessedConversionResult]
+    ) {
         let totalStats = conversionResults.reduce((0, 0, 0, false)) {
             result, current in
             (
@@ -832,24 +901,9 @@ struct FilterListProcessor {
             for: "FilterListProcessor"
         )
     }
-
-    func updateFilterListRuleCounts(
-        filterList: FilterList,
-        result: ConversionResult
-    ) {
-        filterList.standardRuleCount = result.convertedCount
-        filterList.advancedRuleCount =
-            result.advancedBlocking?.components(separatedBy: ",").count ?? 0
-        filterList.lastUpdated = Date()
-    }
 }
 
 // WebShieldApp/Model/FilterList/FilterListProvider.swift
-//
-//  FilterListProvider.swift
-//  WebShieldApp
-//
-
 import Foundation
 
 enum FilterListProvider {
@@ -1139,13 +1193,6 @@ enum FilterListProvider {
 }
 
 // WebShieldApp/Model/FilterList/FilterListSection.swift
-//
-//  FilterListSection.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-07-16.
-//
-
 import Foundation
 
 struct FilterListSection: Identifiable {
@@ -1155,15 +1202,7 @@ struct FilterListSection: Identifiable {
     var id: String { title }
 }
 
-
 // WebShieldApp/Model/FilterList/TotalStats.swift
-//
-//  TotalStats.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-07-30.
-//
-
 struct TotalStats {
     var totalConvertedCount: Int = 0
     var convertedCount: Int = 0
@@ -1172,13 +1211,6 @@ struct TotalStats {
 }
 
 // WebShieldApp/Model/GroupContainerURL.swift
-//
-//  GroupContainerURL.swift
-//  WebShieldApp
-//
-//  Created by Arjun on 2024-09-08.
-//
-
 import Foundation
 
 @MainActor
@@ -1192,34 +1224,29 @@ struct GroupContainerURL {
 }
 
 // WebShieldApp/Model/Identifiers.swift
-//
-//  GlobalSettings.swift
-//  WebShieldApp
-//
-//  Created by Arjun on 2024-09-08.
-//
-
 import Foundation
 
 public enum Identifiers {
     static let groupID: String = "G5S45S77DF.me.arjuna.WebShield"
 }
 
-// WebShieldApp/Model/Item.swift
+// WebShieldApp/Model/TrustedSite.swift
 import Foundation
 import SwiftData
+import SwiftUI
 
-@Model final class Item {
-    var timestamp: Date
+@Model
+final class TrustedSite {
+    @Attribute(.unique) var id: String
+    var domain: String
 
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+    init(domain: String) {
+        self.id = UUID().uuidString
+        self.domain = domain
     }
 }
 
-// WebShieldApp/Model/Logger.swift
-// Logger.swift
-
+// WebShieldApp/Model/WSLogger.swift
 import Foundation
 
 @MainActor
@@ -1324,15 +1351,36 @@ struct ContentView: View {
     }
 
     private var totalRuleCount: Int {
-        // Read the blockerList.json to get the actual rule count
-        if let url = GroupContainerURL.groupContainerURL()?
+        // Read both blockerList.json and advancedBlocking.json to get the combined rule count
+
+        var combinedRuleCount = 0
+
+        // Read blockerList.json (regular rules)
+        if let blockerListURL = GroupContainerURL.groupContainerURL()?
             .appendingPathComponent("blockerList.json"),
-            let data = try? Data(contentsOf: url),
-            let rules = try? JSONDecoder().decode([String].self, from: data)
+            let blockerListData = try? Data(contentsOf: blockerListURL)
         {
-            return rules.count
+            if let rules = try? JSONDecoder().decode(
+                [Rule].self, from: blockerListData)
+            {
+                combinedRuleCount += rules.count
+            }
         }
-        return 0
+
+        // Read advancedBlocking.json (advanced rules)
+        if let advancedBlockingURL = GroupContainerURL.groupContainerURL()?
+            .appendingPathComponent("advancedBlocking.json"),
+            let advancedBlockingData = try? Data(
+                contentsOf: advancedBlockingURL)
+        {
+            if let rules = try? JSONDecoder().decode(
+                [ContentBlockerRule].self, from: advancedBlockingData
+            ) {
+                combinedRuleCount += rules.count
+            }
+        }
+
+        return combinedRuleCount
     }
 
     private func shouldShowSection(_ category: FilterListCategory) -> Bool {
@@ -1404,12 +1452,12 @@ struct ContentView: View {
             }
 
             totalLists = enabledLists.count
-            var allConversionResults: [ConversionResult] = []
+            var allConversionResults: [ProcessedConversionResult] = []
 
             for (index, enabledList) in enabledLists.enumerated() {
                 do {
                     let (conversionResult, version, homepage):
-                        (ConversionResult, String, String?)
+                        (ProcessedConversionResult, String, String?)
 
                     if let providerData = FilterListProvider.filterListData
                         .first(where: {
@@ -1507,13 +1555,6 @@ struct ContentView: View {
 }
 
 // WebShieldApp/View/FilterList/FilterListRow.swift
-//
-//  FilterListRow.swift
-//  WebShield
-//
-//  Created by Arjun on 2024-11-25.
-//
-
 import Foundation
 import SwiftUI
 
@@ -1595,6 +1636,13 @@ struct FilterListRow: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
+
+                // Add the last updated date
+                Text(
+                    "Last Updated: \(filterList.lastUpdated, formatter: itemFormatter)"
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             }
             .padding(.vertical, 8)
 
@@ -1615,6 +1663,14 @@ struct FilterListRow: View {
         }
     }
 }
+
+// Date formatter for a more readable date
+private let itemFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter
+}()
 
 // WebShieldApp/View/FilterList/FilterListToggle.swift
 import SwiftUI
@@ -1649,9 +1705,21 @@ struct FilterListView: View {
     @Query(sort: \FilterList.order, order: .forward) private var filterLists:
         [FilterList]
     @Environment(\.modelContext) private var modelContext
+    @State private var searchText: String = ""
 
     private var filteredLists: [FilterList] {
-        filterLists.filter { category == .all || $0.category == category }
+        filterLists.filter { filterList in
+            // Match category if it's not `.all`
+            let categoryMatches =
+                (category == .all || filterList.category == category)
+
+            // Match name if user typed something in search bar
+            let nameMatches =
+                searchText.isEmpty
+                || filterList.name.localizedCaseInsensitiveContains(searchText)
+
+            return categoryMatches && nameMatches
+        }
     }
 
     private var enabledCount: Int {
@@ -1747,6 +1815,7 @@ struct FilterListView: View {
             }
         }
         .listStyle(.automatic)
+        .searchable(text: $searchText)
     }
 
     private var groupedFilterLists: [FilterListSection] {
@@ -1802,11 +1871,6 @@ struct FilterListView: View {
 }
 
 // WebShieldApp/View/Navbar/SidebarView.swift
-//
-//  SidebarView.swift
-//  WebShieldApp
-//
-
 import SwiftData
 import SwiftUI
 
@@ -1869,8 +1933,6 @@ struct SidebarView: View {
 }
 
 // WebShieldApp/View/Navbar/Toolbar/ImportView.swift
-// ImportView.swift
-
 @preconcurrency import ContentBlockerConverter
 import Foundation
 import SwiftData
@@ -2043,8 +2105,6 @@ struct ImportView: View {
 }
 
 // WebShieldApp/View/Navbar/Toolbar/LogsView.swift
-// LogsView.swift
-
 import ContentBlockerConverter
 import Foundation
 import SwiftUI
@@ -2169,13 +2229,6 @@ struct LogsView: View {
 }
 
 // WebShieldApp/View/Navbar/Toolbar/NativeStyleTextEditor.swift
-//
-//  NativeStyleTextEditor.swift
-//  WebShieldApp
-//
-//  Created by Arjun on 2024-09-08.
-//
-
 import Foundation
 import SwiftUI
 
@@ -2187,7 +2240,7 @@ struct NativeStyleTextEditor: View {
         ZStack(alignment: .topLeading) {
             if text.isEmpty {
                 Text(placeholder)
-//                    .foregroundColor(Color(.placeholderTextColor))
+                    //                    .foregroundColor(Color(.placeholderTextColor))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 12)
             }
@@ -2199,18 +2252,11 @@ struct NativeStyleTextEditor: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color(.systemGray), lineWidth: 1)
         )
-//        .background(Color(.textBackgroundColor))
+        //        .background(Color(.textBackgroundColor))
     }
 }
 
 // WebShieldApp/ViewModel/ContentViewModel.swift
-//
-//  ContentViewModel.swift
-//  WebShieldApp
-//
-//  Created by Arjun on 2024-07-16.
-//
-
 import Foundation
 import SwiftData
 
@@ -2224,6 +2270,8 @@ final class ContentViewModel: ObservableObject {
 }
 
 // WebShieldApp/WebShieldApp.swift
+import Foundation
+import SafariServices
 import SwiftData
 import SwiftUI
 
@@ -2280,13 +2328,6 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
 }
 
 // WebShieldExtra/ContentBlockerEngineWrapper.swift
-//
-//  ContentBlockerEngineWrapper.swift
-//  WebShieldScripts
-//
-//  Created by Arjun on 2024-07-13.
-//
-
 @preconcurrency import ContentBlockerEngine
 import Foundation
 import os.log
@@ -2409,8 +2450,13 @@ final class ContentBlockerEngineWrapper: Sendable {
         // Ensure ContentBlockerEngine is initialized
         let engine = contentBlockerEngine
 
+        logger.log(
+            "Getting data for URL: \(url.absoluteString, privacy: .public)")
+
         do {
             let data = try engine.getData(url: url)
+            logger.log(
+                "Data returned from engine: \(data, privacy: .public)")
             return data
         } catch {
             logger.error(
@@ -2422,13 +2468,6 @@ final class ContentBlockerEngineWrapper: Sendable {
 }
 
 // WebShieldExtra/SafariExtensionHandler.swift
-//
-//  SafariExtensionHandler.swift
-//  Test
-//
-//  Created by Arjun on 2024-07-13.
-//
-
 import ContentBlockerEngine
 import SafariServices
 import os

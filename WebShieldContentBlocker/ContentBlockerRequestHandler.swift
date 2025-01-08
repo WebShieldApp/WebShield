@@ -1,8 +1,8 @@
 import Foundation
 
-class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
+final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     func beginRequest(with context: NSExtensionContext) {
-        let requiredPart = "G5S45S77DF.me.arjuna.WebShield"
+        let requiredPart = "group.dev.arjuna.WebShield"
 
         guard
             let containerURL = FileManager.default.containerURL(
@@ -23,7 +23,7 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
             return
         }
 
-        // Use if let instead of force unwrapping
+            // Use if let instead of force unwrapping
         if let attachment = NSItemProvider(contentsOf: blockerlistURL) {
             let item = NSExtensionItem()
             item.attachments = [attachment]

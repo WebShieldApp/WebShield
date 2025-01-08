@@ -4,17 +4,37 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>WebShieldApp.xcscheme_^#shared#^_</key>
+		<key>App (iOS).xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>4</integer>
 		</dict>
-		<key>WebShieldContentBlocker.xcscheme_^#shared#^_</key>
+		<key>App (macOS).xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Extra.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>WebShield ContentBlocker.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>WebShieldExtra.xcscheme_^#shared#^_</key>
+		<key>WebShield Extra.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>WebShield.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>a.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
@@ -23,6 +43,21 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>00026EB52C2B96740087E1DA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>000F2C9F2D2E533400871D5E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>000F2CCF2D2E534600871D5E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>000F2CE32D2E535400871D5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -53,6 +88,16 @@
 			<true/>
 		</dict>
 		<key>00A319552C3CAE9D007743FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00C2BE0B2D2E31F9000B431F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00C2BE302D2E327F000B431F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

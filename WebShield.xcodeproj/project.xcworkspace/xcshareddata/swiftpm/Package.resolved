@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gumob/PunycodeSwift.git",
       "state" : {
-        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-        "version" : "2.1.0"
+        "revision" : "30a462bdb4398ea835a3585472229e0d74b36ba5",
+        "version" : "3.0.0"
       }
     },
     {
@@ -16,7 +16,7 @@
       "location" : "https://github.com/AdguardTeam/SafariConverterLib.git",
       "state" : {
         "branch" : "master",
-        "revision" : "a2baf3b357ce2a5f704fd5d53666cd652baaf926"
+        "revision" : "a9e6920ea68145c6a98fd79acd86c587ec7e0b7b"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "0fbc8848e389af3bb55c182bc19ca9d5dc2f255b",
-        "version" : "1.4.0"
+        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
+        "version" : "1.5.0"
       }
     }
   ],

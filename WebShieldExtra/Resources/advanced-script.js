@@ -1,18 +1,9 @@
-//
-//  t.js
-//  WebShield
-//
-//  Created by Arjun on 2024-07-13.
-//
-/* global safari, ExtendedCss */
 (() => {
-    const logMessage = (verbose, message) => {
-        verbose && console.log(`(WebShield Extra) ${message}`);
-    };
+    const logMessage = (verbose, message) => { verbose && console.log(`(WebShield Extra) ${message}`); };
 
     const executeScript = async (code) => {
         const executeViaTextContent = () => {
-            const script = document.createElement('script');
+            const script = document.createElement("script");
             script.textContent = code;
             (document.head || document.documentElement).appendChild(script);
             script.remove();
@@ -20,9 +11,9 @@
         };
 
         const executeViaBlob = () => {
-            const blob = new Blob([ code ], {type : 'text/javascript'});
+            const blob = new Blob([ code ], {type : "text/javascript"});
             const url = URL.createObjectURL(blob);
-            const script = document.createElement('script');
+            const script = document.createElement("script");
             script.src = url;
             (document.head || document.documentElement).appendChild(script);
             URL.revokeObjectURL(url);
@@ -36,13 +27,14 @@
     const executeScripts = async (scripts = [], verbose) => {
         logMessage(verbose, "Executing scripts...");
         const code = [
-            '(function () { try {', ...scripts,
-            ';document.currentScript.remove();',
-            "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();"
-        ].join('\n');
+            "(function () { try {",
+            ...scripts,
+            ";document.currentScript.remove();",
+            "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();",
+        ].join("\n");
 
-        if (!await executeScript(code)) {
-            logMessage(verbose, 'Unable to inject scripts');
+        if (!(await executeScript(code))) {
+            logMessage(verbose, "Unable to inject scripts");
         }
     };
 
@@ -54,25 +46,24 @@
     };
 
     const protectStyleElementContent = (styleEl) => {
-        const MutationObserver =
-            window.MutationObserver || window.WebKitMutationObserver;
+        const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
         if (!MutationObserver)
             return;
 
         new MutationObserver((mutations) => {
             for (const m of mutations) {
-                if (styleEl.getAttribute('mod') === 'inner') {
-                    styleEl.removeAttribute('mod');
+                if (styleEl.getAttribute("mod") === "inner") {
+                    styleEl.removeAttribute("mod");
                     break;
                 }
-                styleEl.setAttribute('mod', 'inner');
+                styleEl.setAttribute("mod", "inner");
 
                 if (m.removedNodes.length > 0) {
                     styleEl.append(...m.removedNodes);
                 } else if (m.oldValue) {
                     styleEl.textContent = m.oldValue;
                 } else {
-                    styleEl.removeAttribute('mod');
+                    styleEl.removeAttribute("mod");
                 }
             }
         }).observe(styleEl, {
@@ -86,11 +77,10 @@
     const applyCss = async (styleSelectors, verbose) => {
         if (!styleSelectors?.length)
             return;
-        logMessage(verbose,
-                   `Applying ${styleSelectors.length} CSS stylesheets...`);
+        logMessage(verbose, `Applying ${styleSelectors.length} CSS stylesheets...`);
 
-        const styleElement = document.createElement('style');
-        styleElement.textContent = styleSelectors.join('\n');
+        const styleElement = document.createElement("style");
+        styleElement.textContent = styleSelectors.join("\n");
         (document.head || document.documentElement).appendChild(styleElement);
         protectStyleElementContent(styleElement);
     };
@@ -100,13 +90,12 @@
             return;
         logMessage(
             verbose,
-            `Applying ${extendedCss.length} extended CSS stylesheets...`);
+            `Applying ${extendedCss.length} extended CSS stylesheets...`,
+        );
 
-        const cssRules =
-            extendedCss.filter(Boolean)
-                .map(s => s.trim())
-                .map(s => s.endsWith('}') ? s
-                                          : `${s} {display:none!important;}`);
+        const cssRules = extendedCss.filter(Boolean)
+                             .map((s) => s.trim())
+                             .map((s) => (s.endsWith("}") ? s : `${s} {display:none!important;}`));
 
         new ExtendedCss({cssRules}).apply();
     };
@@ -116,14 +105,14 @@
             return;
         logMessage(verbose, `Applying ${scriptletsData.length} scriptlets...`);
 
-        const scriptletExecutableScripts = scriptletsData.map(s => {
-            const param =
-                {...JSON.parse(s), engine : "safari-extension", verbose};
+        const scriptletExecutableScripts = scriptletsData.map((s) => {
+            const param = {...JSON.parse(s), engine : "safari-extension", verbose};
             try {
-                return scriptlets?.invoke(param) || '';
+                return scriptlets?.invoke(param) || "";
             } catch (e) {
+                logMessgae(verbose, "Had an error in applyScriptlets");
                 logMessage(verbose, e.message);
-                return '';
+                return "";
             }
         });
 
@@ -131,22 +120,24 @@
     };
 
     const applyAdvancedBlockingData = async (data, verbose) => {
-        logMessage(verbose,
-                   `Applying scripts and css for ${window.location.href}...`);
+        logMessage(
+            verbose,
+            `Applying scripts and css for ${window.location.href}...`,
+        );
 
         await Promise.all([
             applyScripts(data.scripts, verbose),
             applyCss(data.cssInject, verbose),
             applyExtendedCss(data.cssExtended, verbose),
-            applyScriptlets(data.scriptlets, verbose)
+            applyScriptlets(data.scriptlets, verbose),
         ]);
 
-        logMessage(verbose, 'Applying scripts and css - done');
-        safari.self.removeEventListener('message', handleMessage);
+        logMessage(verbose, "Applying scripts and css - done");
+        safari.self.removeEventListener("message", handleMessage);
     };
 
     const handleMessage = async ({name, message}) => {
-        if (name !== 'advancedBlockingData')
+        if (name !== "advancedBlockingData")
             return;
 
         try {
@@ -156,20 +147,20 @@
 
             logMessage(isVerbose, "Received advancedBlockingData message...");
             logMessage(isVerbose, "Message Data:");
-            console.log(parsedData)
+            console.log(parsedData);
             if (window.location.href === url) {
                 await applyAdvancedBlockingData(parsedData, isVerbose);
             }
         } catch (e) {
-            console.error('Error handling message:', e);
+            console.error("Error handling message:", e);
         }
     };
 
-    if (document instanceof HTMLDocument &&
-        window.location.href?.startsWith('http')) {
-        safari.self.addEventListener('message', handleMessage);
+    if (document instanceof HTMLDocument && window.location.href?.startsWith("http")) {
+        safari.self.addEventListener("message", handleMessage);
         logMessage(true, "Sending getAdvancedBlockingData message...");
-        safari.extension.dispatchMessage('getAdvancedBlockingData',
-                                         {url : window.location.href});
+        safari.extension.dispatchMessage("getAdvancedBlockingData", {
+            url : window.location.href,
+        });
     }
 })();
