@@ -1,5 +1,3 @@
-import Foundation
-import SafariServices
 import SwiftData
 import SwiftUI
 
@@ -8,25 +6,14 @@ struct WebShieldApp: App {
     @StateObject private var dataManager = DataManager()
 
     var body: some Scene {
-
         WindowGroup {
             ContentView()
-                .modelContainer(
-                    for: [FilterList.self],
-                    isAutosaveEnabled: true
-                )
+                .modelContainer(dataManager.container)
                 .environmentObject(dataManager)
                 .onAppear {
                     dataManager.seedDataIfNeeded()
                 }
                 .frame(minWidth: 900, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         }
-
-            //        Settings {
-            //            SettingsView()
-            //                .modelContainer(
-            //                    for: FilterList.self,
-            //                    isAutosaveEnabled: true)
-            //        }
     }
 }

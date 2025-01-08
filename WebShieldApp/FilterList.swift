@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-    // MARK: - Model
+// MARK: - Model
 @Model
 final class FilterList {
     @Attribute(.unique) var id: String
@@ -19,7 +19,7 @@ final class FilterList {
     var informationURL: String? = "https://example.com"
     var downloaded: Bool = false
 
-        // Initializer
+    // Initializer
     init(
         name: String = "No Name",
         version: String = "No Version",
@@ -27,6 +27,7 @@ final class FilterList {
         category: FilterListCategory,
         isEnabled: Bool = false,
         order: Int = 0,
+        urlString: String? = nil,
         homepageURL: String? = nil,
         informationURL: String? = nil,
         downloaded: Bool = false
@@ -38,7 +39,7 @@ final class FilterList {
         self.categoryString = category.rawValue
         self.isEnabled = isEnabled
         self.order = order
-        self.urlString = nil
+        self.urlString = urlString
         self.homepageURL = homepageURL
         self.informationURL = informationURL
         self.downloaded = false

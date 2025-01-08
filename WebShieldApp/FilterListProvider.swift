@@ -234,7 +234,7 @@ enum FilterListProvider {
             homepageURL: "https://github.com/ryanbr/fanboy-adblock/issues"),
         FilterListData(
             id: UUID().uuidString,
-            name: "ru",
+            name: "🇷🇺 ru",
             urlString:
                 "https://filters.adtidy.org/extension/safari/filters/1_optimized.txt",
             category: .regional,
@@ -245,13 +245,63 @@ enum FilterListProvider {
                 "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
         ),
         FilterListData(
-            id: UUID().uuidString, name: "de",
+            id: UUID().uuidString, name: "🇩🇪 de",
             urlString:
                 "https://filters.adtidy.org/extension/safari/filters/6_optimized.txt",
             category: .regional,
             isSelected: false,
             description:
                 "EasyList Germany + AdGuard German filter. Filter list that specifically removes ads on websites in German language.",
+            homepageURL:
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+        FilterListData(
+            id: UUID().uuidString, name: "🇯🇵 jp",
+            urlString:
+                "https://filters.adtidy.org/extension/safari/filters/7_optimized.txt",
+            category: .regional,
+            isSelected: false,
+            description:
+                "Filter that enables ad blocking on websites in Japanese language.",
+            homepageURL:
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+        FilterListData(
+            id: UUID().uuidString, name: "🇳🇱 nl",
+            urlString:
+                "https://filters.adtidy.org/extension/safari/filters/7_optimized.txt",
+            category: .regional,
+            isSelected: false,
+            description:
+                "Filter that enables ad blocking on websites in Japanese language.",
+            homepageURL:
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+        FilterListData(
+            id: UUID().uuidString, name: "🇪🇸 🇵🇹 es/pt",
+            urlString:
+                "https://filters.adtidy.org/extension/safari/filters/9_optimized.txt",
+            category: .regional,
+            isSelected: false,
+            description:
+                "Filter that enables ad blocking on websites in Japanese language.",
+            homepageURL:
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+        FilterListData(
+            id: UUID().uuidString, name: "🇹🇷 tr",
+            urlString:
+                "https://filters.adtidy.org/extension/safari/filters/13_optimized.txt",
+            category: .regional,
+            isSelected: false,
+            description:
+                "Filter list that specifically removes ads on websites in Turkish language.",
+            homepageURL:
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+        FilterListData(
+            id: UUID().uuidString, name: "🇫🇷 fr",
+            urlString:
+                "https://filters.adtidy.org/extension/safari/filters/16_optimized.txt",
+            category: .regional,
+            isSelected: false,
+            description:
+                "Liste FR + AdGuard French filter. Filter list that specifically removes ads on websites in French language.",
             homepageURL:
                 "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(

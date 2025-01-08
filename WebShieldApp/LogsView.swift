@@ -13,7 +13,7 @@ struct LogsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-                // Header
+            // Header
             HStack {
                 Text("Logs")
                     .font(.headline)
@@ -21,15 +21,17 @@ struct LogsView: View {
                 Button(action: copyLogs) {
                     Label("Copy", systemImage: "doc.on.doc")
                 }
+                .buttonStyle(.borderless)
                 Button("Done") {
                     dismiss()
                 }
+                .buttonStyle(.borderless)
             }
             .padding()
 
-                //            Divider()
+            //            Divider()
 
-                // Log content
+            // Log content
             ScrollView {
                 if !Self.logEntries.isEmpty {
                     Text(Self.logEntries.joined(separator: "\n"))
@@ -46,29 +48,29 @@ struct LogsView: View {
                         .padding()
                 }
             }
-#if targetEnvironment(macCatalyst) || os(iOS)
-            .background(Color(.secondarySystemBackground))
-#else
-            .background(Color(.textBackgroundColor))
-#endif
+            #if targetEnvironment(macCatalyst) || os(iOS)
+                .background(Color(.secondarySystemBackground))
+            #else
+                .background(Color(.textBackgroundColor))
+            #endif
         }
         .frame(width: 600, height: 400, alignment: .top)
     }
 
     private func copyLogs() {
-#if os(macOS)
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(
-            Self.logEntries.joined(separator: "\n"),
-            forType: .string
-        )
-#else
-        UIPasteboard.general.string = Self.logEntries.joined(
-            separator: "\n")
-#endif
+        #if os(macOS)
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(
+                Self.logEntries.joined(separator: "\n"),
+                forType: .string
+            )
+        #else
+            UIPasteboard.general.string = Self.logEntries.joined(
+                separator: "\n")
+        #endif
     }
 
-        // Static methods to add logs
+    // Static methods to add logs
     static func logConversionStatistics(
         totalConvertedCount: Int,
         convertedCount: Int,
@@ -77,26 +79,26 @@ struct LogsView: View {
         for listName: String
     ) {
         let message = """
-            
+
             Conversion statistics for \(listName):
             - Total converted count: \(totalConvertedCount)
             - Converted count: \(convertedCount)
             - Errors count: \(errorsCount)
             - Over limit: \(overLimit)
-            
+
             """
         addLog(message)
     }
 
     static func logTotalStatistics(_ stats: TotalStats) {
         let message = """
-            
+
             Total conversion statistics:
             - Total converted count: \(stats.totalConvertedCount)
             - Converted count: \(stats.convertedCount)
             - Errors count: \(stats.errorsCount)
             - Lists over limit: \(stats.overLimit)
-            
+
             """
         addLog(message)
     }
@@ -112,17 +114,17 @@ struct LogsView: View {
 
     static func logRefreshStart() {
         let message = """
-            
-            
+
+
             ==========================================
                         STARTING REFRESH
             ==========================================
-            
+
             """
         addLog(message)
     }
 
-    private static func addLog(_ message: String) {
+    static func addLog(_ message: String) {
         print("\(message)")
         logEntries.append(message)
         if logEntries.count > 1000 {

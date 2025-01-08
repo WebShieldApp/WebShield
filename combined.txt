@@ -1,10 +1,20 @@
 
-// WebShieldApp/Model/ContentBlockerState.swift
+// WebShieldApp/ColorExtension.swift
+import Foundation
+import SwiftUI
+
+extension Color {
+    static let background = Color(NSColor.windowBackgroundColor)
+    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
+    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
+}
+
+// WebShieldApp/ContentBlockerState.swift
 import SafariServices
 import SwiftUI
 
 actor ContentBlockerState: ObservableObject {
-    private let identifier = "me.arjuna.WebShield.ContentBlocker"
+    private let identifier = "dev.arjuna.WebShield.Filters"
 
     func reloadContentBlocker() async {
         do {
@@ -61,25 +71,368 @@ actor ContentBlockerState: ObservableObject {
     }
 }
 
-// WebShieldApp/Model/Extension/ColorExtension.swift
+// WebShieldApp/ContentView.swift
+@preconcurrency import ContentBlockerConverter
 import Foundation
+import SwiftData
 import SwiftUI
 
-extension Color {
+struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \FilterList.order, order: .forward) private var filterLists: [FilterList]
+    @State private var selectedCategory: FilterListCategory? = .all
+    @State private var isUpdating = false
+    @State private var showingLogs = false
+    @State private var showingImport = false
+    @State private var showingSettings = false
+    @State private var progress: Double = 0
+    @State private var currentList: Int = 0
+    private let filterListProcessor = FilterListProcessor()
+    @State private var totalLists: Int = 0
+    @State private var columnVisibility = NavigationSplitViewVisibility
+        .all
 
-    #if os(macOS)
-        static let background = Color(NSColor.windowBackgroundColor)
-        static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
-        static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
-    #else
-        static let background = Color(UIColor.systemBackground)
-        static let secondaryBackground = Color(
-            UIColor.secondarySystemBackground)
-        static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
-    #endif
+    var body: some View {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+            SidebarView(selectedCategory: $selectedCategory)
+                .navigationSplitViewColumnWidth(140)
+                .navigationSplitViewStyle(.balanced)
+        } detail: {
+            VStack(spacing: 0) {
+                if isUpdating {
+                    ProgressView(value: progress, total: 1.0)
+                        .progressViewStyle(.linear)
+                        .tint(.blue)
+                }
+
+                FilterListView(category: selectedCategory ?? .all)
+                    .navigationTitle(selectedCategory?.rawValue ?? "All")
+                    .toolbar {
+                        ToolbarItemGroup(placement: .automatic) {
+                            Button(action: { showingSettings.toggle() }) {
+                                Label(
+                                    "Settings",
+                                    systemImage: "gear")
+                            }
+                            .help("Settings")
+                        }
+
+                        ToolbarItemGroup(placement: .automatic) {
+                            HStack {
+                                PulsatingCircleButton()
+                                Button(action: { refreshFilters() }) {
+                                    Label("Refresh", systemImage: "arrow.2.circlepath")
+                                }
+                                .help("Refresh Filters")
+                                .disabled(isUpdating)
+
+                                Button(action: { showingLogs.toggle() }) {
+                                    Label(
+                                        "Logs",
+                                        systemImage: "doc.text.magnifyingglass")
+                                }
+                                .help("View Logs")
+
+                                Button(action: { showingImport.toggle() }) {
+                                    Label("Import", systemImage: "plus")
+                                }
+                                .help("Import Filters")
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $showingLogs) {
+                        LogsView()
+                    }
+                    .sheet(isPresented: $showingImport) {
+                        ImportView()
+                    }
+                    .sheet(isPresented: $showingSettings) {
+                        SettingsView()
+                    }
+            }
+        }
+
+    }
+
+    private var enabledFilterCount: Int {
+        filterLists.filter { $0.isEnabled }.count
+    }
+
+    private var totalRuleCount: Int {
+        // Read both blockerList.json and advancedBlocking.json to get the combined rule count
+
+        var combinedRuleCount = 0
+
+        // Read blockerList.json (regular rules)
+        if let blockerListURL = GroupContainerURL.groupContainerURL()?
+            .appendingPathComponent("blockerList.json"),
+            let blockerListData = try? Data(contentsOf: blockerListURL)
+        {
+            if let rules = try? JSONDecoder().decode(
+                [Rule].self, from: blockerListData)
+            {
+                combinedRuleCount += rules.count
+            }
+        }
+
+        // Read advancedBlocking.json (advanced rules)
+        if let advancedBlockingURL = GroupContainerURL.groupContainerURL()?
+            .appendingPathComponent("advancedBlocking.json"),
+            let advancedBlockingData = try? Data(
+                contentsOf: advancedBlockingURL)
+        {
+            if let rules = try? JSONDecoder().decode(
+                [ContentBlockerRule].self, from: advancedBlockingData
+            ) {
+                combinedRuleCount += rules.count
+            }
+        }
+
+        return combinedRuleCount
+    }
+
+    private func shouldShowSection(_ category: FilterListCategory) -> Bool {
+        selectedCategory == .all || category == selectedCategory
+    }
+
+    private var groupedFilterLists: [FilterListSection] {
+        let categoryOrder: [FilterListCategory] = [
+            .ads, .privacy, .security, .multipurpose,
+            .social, .cookies, .annoyances, .regional,
+            .experimental, .custom,
+        ]
+
+        let sortedLists = filterLists.sorted { $0.order < $1.order }
+        var sections: [FilterListCategory: [FilterList]] = [:]
+
+        for list in sortedLists {
+            if let category = list.category {
+                sections[category, default: []].append(list)
+            }
+        }
+
+        return categoryOrder.compactMap { category in
+            if let lists = sections[category], !lists.isEmpty {
+                return FilterListSection(
+                    title: category.rawValue,
+                    filterLists: lists,
+                    category: category
+                )
+            }
+            return nil
+        }
+    }
+
+    private func refreshFilters() {
+        Task {
+            isUpdating = true
+            progress = 0
+            currentList = 0
+
+            defer {
+                isUpdating = false
+                progress = 0
+                currentList = 0
+                totalLists = 0
+            }
+
+            LogsView.logRefreshStart()
+
+            let fetchDescriptor = FetchDescriptor<FilterList>(
+                predicate: #Predicate { $0.isEnabled == true }
+            )
+
+            guard let enabledLists = try? modelContext.fetch(fetchDescriptor)
+            else {
+                LogsView.logProcessingStep(
+                    "Failed to fetch enabled filter lists", for: "System")
+                return
+            }
+
+            totalLists = enabledLists.count
+            var allConversionResults: [ProcessedConversionResult] = []
+
+            for (index, enabledList) in enabledLists.enumerated() {
+                do {
+                    let (conversionResult, version, homepage): (ProcessedConversionResult, String, String?)
+
+                    if let providerData = FilterListProvider.filterListData
+                        .first(where: {
+                            $0.name == enabledList.name
+                        })
+                    {
+                        (conversionResult, version, homepage) =
+                            try await filterListProcessor.downloadAndParse(
+                                from: URL(string: providerData.urlString)!,
+                                id: enabledList.id,
+                                name: enabledList.name,
+                                existingHomepage: enabledList.homepageURL
+                            )
+                    } else if let urlString = enabledList.urlString,
+                        let url = URL(string: urlString)
+                    {
+                        (conversionResult, version, homepage) =
+                            try await filterListProcessor.downloadAndParse(
+                                from: url,
+                                id: enabledList.id,
+                                name: enabledList.name,
+                                existingHomepage: enabledList.homepageURL
+                            )
+                    } else {
+                        LogsView.logProcessingStep(
+                            "No URL found for filter list",
+                            for: enabledList.name)
+                        continue
+                    }
+
+                    enabledList.version = version
+                    if enabledList.homepageURL == nil
+                        || enabledList.homepageURL?.isEmpty == true
+                    {
+                        enabledList.homepageURL = homepage
+                    }
+                    allConversionResults.append(conversionResult)
+
+                    filterListProcessor.hasDownloaded(filterList: enabledList)
+
+                    // Update rule counts in SwiftData
+                    filterListProcessor.updateFilterListRuleCounts(
+                        filterList: enabledList,
+                        result: conversionResult
+                    )
+
+                    await MainActor.run {
+                        currentList = index + 1
+                        progress = Double(currentList) / Double(totalLists)
+                    }
+
+                } catch {
+                    LogsView.logProcessingStep(
+                        "Failed to process: \(error.localizedDescription)",
+                        for: enabledList.name
+                    )
+                }
+            }
+
+            // Save conversion results
+            do {
+                let blockerListURL = GroupContainerURL.groupContainerURL()?
+                    .appendingPathComponent("blockerList.json")
+
+                if let url = blockerListURL {
+                    try await filterListProcessor.saveContentBlockerRules(
+                        to: url,
+                        conversionResults: allConversionResults
+                    )
+                }
+
+                // Save the changes to SwiftData
+                try modelContext.save()
+
+            } catch {
+                print("Failed to save conversion results: \(error)")
+            }
+        }
+    }
 }
 
-// WebShieldApp/Model/Extension/EditMode.swift
+// WebShieldApp/DataManager.swift
+import Foundation
+import SwiftData
+
+@MainActor
+final class DataManager: ObservableObject {
+    let container: ModelContainer
+    private let filterListProcessor = FilterListProcessor()
+
+    init() {
+        // Initialize ModelContainer once
+        guard
+            let groupURL = FileManager.default.containerURL(
+                forSecurityApplicationGroupIdentifier: "group.dev.arjuna.WebShield")
+        else {
+            fatalError("Failed to get container URL for app group.")
+        }
+
+        let storeURL = groupURL.appendingPathComponent("Library/Application Support/default.store")
+        let config = ModelConfiguration(url: storeURL)
+
+        // Define the schema for your models
+        let schema = Schema([FilterList.self])
+
+        // Initialize the container with the schema and configuration
+        do {
+            container = try ModelContainer(for: schema, configurations: [config])
+        } catch {
+            fatalError("Failed to initialize ModelContainer: \(error)")
+        }
+    }
+
+    /// Resets the data model by deleting all records and reseeding.
+    func resetModel() {
+        let context = ModelContext(container)
+        Task {
+            do {
+                let fetchRequest = FetchDescriptor<FilterList>()
+                let results = try context.fetch(fetchRequest)
+                for filterList in results {
+                    context.delete(filterList)
+                }
+                try context.save()
+                await seedData()
+                print("Model reset successfully.")
+            } catch {
+                print("Failed to reset model: \(error)")
+            }
+        }
+    }
+
+    /// Seeds initial data into the database.
+    func seedData() async {
+        let context = ModelContext(container)
+        for (index, data) in FilterListProvider.filterListData.enumerated() {
+            filterListProcessor.saveFilterList(
+                to: context,
+                id: data.id,
+                name: data.name,
+                version: "N/A",
+                description: data.description,
+                category: data.category,
+                isEnabled: data.isSelected,
+                order: index,
+                homepageURL: data.homepageURL,
+                downloaded: false
+            )
+        }
+        do {
+            try context.save()
+            print("Seed data saved successfully.")
+        } catch {
+            print("Failed to save seed data: \(error)")
+        }
+    }
+
+    /// Seeds data only if the database is empty.
+    func seedDataIfNeeded() {
+        let context = ModelContext(container)
+        Task {
+            let fetchRequest = FetchDescriptor<FilterList>()
+            do {
+                let results = try context.fetch(fetchRequest)
+                if results.isEmpty {
+                    await seedData()
+                    print("Seed data inserted.")
+                } else {
+                    print("Database is not empty.")
+                }
+            } catch {
+                print("Error fetching or saving data: \(error)")
+            }
+        }
+    }
+}
+
+// WebShieldApp/EditMode.swift
 // Documentation comments are copied from the official documentation for iOS.
 
 import SwiftUI
@@ -157,60 +510,29 @@ extension Optional where Wrapped == Binding<EditMode> {
     }
 }
 
-// WebShieldApp/Model/Extension/ModelContextExtension.swift
+// WebShieldApp/FilterList.swift
 import Foundation
 import SwiftData
 
-extension ModelContext {
-    func deleteAll<T: PersistentModel>(_ type: T.Type) throws {
-        let fetchDescriptor = FetchDescriptor<T>()
-        let results = try fetch(fetchDescriptor)
-        for object in results {
-            delete(object)
-        }
-    }
-}
-
-// WebShieldApp/Model/Extension/StringExtension.swift
-// Helper extension for String truncation
-extension String {
-    func truncated(to length: Int, trailing: String = "...") -> String {
-        return self.count > length
-            ? String(self.prefix(length)) + trailing : self
-    }
-}
-
-// WebShieldApp/Model/Extension/UserDefaultsExtension.swift
-import Foundation
-
-extension UserDefaults {
-    static func exists(key: String) -> Bool {
-        return UserDefaults.standard.object(forKey: key) != nil
-    }
-}
-
-// WebShieldApp/Model/FilterList/FilterList.swift
-import Foundation
-import SwiftData
-
-// MARK: - Model
+    // MARK: - Model
 @Model
 final class FilterList {
     @Attribute(.unique) var id: String
     var name: String = "No Name"
-    var version: String = "No Version"
+    var version: String = "N/A"
     var desc: String = "No Description"
     var categoryString: String = FilterListCategory.custom.rawValue
     var isEnabled: Bool = false
     var order: Int = 0
-    var urlString: String?
-    var homepageURL: String?
+    var urlString: String? = "https://example.com"
+    var homepageURL: String? = "https://example.com"
     var standardRuleCount: Int = 0
     var advancedRuleCount: Int = 0
     var lastUpdated: Date = Date()
-    var informationURL: String?
+    var informationURL: String? = "https://example.com"
+    var downloaded: Bool = false
 
-    // Initializer
+        // Initializer
     init(
         name: String = "No Name",
         version: String = "No Version",
@@ -219,7 +541,8 @@ final class FilterList {
         isEnabled: Bool = false,
         order: Int = 0,
         homepageURL: String? = nil,
-        informationURL: String? = nil
+        informationURL: String? = nil,
+        downloaded: Bool = false
     ) {
         self.id = UUID().uuidString
         self.name = name
@@ -231,10 +554,10 @@ final class FilterList {
         self.urlString = nil
         self.homepageURL = homepageURL
         self.informationURL = informationURL
+        self.downloaded = false
     }
 }
 
-// MARK: - Identifiable & Hashable
 extension FilterList: Identifiable, Hashable {
     static func == (lhs: FilterList, rhs: FilterList) -> Bool {
         lhs.id == rhs.id
@@ -245,7 +568,6 @@ extension FilterList: Identifiable, Hashable {
     }
 }
 
-// MARK: - Computed Properties
 extension FilterList {
     var category: FilterListCategory? {
         FilterListCategory(rawValue: categoryString)
@@ -256,10 +578,10 @@ extension FilterList {
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListCategory.swift
+// WebShieldApp/FilterListCategory.swift
 import SwiftUI
 
-// Add Codable conformance
+    // Add Codable conformance
 enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
     case all = "All"
     case ads = "Ads"
@@ -277,23 +599,23 @@ enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
 
     var systemImage: String {
         switch self {
-        case .all: return "square.grid.2x2"
-        case .ads: return "megaphone"
-        case .privacy: return "hand.raised"
-        case .security: return "lock"
-        case .multipurpose: return "square.stack.3d.down.right"
-        case .cookies: return "circle.dotted.circle"
-        case .social: return "bubble.left.and.bubble.right"
-        case .annoyances: return "exclamationmark.triangle"
-        case .regional: return "globe"
-        case .experimental: return "flask"
-        case .custom: return "slider.horizontal.3"
+            case .all: return "square.grid.2x2"
+            case .ads: return "megaphone"
+            case .privacy: return "hand.raised"
+            case .security: return "lock"
+            case .multipurpose: return "square.stack.3d.down.right"
+            case .cookies: return "circle.dotted.circle"
+            case .social: return "bubble.left.and.bubble.right"
+            case .annoyances: return "exclamationmark.triangle"
+            case .regional: return "globe"
+            case .experimental: return "flask"
+            case .custom: return "slider.horizontal.3"
         }
     }
 }
 
 
-// WebShieldApp/Model/FilterList/FilterListData.swift
+// WebShieldApp/FilterListData.swift
 import Foundation
 
 struct FilterListData {
@@ -327,7 +649,7 @@ struct FilterListData {
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListError.swift
+// WebShieldApp/FilterListError.swift
 import Foundation
 
 enum FilterListError: LocalizedError {
@@ -338,19 +660,19 @@ enum FilterListError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidData:
-            return "Invalid filter list data"
-        case .invalidFormat:
-            return "Invalid filter list format"
-        case .downloadFailed:
-            return "Failed to download filter list"
-        case .parsingFailed:
-            return "Failed to parse filter list"
+            case .invalidData:
+                return "Invalid filter list data"
+            case .invalidFormat:
+                return "Invalid filter list format"
+            case .downloadFailed:
+                return "Failed to download filter list"
+            case .parsingFailed:
+                return "Failed to parse filter list"
         }
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListProcessor.swift
+// WebShieldApp/FilterListProcessor.swift
 import ContentBlockerConverter
 import Foundation
 import SwiftData
@@ -379,7 +701,7 @@ struct Rule: Encodable, Decodable {
         let unlessTopURL: [String]?
         let loadType: [String]?
 
-        // CodingKeys to match JSON keys if different from property names
+            // CodingKeys to match JSON keys if different from property names
         enum CodingKeys: String, CodingKey {
             case urlFilter = "url-filter"
             case urlFilterIsCaseSensitive = "url-filter-is-case-sensitive"
@@ -397,7 +719,7 @@ struct Rule: Encodable, Decodable {
         let selector: String?
         let subject: String?
 
-        // CodingKeys if needed
+            // CodingKeys if needed
         enum CodingKeys: String, CodingKey {
             case type, selector, subject
         }
@@ -516,13 +838,13 @@ struct FilterListProcessor {
         LogsView.logProcessingStep(
             "Successfully parsed \(rules.count) rules", for: "Parser")
 
-        // Log a sample of the rules for debugging
+            // Log a sample of the rules for debugging
         if let firstRule = rules.first {
             LogsView.logProcessingStep(
                 "Sample rule: \(firstRule)", for: name)
         }
 
-        // Extract metadata but preserve existing homepage if present
+            // Extract metadata but preserve existing homepage if present
         let metadata = try extractMetadata(from: data)
         let homepage = existingHomepage ?? metadata.homepage
         if let homepage = homepage {
@@ -533,7 +855,7 @@ struct FilterListProcessor {
         LogsView.logProcessingStep(
             "Starting conversion of \(rules.count) rules", for: name)
 
-        // Update here to use ProcessedConversionResult
+            // Update here to use ProcessedConversionResult
         let result = try await convertRulesToAdGuardFormat(rules, for: name)
 
         logConversionStatistics(from: result, for: name)
@@ -541,93 +863,93 @@ struct FilterListProcessor {
         return (result, metadata.version, metadata.homepage)
     }
 
-    // Helper functions for better readability and error handling
+        // Helper functions for better readability and error handling
 
     private func downloadData(from url: URL, for name: String) async throws
-        -> Data
+    -> Data
     {
-        do {
-            let (data, _) = try await urlSession.data(from: url)
-            LogsView.logProcessingStep("Download completed", for: name)
-            return data
-        } catch {
-            LogsView.logProcessingStep(
-                "Download failed: \(error.localizedDescription)", for: name)
-            throw error
-        }
+    do {
+        let (data, _) = try await urlSession.data(from: url)
+        LogsView.logProcessingStep("Download completed", for: name)
+        return data
+    } catch {
+        LogsView.logProcessingStep(
+            "Download failed: \(error.localizedDescription)", for: name)
+        throw error
+    }
     }
 
     private func parseRules(_ data: Data, for name: String) async throws
-        -> [String]
+    -> [String]
     {
-        guard let content = String(data: data, encoding: .utf8) else {
-            LogsView.logProcessingStep(
-                "Failed to decode data as UTF-8", for: "Parser")
-            throw FilterListError.invalidData
-        }
+    guard let content = String(data: data, encoding: .utf8) else {
+        LogsView.logProcessingStep(
+            "Failed to decode data as UTF-8", for: "Parser")
+        throw FilterListError.invalidData
+    }
 
-        let lines = content.components(separatedBy: .newlines)
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+    let lines = content.components(separatedBy: .newlines)
+        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
 
-        let validRules = lines.filter { !$0.isEmpty && !$0.hasPrefix("!") }
+    let validRules = lines.filter { !$0.isEmpty && !$0.hasPrefix("!") }
 
-        guard !validRules.isEmpty else {
-            LogsView.logProcessingStep(
-                "No valid rules found after parsing", for: "Parser")
-            throw FilterListError.parsingFailed
-        }
+    guard !validRules.isEmpty else {
+        LogsView.logProcessingStep(
+            "No valid rules found after parsing", for: "Parser")
+        throw FilterListError.parsingFailed
+    }
 
-        return validRules
+    return validRules
     }
 
     func convertToAdGuardFormat(_ rules: [String]) async throws
-        -> ProcessedConversionResult
+    -> ProcessedConversionResult
     {
-        LogsView.logProcessingStep(
-            "Converting rules with ContentBlockerConverter", for: "Converter")
-        let converter = ContentBlockerConverter()
-        let result = converter.convertArray(
-            rules: rules,
-            safariVersion: .safari16_4,
-            optimize: true,
-            advancedBlocking: true,
-            advancedBlockingFormat: .json
-        )
+    LogsView.logProcessingStep(
+        "Converting rules with ContentBlockerConverter", for: "Converter")
+    let converter = ContentBlockerConverter()
+    let result = converter.convertArray(
+        rules: rules,
+        safariVersion: .safari16_4,
+        optimize: true,
+        advancedBlocking: true,
+        advancedBlockingFormat: .json
+    )
 
-        if result.errorsCount > 0 {
-            LogsView.logProcessingStep(
-                "Conversion had \(result.errorsCount) errors", for: "Converter")
-        }
+    if result.errorsCount > 0 {
+        LogsView.logProcessingStep(
+            "Conversion had \(result.errorsCount) errors", for: "Converter")
+    }
 
         // Decode advancedBlocking into an array of ContentBlockerRule
-        var advancedRules: [ContentBlockerRule] = []
-        if let advancedBlockingString = result.advancedBlocking,
-            let data = advancedBlockingString.data(using: .utf8)
-        {
-            do {
-                let rules = try JSONDecoder().decode(
-                    [ContentBlockerRule].self, from: data)
-                advancedRules = rules
-            } catch {
-                LogsView.logProcessingStep(
-                    "Failed to decode advancedBlocking JSON: \(error.localizedDescription)",
-                    for: "Converter"
-                )
-            }
-        }
+    var advancedRules: [ContentBlockerRule] = []
+    if let advancedBlockingString = result.advancedBlocking,
+       let data = advancedBlockingString.data(using: .utf8)
+    {
+    do {
+        let rules = try JSONDecoder().decode(
+            [ContentBlockerRule].self, from: data)
+        advancedRules = rules
+    } catch {
+        LogsView.logProcessingStep(
+            "Failed to decode advancedBlocking JSON: \(error.localizedDescription)",
+            for: "Converter"
+        )
+    }
+    }
 
         // Create a ProcessedConversionResult
-        let processedResult = ProcessedConversionResult(
-            totalConvertedCount: result.totalConvertedCount,
-            convertedCount: result.convertedCount,
-            errorsCount: result.errorsCount,
-            overLimit: result.overLimit,
-            converted: result.converted,
-            advancedBlocking: advancedRules,
-            message: result.message
-        )
+    let processedResult = ProcessedConversionResult(
+        totalConvertedCount: result.totalConvertedCount,
+        convertedCount: result.convertedCount,
+        errorsCount: result.errorsCount,
+        overLimit: result.overLimit,
+        converted: result.converted,
+        advancedBlocking: advancedRules,
+        message: result.message
+    )
 
-        return processedResult
+    return processedResult
     }
 
     private func logConversionStatistics(
@@ -651,9 +973,13 @@ struct FilterListProcessor {
         filterList.lastUpdated = Date()
     }
 
+    func hasDownloaded(filterList: FilterList) {
+        filterList.downloaded = true
+    }
+
     private func convertRulesToAdGuardFormat(
         _ rules: [String], for name: String
-            // Update here to use ProcessedConversionResult
+        // Update here to use ProcessedConversionResult
     ) async throws -> ProcessedConversionResult {
         do {
             let result = try await convertToAdGuardFormat(rules)
@@ -705,7 +1031,8 @@ struct FilterListProcessor {
         category: FilterListCategory,
         isEnabled: Bool,
         order: Int,
-        homepageURL: String? = nil
+        homepageURL: String? = nil,
+        downloaded: Bool
     ) {
         let fetchDescriptor = FetchDescriptor<FilterList>(
             predicate: #Predicate { $0.id == id })
@@ -716,6 +1043,7 @@ struct FilterListProcessor {
             filterList.categoryString = category.rawValue
             filterList.isEnabled = isEnabled
             filterList.order = order
+            filterList.downloaded = downloaded
             if let homepageURL = homepageURL, !homepageURL.isEmpty {
                 filterList.homepageURL = homepageURL
             }
@@ -727,7 +1055,8 @@ struct FilterListProcessor {
                 category: category,
                 isEnabled: isEnabled,
                 order: order,
-                homepageURL: homepageURL
+                homepageURL: homepageURL,
+                downloaded: downloaded
             )
             context.insert(filterList)
         }
@@ -746,15 +1075,12 @@ struct FilterListProcessor {
             for: "FilterListProcessor"
         )
 
-        // MARK: - Save Regular Rules
         try await saveRegularRules(
             to: blockerListURL, conversionResults: conversionResults)
 
-        // MARK: - Save Advanced Blocking Rules
         try await saveAdvancedBlockingRules(
             to: advancedBlockingURL, conversionResults: conversionResults)
 
-        // MARK: - Log Total Statistics
         logTotalStatistics(from: conversionResults)
     }
 
@@ -765,41 +1091,41 @@ struct FilterListProcessor {
 
         for result in conversionResults {
             if let convertedString = result.converted,
-                let convertedData = convertedString.data(using: .utf8)
+               let convertedData = convertedString.data(using: .utf8)
             {
-                do {
+            do {
                     // Decode the JSON data into an array of dictionaries
-                    if let jsonArray = try JSONSerialization.jsonObject(
-                        with: convertedData, options: []) as? [[String: Any]]
-                    {
-                        // Convert each dictionary to a Rule and append to allRules
-                        let rules = jsonArray.compactMap { ruleDict -> Rule? in
-                            guard
-                                let triggerDict = ruleDict["trigger"]
-                                    as? [String: Any],
-                                let actionDict = ruleDict["action"]
-                                    as? [String: Any],
-                                let trigger = try? JSONDecoder().decode(
-                                    Rule.Trigger.self,
-                                    from: JSONSerialization.data(
-                                        withJSONObject: triggerDict)),
-                                let action = try? JSONDecoder().decode(
-                                    Rule.Action.self,
-                                    from: JSONSerialization.data(
-                                        withJSONObject: actionDict))
-                            else {
-                                return nil
-                            }
-                            return Rule(trigger: trigger, action: action)
-                        }
-                        allRules.append(contentsOf: rules)
+                if let jsonArray = try JSONSerialization.jsonObject(
+                    with: convertedData, options: []) as? [[String: Any]]
+                {
+                    // Convert each dictionary to a Rule and append to allRules
+                let rules = jsonArray.compactMap { ruleDict -> Rule? in
+                    guard
+                        let triggerDict = ruleDict["trigger"]
+                            as? [String: Any],
+                        let actionDict = ruleDict["action"]
+                            as? [String: Any],
+                        let trigger = try? JSONDecoder().decode(
+                            Rule.Trigger.self,
+                            from: JSONSerialization.data(
+                                withJSONObject: triggerDict)),
+                        let action = try? JSONDecoder().decode(
+                            Rule.Action.self,
+                            from: JSONSerialization.data(
+                                withJSONObject: actionDict))
+                    else {
+                        return nil
                     }
-                } catch {
-                    LogsView.logProcessingStep(
-                        "Failed to decode JSON array from string: \(error.localizedDescription)",
-                        for: "FilterListProcessor"
-                    )
+                    return Rule(trigger: trigger, action: action)
                 }
+                allRules.append(contentsOf: rules)
+                }
+            } catch {
+                LogsView.logProcessingStep(
+                    "Failed to decode JSON array from string: \(error.localizedDescription)",
+                    for: "FilterListProcessor"
+                )
+            }
             }
         }
 
@@ -809,7 +1135,7 @@ struct FilterListProcessor {
             return
         }
 
-        // Encode and save the rules
+            // Encode and save the rules
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
 
@@ -832,12 +1158,12 @@ struct FilterListProcessor {
     private func saveAdvancedBlockingRules(
         to url: URL, conversionResults: [ProcessedConversionResult]  // Update type here
     ) async throws {
-        // 1. Extract Advanced Rules
+            // 1. Extract Advanced Rules
         let advancedRules = conversionResults.flatMap {
             $0.advancedBlocking ?? []  // Access advancedBlocking directly
         }
 
-        // 2. Handle Empty Rules Case
+            // 2. Handle Empty Rules Case
         guard !advancedRules.isEmpty else {
             LogsView.logProcessingStep(
                 "No advanced blocking rules to write.",
@@ -846,34 +1172,34 @@ struct FilterListProcessor {
             return
         }
 
-        // 3. Encode and Save Rules
+            // 3. Encode and Save Rules
         try await encodeAndSaveRules(advancedRules, to: url)
 
-        // 4. Log Success
+            // 4. Log Success
         LogsView.logProcessingStep(
             "Successfully wrote advanced blocking rules to \(url.absoluteString)",
             for: "FilterListProcessor"
         )
     }
 
-    // Helper function to encode and save rules to a file
+        // Helper function to encode and save rules to a file
     private func encodeAndSaveRules(_ rules: [ContentBlockerRule], to url: URL)
-        async throws
+    async throws
     {
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
 
-        do {
-            let jsonData = try encoder.encode(rules)
-            try jsonData.write(to: url)
-        } catch {
-            LogsView.logProcessingStep(
-                "Failed to encode or write advanced blocking rules: \(error.localizedDescription)",
-                for: "FilterListProcessor"
-            )
-            throw error
-        }
+    do {
+        let jsonData = try encoder.encode(rules)
+        try jsonData.write(to: url)
+    } catch {
+        LogsView.logProcessingStep(
+            "Failed to encode or write advanced blocking rules: \(error.localizedDescription)",
+            for: "FilterListProcessor"
+        )
+        throw error
+    }
     }
 
     private func logTotalStatistics(
@@ -891,7 +1217,7 @@ struct FilterListProcessor {
 
         LogsView.logProcessingStep(
             """
-
+            
             === Total Statistics ===
             Total rules processed: \(totalStats.0)
             Successfully converted: \(totalStats.1)
@@ -903,7 +1229,7 @@ struct FilterListProcessor {
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListProvider.swift
+// WebShieldApp/FilterListProvider.swift
 import Foundation
 
 enum FilterListProvider {
@@ -921,8 +1247,7 @@ enum FilterListProvider {
             homepageURL:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Mobile Ads",
@@ -946,8 +1271,7 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "EasyList is the primary subscription that removes adverts from web pages in English. Already included in AdGuard Base filter.",
-            homepageURL: "https://easylist.to/"
-        ),
+            homepageURL: "https://easylist.to/"),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard Tracking Protection",
@@ -960,8 +1284,7 @@ enum FilterListProvider {
             homepageURL:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "EasyPrivacy",
@@ -971,8 +1294,7 @@ enum FilterListProvider {
             isSelected: true,
             description:
                 "Privacy protection supplement for EasyList.",
-            homepageURL: "https://easylist.to/"
-        ),
+            homepageURL: "https://easylist.to/"),
         FilterListData(
             id: UUID().uuidString,
             name: "Online Malicious URL Blocklist",
@@ -983,8 +1305,7 @@ enum FilterListProvider {
             description:
                 "Blocks domains that are known to be used to propagate malware and spyware.",
             homepageURL:
-                "https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist"
-        ),
+                "https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist"),
         FilterListData(
             id: UUID().uuidString,
             name: "Phishing URL Blocklist",
@@ -995,8 +1316,7 @@ enum FilterListProvider {
             description:
                 "Phishing URL blocklist for uBlock Origin (uBO), AdGuard, Vivaldi, Pi-hole, Hosts file, Dnsmasq, BIND, Unbound, Snort and Suricata.",
             homepageURL:
-                "https://gitlab.com/malware-filter/phishing-filter#phishing-url-blocklist"
-        ),
+                "https://gitlab.com/malware-filter/phishing-filter#phishing-url-blocklist"),
         FilterListData(
             id: UUID().uuidString,
             name: "Peter Lowe’s Ad and tracking server list",
@@ -1006,8 +1326,7 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Filter that blocks ads, trackers, and other nasty things.",
-            homepageURL: "https://pgl.yoyo.org/adservers/"
-        ),
+            homepageURL: "https://pgl.yoyo.org/adservers/"),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Cookie Notices",
@@ -1020,8 +1339,7 @@ enum FilterListProvider {
             homepageURL:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "EasyList – Cookie Notices",
@@ -1056,8 +1374,7 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Hides and blocks social content, social widgets, social scripts and social icons. Already included in Fanboy's Annoyances list.",
-            homepageURL: "https://github.com/ryanbr/fanboy-adblock/issues"
-        ),
+            homepageURL: "https://github.com/ryanbr/fanboy-adblock/issues"),
         FilterListData(
             id: UUID().uuidString,
             name: "Fanboy – Anti-Facebook",
@@ -1109,8 +1426,7 @@ enum FilterListProvider {
             homepageURL:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Other Annoyances",
@@ -1137,8 +1453,7 @@ enum FilterListProvider {
             homepageURL:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "Fanboy – Annoyances",
@@ -1148,8 +1463,7 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Removes in-page pop-ups and other annoyances. Includes Fanboy's Social Blocking & EasyList Cookie Lists.",
-            homepageURL: "https://github.com/ryanbr/fanboy-adblock/issues"
-        ),
+            homepageURL: "https://github.com/ryanbr/fanboy-adblock/issues"),
         FilterListData(
             id: UUID().uuidString,
             name: "ru",
@@ -1171,8 +1485,7 @@ enum FilterListProvider {
             description:
                 "EasyList Germany + AdGuard German filter. Filter list that specifically removes ads on websites in German language.",
             homepageURL:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
-        ),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Experimental",
@@ -1192,369 +1505,7 @@ enum FilterListProvider {
     }
 }
 
-// WebShieldApp/Model/FilterList/FilterListSection.swift
-import Foundation
-
-struct FilterListSection: Identifiable {
-    let title: String
-    let filterLists: [FilterList]
-    let category: FilterListCategory
-    var id: String { title }
-}
-
-// WebShieldApp/Model/FilterList/TotalStats.swift
-struct TotalStats {
-    var totalConvertedCount: Int = 0
-    var convertedCount: Int = 0
-    var errorsCount: Int = 0
-    var overLimit: Int = 0
-}
-
-// WebShieldApp/Model/GroupContainerURL.swift
-import Foundation
-
-@MainActor
-struct GroupContainerURL {
-    private static let fileManager: FileManager = FileManager.default
-    static func groupContainerURL() -> URL? {
-        return fileManager.containerURL(
-            forSecurityApplicationGroupIdentifier:
-                Identifiers.groupID)
-    }
-}
-
-// WebShieldApp/Model/Identifiers.swift
-import Foundation
-
-public enum Identifiers {
-    static let groupID: String = "G5S45S77DF.me.arjuna.WebShield"
-}
-
-// WebShieldApp/Model/TrustedSite.swift
-import Foundation
-import SwiftData
-import SwiftUI
-
-@Model
-final class TrustedSite {
-    @Attribute(.unique) var id: String
-    var domain: String
-
-    init(domain: String) {
-        self.id = UUID().uuidString
-        self.domain = domain
-    }
-}
-
-// WebShieldApp/Model/WSLogger.swift
-import Foundation
-
-@MainActor
-class WSLogger {
-    static var logs: [String] = []
-
-    static func log(_ message: String) {
-        logs.append(message)
-    }
-}
-
-// WebShieldApp/View/ContentView.swift
-@preconcurrency import ContentBlockerConverter
-import Foundation
-import SwiftData
-import SwiftUI
-
-struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query(sort: \FilterList.order, order: .forward) private var filterLists:
-        [FilterList]
-    @State private var selectedCategory: FilterListCategory = .all
-    @State private var isUpdating = false
-    @State private var showingLogs = false
-    @State private var showingImport = false
-    @State private var progress: Double = 0
-    @State private var currentList: Int = 0
-    @State private var totalLists: Int = 0
-    private let filterListProcessor = FilterListProcessor()
-    @State private var columnVisibility = NavigationSplitViewVisibility
-        .all
-
-    var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            List(selection: $selectedCategory) {
-                Section {
-                    let categories: [FilterListCategory] = [
-                        .all, .regional, .custom,
-                    ]
-                    ForEach(categories, id: \.self) { category in
-                        NavigationLink(value: category) {
-                            Label(
-                                category.rawValue,
-                                systemImage: category.systemImage
-                            )
-                        }
-                    }
-                } header: {
-                    Text("Categories")
-                }
-            }
-            .navigationTitle("WebShield")
-            .toolbar(removing: .sidebarToggle)
-        } detail: {
-            VStack(spacing: 0) {
-                if isUpdating {
-                    ProgressView(value: progress, total: 1.0)
-                        .progressViewStyle(.linear)
-                        .tint(.blue)
-                }
-
-                FilterListView(category: selectedCategory)
-                    .navigationTitle(selectedCategory.rawValue)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .automatic) {
-                            Button(action: { resetModel() }) {
-                                Label("Reset", systemImage: "trash")
-                            }
-                            .help("Reset Model")
-
-                            Button(action: { refreshFilters() }) {
-                                Label("Refresh", systemImage: "arrow.clockwise")
-                            }
-                            .help("Refresh Filters")
-                            .disabled(isUpdating)
-
-                            Button(action: { showingLogs.toggle() }) {
-                                Label(
-                                    "Logs",
-                                    systemImage: "doc.text.magnifyingglass")
-                            }
-                            .help("View Logs")
-
-                            Button(action: { showingImport.toggle() }) {
-                                Label("Import", systemImage: "plus")
-                            }
-                            .help("Import Filters")
-                        }
-                    }
-                    .sheet(isPresented: $showingLogs) {
-                        LogsView()
-                    }
-                    .sheet(isPresented: $showingImport) {
-                        ImportView()
-                    }
-            }
-        }
-    }
-
-    private var enabledFilterCount: Int {
-        filterLists.filter { $0.isEnabled }.count
-    }
-
-    private var totalRuleCount: Int {
-        // Read both blockerList.json and advancedBlocking.json to get the combined rule count
-
-        var combinedRuleCount = 0
-
-        // Read blockerList.json (regular rules)
-        if let blockerListURL = GroupContainerURL.groupContainerURL()?
-            .appendingPathComponent("blockerList.json"),
-            let blockerListData = try? Data(contentsOf: blockerListURL)
-        {
-            if let rules = try? JSONDecoder().decode(
-                [Rule].self, from: blockerListData)
-            {
-                combinedRuleCount += rules.count
-            }
-        }
-
-        // Read advancedBlocking.json (advanced rules)
-        if let advancedBlockingURL = GroupContainerURL.groupContainerURL()?
-            .appendingPathComponent("advancedBlocking.json"),
-            let advancedBlockingData = try? Data(
-                contentsOf: advancedBlockingURL)
-        {
-            if let rules = try? JSONDecoder().decode(
-                [ContentBlockerRule].self, from: advancedBlockingData
-            ) {
-                combinedRuleCount += rules.count
-            }
-        }
-
-        return combinedRuleCount
-    }
-
-    private func shouldShowSection(_ category: FilterListCategory) -> Bool {
-        selectedCategory == .all || category == selectedCategory
-    }
-
-    private var groupedFilterLists: [FilterListSection] {
-        let categoryOrder: [FilterListCategory] = [
-            .ads, .privacy, .security, .multipurpose,
-            .social, .cookies, .annoyances, .regional,
-            .experimental, .custom,
-        ]
-
-        let sortedLists = filterLists.sorted { $0.order < $1.order }
-        var sections: [FilterListCategory: [FilterList]] = [:]
-
-        for list in sortedLists {
-            if let category = list.category {
-                sections[category, default: []].append(list)
-            }
-        }
-
-        return categoryOrder.compactMap { category in
-            if let lists = sections[category], !lists.isEmpty {
-                return FilterListSection(
-                    title: category.rawValue,
-                    filterLists: lists,
-                    category: category
-                )
-            }
-            return nil
-        }
-    }
-
-    private func resetModel() {
-        do {
-            try modelContext.delete(model: FilterList.self)
-            try modelContext.save()
-            seedDataIfNeeded()
-        } catch {
-            print("Failed to reset model: \(error)")
-        }
-    }
-
-    private func refreshFilters() {
-        Task {
-            isUpdating = true
-            progress = 0
-            currentList = 0
-
-            defer {
-                isUpdating = false
-                progress = 0
-                currentList = 0
-                totalLists = 0
-            }
-
-            LogsView.logRefreshStart()
-
-            let fetchDescriptor = FetchDescriptor<FilterList>(
-                predicate: #Predicate { $0.isEnabled == true }
-            )
-
-            guard let enabledLists = try? modelContext.fetch(fetchDescriptor)
-            else {
-                LogsView.logProcessingStep(
-                    "Failed to fetch enabled filter lists", for: "System")
-                return
-            }
-
-            totalLists = enabledLists.count
-            var allConversionResults: [ProcessedConversionResult] = []
-
-            for (index, enabledList) in enabledLists.enumerated() {
-                do {
-                    let (conversionResult, version, homepage):
-                        (ProcessedConversionResult, String, String?)
-
-                    if let providerData = FilterListProvider.filterListData
-                        .first(where: {
-                            $0.name == enabledList.name
-                        })
-                    {
-                        (conversionResult, version, homepage) =
-                            try await filterListProcessor.downloadAndParse(
-                                from: URL(string: providerData.urlString)!,
-                                id: enabledList.id,
-                                name: enabledList.name,
-                                existingHomepage: enabledList.homepageURL
-                            )
-                    } else if let urlString = enabledList.urlString,
-                        let url = URL(string: urlString)
-                    {
-                        (conversionResult, version, homepage) =
-                            try await filterListProcessor.downloadAndParse(
-                                from: url,
-                                id: enabledList.id,
-                                name: enabledList.name,
-                                existingHomepage: enabledList.homepageURL
-                            )
-                    } else {
-                        LogsView.logProcessingStep(
-                            "No URL found for filter list",
-                            for: enabledList.name)
-                        continue
-                    }
-
-                    enabledList.version = version
-                    if enabledList.homepageURL == nil
-                        || enabledList.homepageURL?.isEmpty == true
-                    {
-                        enabledList.homepageURL = homepage
-                    }
-                    allConversionResults.append(conversionResult)
-
-                    // Update rule counts in SwiftData
-                    filterListProcessor.updateFilterListRuleCounts(
-                        filterList: enabledList,
-                        result: conversionResult
-                    )
-
-                    await MainActor.run {
-                        currentList = index + 1
-                        progress = Double(currentList) / Double(totalLists)
-                    }
-
-                } catch {
-                    LogsView.logProcessingStep(
-                        "Failed to process: \(error.localizedDescription)",
-                        for: enabledList.name
-                    )
-                }
-            }
-
-            // Save conversion results
-            do {
-                let blockerListURL = GroupContainerURL.groupContainerURL()?
-                    .appendingPathComponent("blockerList.json")
-
-                if let url = blockerListURL {
-                    try await filterListProcessor.saveContentBlockerRules(
-                        to: url,
-                        conversionResults: allConversionResults
-                    )
-                }
-
-                // Save the changes to SwiftData
-                try modelContext.save()
-
-            } catch {
-                print("Failed to save conversion results: \(error)")
-            }
-        }
-    }
-
-    private func seedDataIfNeeded() {
-        for (index, data) in FilterListProvider.filterListData.enumerated() {
-            filterListProcessor.saveFilterList(
-                to: modelContext,
-                id: data.id,
-                name: data.name,
-                version: "N/A",
-                description: data.description,
-                category: data.category,
-                isEnabled: data.isSelected,
-                order: index,
-                homepageURL: data.homepageURL
-            )
-        }
-        try? modelContext.save()
-    }
-}
-
-// WebShieldApp/View/FilterList/FilterListRow.swift
+// WebShieldApp/FilterListRow.swift
 import Foundation
 import SwiftUI
 
@@ -1575,46 +1526,46 @@ struct FilterListRow: View {
                         .font(.headline)
 
                     if let homepage = filterList.homepageURL,
-                        let url = URL(string: homepage)
+                       let url = URL(string: homepage)
                     {
-                        Button {
-                            openURL(url)
-                        } label: {
-                            Label("Homepage", systemImage: "house")
-                        }
-                        .labelStyle(.iconOnly)
-                        .buttonStyle(.plain)
-                        .foregroundStyle(.secondary)
-                        .help("Open Homepage")
+                    Button {
+                        openURL(url)
+                    } label: {
+                        Label("Homepage", systemImage: "house")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .help("Open Homepage")
                     }
 
                     if let urlString =
                         (providerData?.urlString ?? filterList.urlString),
-                        let url = URL(string: urlString)
+                       let url = URL(string: urlString)
                     {
-                        Button {
-                            openURL(url)
-                        } label: {
-                            Label("View Source", systemImage: "eye")
-                        }
-                        .labelStyle(.iconOnly)
-                        .buttonStyle(.plain)
-                        .foregroundStyle(.secondary)
-                        .help("View Filter Source")
+                    Button {
+                        openURL(url)
+                    } label: {
+                        Label("View Source", systemImage: "eye")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .help("View Filter Source")
                     }
 
                     if let infoURL = providerData?.informationURL,
-                        let url = URL(string: infoURL)
+                       let url = URL(string: infoURL)
                     {
-                        Button {
-                            openURL(url)
-                        } label: {
-                            Label("Information", systemImage: "info.circle")
-                        }
-                        .labelStyle(.iconOnly)
-                        .buttonStyle(.plain)
-                        .foregroundStyle(.secondary)
-                        .help("View Filter Information")
+                    Button {
+                        openURL(url)
+                    } label: {
+                        Label("Information", systemImage: "info.circle")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                    .help("View Filter Information")
                     }
                 }
 
@@ -1624,25 +1575,40 @@ struct FilterListRow: View {
                     .lineLimit(2)
 
                 HStack(spacing: 4) {
-                    Text("\(filterList.totalRuleCount) rules")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                    if !filterList.downloaded {
+                        Text("Never Downloaded!")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("\(filterList.totalRuleCount) rules")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
 
-                    Text("•")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        Text("•")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
 
-                    Text("Version \(filterList.version)")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        Text("Version \(filterList.version)")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+
+                    }
                 }
 
-                // Add the last updated date
-                Text(
-                    "Last Updated: \(filterList.lastUpdated, formatter: itemFormatter)"
-                )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                    // Add the last updated date
+                if filterList.downloaded == false {
+                    Text(
+                        "Never Updated!"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                } else {
+                    Text(
+                        "Last Updated: \(filterList.lastUpdated, formatter: itemFormatter)"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                }
             }
             .padding(.vertical, 8)
 
@@ -1664,7 +1630,7 @@ struct FilterListRow: View {
     }
 }
 
-// Date formatter for a more readable date
+    // Date formatter for a more readable date
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
@@ -1672,7 +1638,17 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
-// WebShieldApp/View/FilterList/FilterListToggle.swift
+// WebShieldApp/FilterListSection.swift
+import Foundation
+
+struct FilterListSection: Identifiable {
+    let title: String
+    let filterLists: [FilterList]
+    let category: FilterListCategory
+    var id: String { title }
+}
+
+// WebShieldApp/FilterListToggle.swift
 import SwiftUI
 
 struct FilterListToggle: View {
@@ -1688,7 +1664,7 @@ struct FilterListToggle: View {
                 }
             )
         ) {
-            // No label needed since it's handled in the parent view
+                // No label needed since it's handled in the parent view
             EmptyView()
         }
         .toggleStyle(SwitchToggleStyle())
@@ -1696,27 +1672,26 @@ struct FilterListToggle: View {
     }
 }
 
-// WebShieldApp/View/FilterList/FilterListView.swift
+// WebShieldApp/FilterListView.swift
 import SwiftData
 import SwiftUI
 
 struct FilterListView: View {
     var category: FilterListCategory
-    @Query(sort: \FilterList.order, order: .forward) private var filterLists:
-        [FilterList]
+    @Query(sort: \FilterList.order, order: .forward) private var filterLists: [FilterList]
     @Environment(\.modelContext) private var modelContext
     @State private var searchText: String = ""
 
     private var filteredLists: [FilterList] {
         filterLists.filter { filterList in
-            // Match category if it's not `.all`
+                // Match category if it's not `.all`
             let categoryMatches =
-                (category == .all || filterList.category == category)
+            (category == .all || filterList.category == category)
 
-            // Match name if user typed something in search bar
+                // Match name if user typed something in search bar
             let nameMatches =
-                searchText.isEmpty
-                || filterList.name.localizedCaseInsensitiveContains(searchText)
+            searchText.isEmpty
+            || filterList.name.localizedCaseInsensitiveContains(searchText)
 
             return categoryMatches && nameMatches
         }
@@ -1755,10 +1730,10 @@ struct FilterListView: View {
                                     .bold()
                                     .frame(width: 45, alignment: .leading)
                                     .padding(.horizontal)
-                                //                                Text("•")
-                                //                                    .font(.title2)
-                                //                                    .foregroundStyle(.secondary)
-                                //                                    .frame(width: 32, alignment: .center)
+                                    //                                Text("•")
+                                    //                                    .font(.title2)
+                                    //                                    .foregroundStyle(.secondary)
+                                    //                                    .frame(width: 32, alignment: .center)
                                 Text("\(totalRules)")
                                     .font(.title2)
                                     .bold()
@@ -1771,10 +1746,10 @@ struct FilterListView: View {
                                     .foregroundStyle(.secondary)
                                     .frame(width: 45, alignment: .leading)
                                     .padding(.horizontal)
-                                //                                Text("•")
-                                //                                    .font(.subheadline)
-                                //                                    .foregroundStyle(.secondary)
-                                //                                    .frame(width: 32, alignment: .center)
+                                    //                                Text("•")
+                                    //                                    .font(.subheadline)
+                                    //                                    .foregroundStyle(.secondary)
+                                    //                                    .frame(width: 32, alignment: .center)
                                 Text("Rules")
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
@@ -1828,7 +1803,7 @@ struct FilterListView: View {
             }
         }
 
-        // Define category order with custom at the end
+            // Define category order with custom at the end
         let categoryOrder: [FilterListCategory] = [
             .ads, .privacy, .security, .multipurpose,
             .social, .cookies, .annoyances, .regional,
@@ -1846,7 +1821,7 @@ struct FilterListView: View {
             return nil
         }
 
-        // Add custom section at the end if it exists
+            // Add custom section at the end if it exists
         if let customLists = sections[.custom], !customLists.isEmpty {
             orderedSections.append(
                 FilterListSection(
@@ -1870,69 +1845,27 @@ struct FilterListView: View {
     }
 }
 
-// WebShieldApp/View/Navbar/SidebarView.swift
-import SwiftData
-import SwiftUI
+// WebShieldApp/GroupContainerURL.swift
+import Foundation
 
-struct SidebarView: View {
-    @Binding var selectedCategory: FilterListCategory
-    @Query(sort: \FilterList.categoryString, order: .forward) var filterLists:
-        [FilterList]
-    @State private var showingImport = false
-
-    // 1. Use a regular List without selection binding
-    var body: some View {
-        VStack {
-            Text("Categories")
-                .font(.title3)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.top, .leading])
-            List {
-                ForEach(
-                    [FilterListCategory.all, .regional, .custom], id: \.self
-                ) { category in
-                    NavigationLink(destination: destinationView(for: category))
-                    {
-                        HStack {
-                            Image(systemName: category.systemImage)
-                            Text(category.rawValue)
-                        }
-                        .font(.system(size: 14))
-                        .foregroundColor(.secondary)
-                    }
-                }
-            }
-            .listStyle(SidebarListStyle())
-
-            Spacer()  // Push the button to the bottom
-
-            // 2. Import button outside the List
-            Button(action: {
-                showingImport = true
-            }) {
-                Label("Import", systemImage: "plus")
-            }
-            .buttonStyle(.borderedProminent)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(.ultraThickMaterial)
-            .cornerRadius(10)
-            .padding(.bottom, 8)
-        }
-        .navigationTitle("")  // Optional: Remove the navigation title if it's not needed here
-        .sheet(isPresented: $showingImport) {
-            ImportView()
-        }
-    }
-
-    // Helper function to create destination views
-    private func destinationView(for category: FilterListCategory) -> some View
-    {
-        FilterListView(category: category)
+@MainActor
+struct GroupContainerURL {
+    private static let fileManager: FileManager = FileManager.default
+    static func groupContainerURL() -> URL? {
+        return fileManager.containerURL(
+            forSecurityApplicationGroupIdentifier:
+                Identifiers.groupID)
     }
 }
 
-// WebShieldApp/View/Navbar/Toolbar/ImportView.swift
+// WebShieldApp/Identifiers.swift
+import Foundation
+
+public enum Identifiers {
+    static let groupID: String = "group.dev.arjuna.WebShield"
+}
+
+// WebShieldApp/ImportView.swift
 @preconcurrency import ContentBlockerConverter
 import Foundation
 import SwiftData
@@ -1960,7 +1893,7 @@ struct ImportView: View {
                 .buttonStyle(.borderless)
             }
             .padding()
-            .background(Color(.windowBackgroundColor))
+            //            .background(Color(.systemBackground))
 
             Divider()
 
@@ -1975,10 +1908,12 @@ struct ImportView: View {
                         ForEach(urls.indices, id: \.self) { index in
                             HStack {
                                 TextField(
-                                    "https://example.com/filterlist.txt",
+                                    "Filter List URL",
                                     text: $urls[index]
                                 )
                                 .textFieldStyle(.roundedBorder)
+                                .disableAutocorrection(true)
+                                //                                .textInputAutocapitalization(.never)
 
                                 if urls.count > 1 {
                                     Button(role: .destructive) {
@@ -2014,9 +1949,13 @@ struct ImportView: View {
                     .disabled(isImporting || urls.allSatisfy { $0.isEmpty })
             }
             .padding()
-            .background(Color(.windowBackgroundColor))
+            #if targetEnvironment(macCatalyst) || os(iOS)
+                .background(Color(.systemBackground))
+            #else
+                .background(Color(.textBackgroundColor))
+            #endif
         }
-        .frame(width: 500, height: 400)
+        //        .frame(width: 500, height: 400)
     }
 
     private func importFilterLists() {
@@ -2069,7 +2008,8 @@ struct ImportView: View {
                         version: version,
                         desc: description,
                         category: .custom,
-                        isEnabled: true
+                        isEnabled: true,
+                        downloaded: false
                     )
                     filterList.urlString = url.absoluteString
 
@@ -2104,7 +2044,7 @@ struct ImportView: View {
     }
 }
 
-// WebShieldApp/View/Navbar/Toolbar/LogsView.swift
+// WebShieldApp/LogsView.swift
 import ContentBlockerConverter
 import Foundation
 import SwiftUI
@@ -2135,19 +2075,31 @@ struct LogsView: View {
                 .buttonStyle(.borderless)
             }
             .padding()
-            .background(Color(.windowBackgroundColor))
 
-            Divider()
+            //            Divider()
 
             // Log content
             ScrollView {
-                Text(Self.logEntries.joined(separator: "\n"))
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                if !Self.logEntries.isEmpty {
+                    Text(Self.logEntries.joined(separator: "\n"))
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                } else {
+                    Text("No Logs (Yet) :)")
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                }
             }
-            .background(Color(.textBackgroundColor))
+            #if targetEnvironment(macCatalyst) || os(iOS)
+                .background(Color(.secondarySystemBackground))
+            #else
+                .background(Color(.textBackgroundColor))
+            #endif
         }
         .frame(width: 600, height: 400, alignment: .top)
     }
@@ -2228,7 +2180,21 @@ struct LogsView: View {
     }
 }
 
-// WebShieldApp/View/Navbar/Toolbar/NativeStyleTextEditor.swift
+// WebShieldApp/ModelContextExtension.swift
+import Foundation
+import SwiftData
+
+extension ModelContext {
+    func deleteAll<T: PersistentModel>(_ type: T.Type) throws {
+        let fetchDescriptor = FetchDescriptor<T>()
+        let results = try fetch(fetchDescriptor)
+        for object in results {
+            delete(object)
+        }
+    }
+}
+
+// WebShieldApp/NativeStyleTextEditor.swift
 import Foundation
 import SwiftUI
 
@@ -2252,37 +2218,223 @@ struct NativeStyleTextEditor: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color(.systemGray), lineWidth: 1)
         )
-        //        .background(Color(.textBackgroundColor))
+            //        .background(Color(.textBackgroundColor))
     }
 }
 
-// WebShieldApp/ViewModel/ContentViewModel.swift
+// WebShieldApp/PulsatingCircleButton.swift
 import Foundation
 import SwiftData
+import SwiftUI
 
-final class ContentViewModel: ObservableObject {
-    @Published var selectedCategory: FilterListCategory = .all
+struct PulsatingCircleButton: View {
+    enum FilterState {
+        case needsDownload  // Red
+        case needsUpdate  // Orange
+        case downloaded  // Green
+    }
 
-    @MainActor
-    init(context: ModelContext) {
+    @State private var isPulsating = false
+    @Query(sort: \FilterList.order, order: .forward) private var filterLists: [FilterList]
 
+    var body: some View {
+        VStack {
+                // Pulsating Circle
+            ZStack {
+                Circle()
+                    .fill(colorForState(currentFilterState()))
+                    .frame(width: 4, height: 4)
+                    .scaleEffect(isPulsating ? 1.2 : 1.0)
+                    .animation(
+                        Animation.easeInOut(duration: 1)
+                            .repeatForever(autoreverses: true),
+                        value: isPulsating
+                    )
+                    .onAppear {
+                        isPulsating = true
+                    }
+
+                Circle()
+                    .stroke(colorForState(currentFilterState()).opacity(0.6), lineWidth: 8)
+                    .frame(width: 2, height: 2)
+                    .scaleEffect(isPulsating ? 1.4 : 1.0)
+                    .opacity(0.5)
+                    .animation(
+                        Animation.easeInOut(duration: 1)
+                            .repeatForever(autoreverses: true),
+                        value: isPulsating
+                    )
+                    .onAppear {
+                        isPulsating = true
+                    }
+            }
+        }
+    }
+
+        // MARK: - Helper Functions
+
+    private func colorForState(_ state: FilterState) -> Color {
+        switch state {
+            case .needsDownload:
+                return .red
+            case .needsUpdate:
+                return .orange
+            case .downloaded:
+                return .green
+        }
+    }
+
+    private func currentFilterState() -> FilterState {
+            // Determine the state based on the filter lists
+        let oneToggledNotDownloaded = filterLists.contains { $0.isEnabled && !$0.downloaded }
+        let oneDownloadedNotToggled = filterLists.contains { !$0.isEnabled && $0.downloaded }
+        let allDownloaded = filterLists.allSatisfy { $0.downloaded }
+        let noneDownloaded = filterLists.allSatisfy { !$0.downloaded }
+
+        if noneDownloaded {
+            return .needsDownload  // Red
+        } else if oneToggledNotDownloaded || oneDownloadedNotToggled {
+            return .needsUpdate  // Orange
+        } else if allDownloaded {
+            return .downloaded  // Green
+        } else {
+            return .downloaded  // Default to green
+        }
+    }
+}
+
+// WebShieldApp/SettingsView.swift
+import Foundation
+import SwiftData
+import SwiftUI
+
+struct SettingsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    private let filterListProcessor = FilterListProcessor()
+    @EnvironmentObject var dataManager: DataManager
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section(header: Text("Developer").font(.headline)) {
+                    Button("Reset Model") {
+                        dataManager.resetModel()
+                    }
+                }.padding()
+            }
+            .navigationTitle("Settings")
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+}
+
+// WebShieldApp/SidebarView.swift
+import SwiftData
+import SwiftUI
+
+struct SidebarView: View {
+    @Binding var selectedCategory: FilterListCategory?
+
+    var body: some View {
+        List(selection: $selectedCategory) {
+            Section(header: Text("Categories")) {
+                let categories: [FilterListCategory] = [
+                    .all, .regional, .custom,
+                ]
+                ForEach(categories, id: \.self) { category in
+                    NavigationLink(value: category) {
+                        Label(
+                            category.rawValue,
+                            systemImage: category.systemImage
+                        )
+                    }
+                }
+            }
+        }
+        .navigationTitle("WebShield")
+            //        .frame(minWidth: 200, idealWidth: 200, maxWidth: 200)
+    }
+
+}
+
+// WebShieldApp/StringExtension.swift
+// Helper extension for String truncation
+extension String {
+    func truncated(to length: Int, trailing: String = "...") -> String {
+        return self.count > length
+            ? String(self.prefix(length)) + trailing : self
+    }
+}
+
+// WebShieldApp/TotalStats.swift
+struct TotalStats {
+    var totalConvertedCount: Int = 0
+    var convertedCount: Int = 0
+    var errorsCount: Int = 0
+    var overLimit: Int = 0
+}
+
+// WebShieldApp/TrustedSite.swift
+import Foundation
+import SwiftData
+import SwiftUI
+
+@Model
+final class TrustedSite {
+    @Attribute(.unique) var id: String
+    var domain: String
+
+    init(domain: String) {
+        self.id = UUID().uuidString
+        self.domain = domain
+    }
+}
+
+// WebShieldApp/UserDefaultsExtension.swift
+import Foundation
+
+extension UserDefaults {
+    static func exists(key: String) -> Bool {
+        return UserDefaults.standard.object(forKey: key) != nil
+    }
+}
+
+// WebShieldApp/WSLogger.swift
+import Foundation
+
+@MainActor
+class WSLogger {
+    static var logs: [String] = []
+
+    static func log(_ message: String) {
+        logs.append(message)
     }
 }
 
 // WebShieldApp/WebShieldApp.swift
-import Foundation
-import SafariServices
 import SwiftData
 import SwiftUI
 
 @main
 struct WebShieldApp: App {
+    @StateObject private var dataManager = DataManager()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(
-                    for: FilterList.self,
-                    isAutosaveEnabled: true)
+                .modelContainer(dataManager.container)
+                .environmentObject(dataManager)
+                .onAppear {
+                    dataManager.seedDataIfNeeded()
+                }
+                .frame(minWidth: 900, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
         }
     }
 }
@@ -2290,9 +2442,9 @@ struct WebShieldApp: App {
 // WebShieldContentBlocker/ContentBlockerRequestHandler.swift
 import Foundation
 
-class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
+final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     func beginRequest(with context: NSExtensionContext) {
-        let requiredPart = "G5S45S77DF.me.arjuna.WebShield"
+        let requiredPart = "group.dev.arjuna.WebShield"
 
         guard
             let containerURL = FileManager.default.containerURL(
@@ -2313,7 +2465,7 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
             return
         }
 
-        // Use if let instead of force unwrapping
+            // Use if let instead of force unwrapping
         if let attachment = NSItemProvider(contentsOf: blockerlistURL) {
             let item = NSExtensionItem()
             item.attachments = [attachment]
@@ -2336,11 +2488,11 @@ final class ContentBlockerEngineWrapper: Sendable {
     private let contentBlockerEngine: ContentBlockerEngine
     static let shared = ContentBlockerEngineWrapper()
     private let logger = Logger(
-        subsystem: "me.arjuna.WebShield",
+        subsystem: "dev.arjuna.WebShield.Scripts",
         category: "ContentBlockerEngineWrapper")
 
     private init() {
-        let requiredPart: String = "G5S45S77DF.me.arjuna.WebShield"
+        let requiredPart: String = "group.dev.arjuna.WebShield"
         let advancedBlockingURL =
             ContentBlockerEngineWrapper.getAdvancedBlockingURL(
                 forGroupIdentifier: requiredPart)
@@ -2410,10 +2562,10 @@ final class ContentBlockerEngineWrapper: Sendable {
         if let data = try? Data(contentsOf: url),
             let loadedJson = String(data: data, encoding: .utf8)
         {
-            logger.debug("Successfully loaded advanced blocking rules")
+            //            logger.debug("Successfully loaded advanced blocking rules")
             return loadedJson
         } else {
-            logger.error("Failed to read or decode advancedBlocking.json")
+            //            logger.error("Failed to read or decode advancedBlocking.json")
             return "[]"  // Fallback to empty rules
         }
     }
@@ -2472,9 +2624,9 @@ import ContentBlockerEngine
 import SafariServices
 import os
 
-class SafariExtensionHandler: SFSafariExtensionHandler {
+final class SafariExtensionHandler: SFSafariExtensionHandler {
     private let logger = Logger(
-        subsystem: "me.arjuna.WebShield",
+        subsystem: "dev.arjuna.WebShield.Scripts",
         category: "ContentBlockerEngineWrapper")
     override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
@@ -2488,26 +2640,26 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
 
         if messageName == "getAdvancedBlockingData" {
             guard let userInfo = userInfo,
-                let urlString = userInfo["url"] as? String,
-                let pageUrl = URL(string: urlString)
+                  let urlString = userInfo["url"] as? String,
+                  let pageUrl = URL(string: urlString)
             else {
                 logger.info("Invalid message or URL")
                 return
             }
 
-            // Test method call to trigger further initialization
+                // Test method call to trigger further initialization
             if let mainData = ContentBlockerEngineWrapper.shared.getData(
                 url: pageUrl)
             {
-                let data: [String: Any] = [
-                    "url": urlString,
-                    "data": mainData,
-                    "verbose": true,
-                ]
-                logger.info("Data received: (\(mainData, privacy: .public))")
+            let data: [String: Any] = [
+                "url": urlString,
+                "data": mainData,
+                "verbose": true,
+            ]
+            logger.info("Data received: (\(mainData, privacy: .public))")
 
-                page.dispatchMessageToScript(
-                    withName: "advancedBlockingData", userInfo: data)
+            page.dispatchMessageToScript(
+                withName: "advancedBlockingData", userInfo: data)
             } else {
                 logger.error(
                     "Failed to get data for URL: \(pageUrl.absoluteString, privacy: .public)"
@@ -2527,9 +2679,9 @@ class SafariExtensionHandler: SFSafariExtensionHandler {
         validationHandler(true, "")
     }
 
-    //    override func popoverViewController() -> SFSafariExtensionViewController {
-    //        SafariExtensionViewController.shared
-    //    }
+        //    override func popoverViewController() -> SFSafariExtensionViewController {
+        //        SafariExtensionViewController.shared
+        //    }
 }
 
 // WebShieldExtra/SafariExtensionViewController.swift

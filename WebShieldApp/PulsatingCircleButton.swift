@@ -14,7 +14,7 @@ struct PulsatingCircleButton: View {
 
     var body: some View {
         VStack {
-                // Pulsating Circle
+            // Pulsating Circle
             ZStack {
                 Circle()
                     .fill(colorForState(currentFilterState()))
@@ -46,21 +46,21 @@ struct PulsatingCircleButton: View {
         }
     }
 
-        // MARK: - Helper Functions
+    // MARK: - Helper Functions
 
     private func colorForState(_ state: FilterState) -> Color {
         switch state {
-            case .needsDownload:
-                return .red
-            case .needsUpdate:
-                return .orange
-            case .downloaded:
-                return .green
+        case .needsDownload:
+            return .red
+        case .needsUpdate:
+            return .orange
+        case .downloaded:
+            return .green
         }
     }
 
     private func currentFilterState() -> FilterState {
-            // Determine the state based on the filter lists
+        // Determine the state based on the filter lists
         let oneToggledNotDownloaded = filterLists.contains { $0.isEnabled && !$0.downloaded }
         let oneDownloadedNotToggled = filterLists.contains { !$0.isEnabled && $0.downloaded }
         let allDownloaded = filterLists.allSatisfy { $0.downloaded }

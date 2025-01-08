@@ -16,9 +16,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "000F2CE32D2E535400871D5E"
-               BuildableName = "WebShield Extra.appex"
-               BlueprintName = "WebShield Extra"
+               BlueprintIdentifier = "00C356262D2EEFE000BACCE7"
+               BuildableName = "WebShield Filters.appex"
+               BlueprintName = "WebShield Filters"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,7 +46,7 @@
       shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"

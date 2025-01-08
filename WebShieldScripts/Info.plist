@@ -49,6 +49,6 @@
             </dict>
         </dict>
         <key>NSHumanReadableDescription</key>
-        <string>Advanced wide-spectrum content blocking.</string>
+        <string>Advanced wide-spectrum content blocking. Blocks complex ads, trackers, miners, and more.</string>
     </dict>
 </plist>

@@ -5,21 +5,20 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    private let filterListProcessor = FilterListProcessor()
     @EnvironmentObject var dataManager: DataManager
 
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Developer")) {
+                Section(header: Text("Developer").font(.headline)) {
                     Button("Reset Model") {
                         dataManager.resetModel()
                     }
-                }
+                }.padding()
             }
             .navigationTitle("Settings")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .automatic) {
                     Button("Done") {
                         dismiss()
                     }

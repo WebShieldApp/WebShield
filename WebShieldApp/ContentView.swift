@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var totalLists: Int = 0
     @State private var columnVisibility = NavigationSplitViewVisibility
         .all
+    @State private var contentBlockerState = ContentBlockerState()
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -34,7 +35,7 @@ struct ContentView: View {
                 FilterListView(category: selectedCategory ?? .all)
                     .navigationTitle(selectedCategory?.rawValue ?? "All")
                     .toolbar {
-                        ToolbarItemGroup(placement: .topBarLeading) {
+                        ToolbarItemGroup(placement: .automatic) {
                             Button(action: { showingSettings.toggle() }) {
                                 Label(
                                     "Settings",
@@ -84,37 +85,38 @@ struct ContentView: View {
         filterLists.filter { $0.isEnabled }.count
     }
 
+    /// Summation of counts from both blockerList.json and advancedBlocking.json.
     private var totalRuleCount: Int {
-            // Read both blockerList.json and advancedBlocking.json to get the combined rule count
+        var combinedCount = 0
 
-        var combinedRuleCount = 0
-
-            // Read blockerList.json (regular rules)
+        // 1. blockerList.json
         if let blockerListURL = GroupContainerURL.groupContainerURL()?
-            .appendingPathComponent("blockerList.json"),
-           let blockerListData = try? Data(contentsOf: blockerListURL)
+            .appendingPathComponent("blockerList.json")
         {
-        if let rules = try? JSONDecoder().decode(
-            [Rule].self, from: blockerListData)
-        {
-        combinedRuleCount += rules.count
-        }
+            combinedCount += jsonArrayCount(at: blockerListURL)
         }
 
-            // Read advancedBlocking.json (advanced rules)
+        // 2. advancedBlocking.json
         if let advancedBlockingURL = GroupContainerURL.groupContainerURL()?
-            .appendingPathComponent("advancedBlocking.json"),
-           let advancedBlockingData = try? Data(
-            contentsOf: advancedBlockingURL)
+            .appendingPathComponent("advancedBlocking.json")
         {
-        if let rules = try? JSONDecoder().decode(
-            [ContentBlockerRule].self, from: advancedBlockingData
-        ) {
-            combinedRuleCount += rules.count
-        }
+            combinedCount += jsonArrayCount(at: advancedBlockingURL)
         }
 
-        return combinedRuleCount
+        return combinedCount
+    }
+
+    /// Safely decodes a file as a top-level JSON array, then returns its count.
+    /// If the file is missing or invalid, returns 0.
+    private func jsonArrayCount(at fileURL: URL) -> Int {
+        guard
+            let data = try? Data(contentsOf: fileURL),
+            let jsonObject = try? JSONSerialization.jsonObject(with: data),
+            let array = jsonObject as? [Any]
+        else {
+            return 0
+        }
+        return array.count
     }
 
     private func shouldShowSection(_ category: FilterListCategory) -> Bool {
@@ -149,7 +151,7 @@ struct ContentView: View {
         }
     }
 
-    private func refreshFilters() {
+    func refreshFilters() {
         Task {
             isUpdating = true
             progress = 0
@@ -167,67 +169,40 @@ struct ContentView: View {
             let fetchDescriptor = FetchDescriptor<FilterList>(
                 predicate: #Predicate { $0.isEnabled == true }
             )
-
-            guard let enabledLists = try? modelContext.fetch(fetchDescriptor)
-            else {
-                LogsView.logProcessingStep(
-                    "Failed to fetch enabled filter lists", for: "System")
+            guard let enabledLists = try? modelContext.fetch(fetchDescriptor) else {
+                LogsView.logProcessingStep("Failed to fetch enabled filter lists", for: "System")
                 return
             }
 
             totalLists = enabledLists.count
-            var allConversionResults: [ProcessedConversionResult] = []
 
-            for (index, enabledList) in enabledLists.enumerated() {
+            // --- NEW: If totalLists is 0, skip the loop & just finalize. ---
+            if totalLists == 0 {
+                LogsView.logProcessingStep("No filters are enabled; writing empty blocklist.", for: "Refresh")
+
+                // Write empty files
                 do {
-                    let (conversionResult, version, homepage):
-                    (ProcessedConversionResult, String, String?)
-
-                    if let providerData = FilterListProvider.filterListData
-                        .first(where: {
-                            $0.name == enabledList.name
-                        })
-                    {
-                    (conversionResult, version, homepage) =
-                    try await filterListProcessor.downloadAndParse(
-                        from: URL(string: providerData.urlString)!,
-                        id: enabledList.id,
-                        name: enabledList.name,
-                        existingHomepage: enabledList.homepageURL
-                    )
-                    } else if let urlString = enabledList.urlString,
-                              let url = URL(string: urlString)
-                    {
-                    (conversionResult, version, homepage) =
-                    try await filterListProcessor.downloadAndParse(
-                        from: url,
-                        id: enabledList.id,
-                        name: enabledList.name,
-                        existingHomepage: enabledList.homepageURL
-                    )
-                    } else {
-                        LogsView.logProcessingStep(
-                            "No URL found for filter list",
-                            for: enabledList.name)
-                        continue
+                    if let groupURL = GroupContainerURL.groupContainerURL() {
+                        // Save empty .json
+                        try await filterListProcessor.saveContentBlockerFiles(results: [], directoryURL: groupURL)
                     }
+                    // Reload content blocker anyway
+                    await contentBlockerState.reloadContentBlocker()
+                } catch {
+                    LogsView.addLog("Failed to handle empty filters: \(error)")
+                }
 
-                    enabledList.version = version
-                    if enabledList.homepageURL == nil
-                        || enabledList.homepageURL?.isEmpty == true
-                    {
-                    enabledList.homepageURL = homepage
-                    }
-                    allConversionResults.append(conversionResult)
+                return  // short‐circuit
+            }
 
-                    filterListProcessor.hasDownloaded(filterList: enabledList)
+            // Otherwise, proceed as usual
+            var allResults: [ProcessedConversionResult] = []
 
-                        // Update rule counts in SwiftData
-                    filterListProcessor.updateFilterListRuleCounts(
-                        filterList: enabledList,
-                        result: conversionResult
-                    )
-
+            for (index, list) in enabledLists.enumerated() {
+                do {
+                    let result = try await filterListProcessor.processFilterList(list, modelContext: modelContext)
+                    allResults.append(result)
+                    // UI progress
                     await MainActor.run {
                         currentList = index + 1
                         progress = Double(currentList) / Double(totalLists)
@@ -235,29 +210,24 @@ struct ContentView: View {
 
                 } catch {
                     LogsView.logProcessingStep(
-                        "Failed to process: \(error.localizedDescription)",
-                        for: enabledList.name
-                    )
+                        "Failed to process \(list.name): \(error.localizedDescription)", for: list.name)
                 }
             }
 
-                // Save conversion results
             do {
-                let blockerListURL = GroupContainerURL.groupContainerURL()?
-                    .appendingPathComponent("blockerList.json")
-
-                if let url = blockerListURL {
-                    try await filterListProcessor.saveContentBlockerRules(
-                        to: url,
-                        conversionResults: allConversionResults
-                    )
+                if let groupURL = GroupContainerURL.groupContainerURL() {
+                    try await filterListProcessor.saveContentBlockerFiles(results: allResults, directoryURL: groupURL)
+                } else {
+                    LogsView.logProcessingStep("Could not find App Group container URL.", for: "System")
                 }
 
-                    // Save the changes to SwiftData
+                LogsView.addLog("Saving Model")
                 try modelContext.save()
+                LogsView.addLog("Reloading Content Blocker")
+                await contentBlockerState.reloadContentBlocker()
 
             } catch {
-                print("Failed to save conversion results: \(error)")
+                LogsView.addLog("Failed to save content blocker files: \(error)")
             }
         }
     }

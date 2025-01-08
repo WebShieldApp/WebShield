@@ -4,8 +4,8 @@ import os
 
 final class SafariExtensionHandler: SFSafariExtensionHandler {
     private let logger = Logger(
-        subsystem: "dev.arjuna.WebShield",
-        category: "ContentBlockerEngineWrapper")
+        subsystem: "dev.arjuna.WebShield.Scripts",
+        category: "SafariExtensionHandler")
     override func messageReceived(
         withName messageName: String, from page: SFSafariPage,
         userInfo: [String: Any]?

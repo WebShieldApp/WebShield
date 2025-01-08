@@ -14,7 +14,7 @@ struct ImportView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-                // Header
+            // Header
             HStack {
                 Text("Import Filter Lists")
                     .font(.headline)
@@ -22,13 +22,14 @@ struct ImportView: View {
                 Button("Done") {
                     dismiss()
                 }
+                .buttonStyle(.borderless)
             }
             .padding()
-                //            .background(Color(.systemBackground))
+            //            .background(Color(.systemBackground))
 
             Divider()
 
-                // Content
+            // Content
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Enter filter list URLs (one per line)")
@@ -44,7 +45,7 @@ struct ImportView: View {
                                 )
                                 .textFieldStyle(.roundedBorder)
                                 .disableAutocorrection(true)
-                                    //                                .textInputAutocapitalization(.never)
+                                //                                .textInputAutocapitalization(.never)
 
                                 if urls.count > 1 {
                                     Button(role: .destructive) {
@@ -52,7 +53,7 @@ struct ImportView: View {
                                     } label: {
                                         Image(systemName: "minus.circle.fill")
                                     }
-                                        //                                    .buttonStyle(.borderless)
+                                    .buttonStyle(.borderless)
                                 }
                             }
                         }
@@ -64,7 +65,7 @@ struct ImportView: View {
                     } label: {
                         Label("Add URL", systemImage: "plus.circle.fill")
                     }
-                        //                    .buttonStyle(.borderless)
+                    .buttonStyle(.borderless)
                     .padding(.horizontal)
                 }
                 .padding(.vertical)
@@ -72,7 +73,7 @@ struct ImportView: View {
 
             Divider()
 
-                // Footer
+            // Footer
             HStack {
                 Spacer()
                 Button("Import", action: importFilterLists)
@@ -80,13 +81,13 @@ struct ImportView: View {
                     .disabled(isImporting || urls.allSatisfy { $0.isEmpty })
             }
             .padding()
-#if targetEnvironment(macCatalyst) || os(iOS)
-            .background(Color(.systemBackground))
-#else
-            .background(Color(.textBackgroundColor))
-#endif
+            #if targetEnvironment(macCatalyst) || os(iOS)
+                .background(Color(.systemBackground))
+            #else
+                .background(Color(.textBackgroundColor))
+            #endif
         }
-            //        .frame(width: 500, height: 400)
+        //        .frame(width: 500, height: 400)
     }
 
     private func importFilterLists() {
@@ -101,7 +102,7 @@ struct ImportView: View {
 
             for url in validUrls {
                 do {
-                        // Download and extract metadata
+                    // Download and extract metadata
                     let data = try await filterListProcessor.downloadFilterList(
                         from: url)
                     guard let content = String(data: data, encoding: .utf8)
@@ -109,7 +110,7 @@ struct ImportView: View {
                         throw FilterListError.invalidData
                     }
 
-                        // Extract metadata
+                    // Extract metadata
                     var title = url.lastPathComponent
                     var version = "0.0.0"
                     var description = "Imported filter list"
@@ -133,7 +134,7 @@ struct ImportView: View {
                         }
                     }
 
-                        // Create new filter list
+                    // Create new filter list
                     let filterList = FilterList(
                         name: title,
                         version: version,
