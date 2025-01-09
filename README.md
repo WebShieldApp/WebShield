@@ -1,3 +1,6 @@
+# Testflight for WebShield
+https://testflight.apple.com/join/1t5HfEGS
+
 > [!TIP]
 > * [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
 > * [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
