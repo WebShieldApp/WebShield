@@ -8,6 +8,10 @@ assignees: ''
 
 ---
 
+**These do not have to do with bugs with filters or broken websites. If it does, it will be closed.**
+
+**Before opening a new issue, please search existing issues. If it is a duplicate it will be closed.**
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
