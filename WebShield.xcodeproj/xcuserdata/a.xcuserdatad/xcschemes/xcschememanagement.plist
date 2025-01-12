@@ -19,15 +19,15 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>WebShield Advanced.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>WebShield Filters.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
-		</dict>
-		<key>WebShield Scripts.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>WebShield.xcscheme_^#shared#^_</key>
 		<dict>
@@ -88,6 +88,11 @@
 			<true/>
 		</dict>
 		<key>006959532C427DC0008A6204</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>006FC39B2D3095DD0091056F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

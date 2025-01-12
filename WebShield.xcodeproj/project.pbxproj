@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006FC3E42D30A07B0091056F /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 006FC3E32D30A07B0091056F /* ContentBlockerConverter */; };
 		00A76C112D2E835700CE43C4 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 00A76C102D2E835700CE43C4 /* ContentBlockerConverter */; };
-		00C3561B2D2EA64000BACCE7 /* WebShield Scripts.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000F2CE42D2E535400871D5E /* WebShield Scripts.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00C3561F2D2EA93400BACCE7 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 00C3561E2D2EA93400BACCE7 /* ContentBlockerConverter */; };
 		00C356282D2EEFE000BACCE7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00C356322D2EEFE100BACCE7 /* WebShield Filters.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C356272D2EEFE000BACCE7 /* WebShield Filters.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00CCC1902D30D126002D98A1 /* WebShield Advanced.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00CCC1942D30D128002D98A1 /* WebShield Filters.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB72D30C4610008D09D /* WebShield Filters.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,38 +29,31 @@
 			remoteGlobalIDString = 000F2C9F2D2E533400871D5E;
 			remoteInfo = a;
 		};
-		00C356182D2EA63D00BACCE7 /* PBXContainerItemProxy */ = {
+		00681F792D30D49D00F9E3F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 00C356262D2EEFE000BACCE7;
 			remoteInfo = "WebShield Filters";
 		};
-		00C3561C2D2EA64000BACCE7 /* PBXContainerItemProxy */ = {
+		00681F7B2D30D4A000F9E3F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 000F2CE32D2E535400871D5E;
-			remoteInfo = "WebShield Scripts";
-		};
-		00C356302D2EEFE000BACCE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 00C356262D2EEFE000BACCE7;
-			remoteInfo = Extra;
+			remoteGlobalIDString = 006FC39B2D3095DD0091056F;
+			remoteInfo = "WebShield Advanced";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		00C3561A2D2EA63E00BACCE7 /* Embed Foundation Extensions */ = {
+		00CCC1932D30D126002D98A1 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				00C3561B2D2EA64000BACCE7 /* WebShield Scripts.appex in Embed Foundation Extensions */,
-				00C356322D2EEFE100BACCE7 /* WebShield Filters.appex in Embed Foundation Extensions */,
+				00CCC1902D30D126002D98A1 /* WebShield Advanced.appex in Embed Foundation Extensions */,
+				00CCC1942D30D128002D98A1 /* WebShield Filters.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,24 +61,50 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		000F2CA02D2E533400871D5E /* WebShield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShield.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		000F2CB12D2E533500871D5E /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		000F2CBB2D2E533500871D5E /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		000F2CE42D2E535400871D5E /* WebShield Scripts.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Scripts.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C2BE322D2E327F000B431F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		00C356272D2EEFE000BACCE7 /* WebShield Filters.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Filters.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C356372D2EF54100BACCE7 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
+		00C4EAB62D30C4610008D09D /* WebShield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShield.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C4EAB72D30C4610008D09D /* WebShield Filters.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Filters.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Advanced.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		008F181B2D2E7228004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		006FC3DE2D3095DD0091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				WebShieldAppTests/AppTests.swift,
-				WebShieldAppUITests/AppUITests.swift,
-				WebShieldAppUITests/AppUITestsLaunchTests.swift,
+				Resources/_locales,
+				Resources/background.js,
+				Resources/content.js,
+				"Resources/extended-css.js",
+				Resources/images,
+				Resources/manifest.json,
+				Resources/popup.css,
+				Resources/popup.html,
+				Resources/popup.js,
+				Resources/scriptlet.js,
+				Source/ContentBlockerEngineWrapper.swift,
+				Source/SafariWebExtensionHandler.swift,
 			);
-			target = 000F2CE32D2E535400871D5E /* WebShield Scripts */;
+			target = 006FC39B2D3095DD0091056F /* WebShield Advanced */;
+		};
+		006FC3FC2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				blockerList.json,
+				Info.plist,
+				Source/ContentBlockerRequestHandler.swift,
+			);
+			target = 000F2C9F2D2E533400871D5E /* WebShield */;
+		};
+		006FC3FD2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				blockerList.json,
+				Source/ContentBlockerRequestHandler.swift,
+			);
+			target = 00C356262D2EEFE000BACCE7 /* WebShield Filters */;
 		};
 		008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -102,34 +121,49 @@
 			);
 			target = 000F2CBA2D2E533500871D5E /* AppUITests */;
 		};
-		00C356052D2EA24400BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 000F2CE32D2E535400871D5E /* WebShield Scripts */;
-		};
 		00C356162D2EA48100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Resources/iOS/AppIcon.appiconset/Contents.json,
+				"Resources/iOS/AppIcon.appiconset/Icon-20.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-20@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-20@3x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-29.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-29@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-29@3x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-40.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-40@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-40@3x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-60@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-60@3x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-76.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-76@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-83.5@2x.png",
+				"Resources/iOS/AppIcon.appiconset/Icon-1024.png",
+				Resources/macOS/AppIcon.appiconset/Contents.json,
+				"Resources/macOS/AppIcon.appiconset/Icon-16.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-32.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-64.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-128.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-256.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-512.png",
+				"Resources/macOS/AppIcon.appiconset/Icon-1024.png",
 			);
+			platformFiltersByRelativePath = {
+				Resources/LaunchScreen.storyboard = (
+					ios,
+				);
+			};
 			target = 000F2C9F2D2E533400871D5E /* WebShield */;
-		};
-		00C356362D2EEFE100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 00C356262D2EEFE000BACCE7 /* WebShield Filters */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000F2CA12D2E533400871D5E /* WebShieldApp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00C356162D2EA48100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldApp; sourceTree = "<group>"; };
-		000F2CE52D2E535400871D5E /* WebShieldScripts */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00C356052D2EA24400BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldScripts; sourceTree = "<group>"; };
-		008F181A2D2E7228004E312A /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (008F181B2D2E7228004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 008F181F2D2E7256004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
-		00C356292D2EEFE000BACCE7 /* WebShieldFilters */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00C356362D2EEFE100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldFilters; sourceTree = "<group>"; };
+		006FC3702D3095DD0091056F /* WebShieldAdvanced */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (006FC3DE2D3095DD0091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (Resources/_locales, Resources/images, ); path = WebShieldAdvanced; sourceTree = "<group>"; };
+		006FC3F92D30AA590091056F /* WebShieldFilters */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (006FC3FC2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 006FC3FD2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldFilters; sourceTree = "<group>"; };
+		008F181A2D2E7228004E312A /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 008F181F2D2E7256004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,11 +189,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CE12D2E535400871D5E /* Frameworks */ = {
+		006FC3992D3095DD0091056F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00C3561F2D2EA93400BACCE7 /* ContentBlockerConverter in Frameworks */,
+				006FC3E42D30A07B0091056F /* ContentBlockerConverter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,15 +212,15 @@
 			isa = PBXGroup;
 			children = (
 				000F2CA12D2E533400871D5E /* WebShieldApp */,
-				00C356292D2EEFE000BACCE7 /* WebShieldFilters */,
-				000F2CE52D2E535400871D5E /* WebShieldScripts */,
+				006FC3F92D30AA590091056F /* WebShieldFilters */,
+				006FC3702D3095DD0091056F /* WebShieldAdvanced */,
 				008F181A2D2E7228004E312A /* Tests */,
 				00333FBB2C3CC6D20031AEC6 /* Frameworks */,
-				000F2CA02D2E533400871D5E /* WebShield.app */,
 				000F2CB12D2E533500871D5E /* AppTests.xctest */,
 				000F2CBB2D2E533500871D5E /* AppUITests.xctest */,
-				000F2CE42D2E535400871D5E /* WebShield Scripts.appex */,
-				00C356272D2EEFE000BACCE7 /* WebShield Filters.appex */,
+				00C4EAB62D30C4610008D09D /* WebShield.app */,
+				00C4EAB72D30C4610008D09D /* WebShield Filters.appex */,
+				00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,24 +243,24 @@
 				000F2C9C2D2E533400871D5E /* Sources */,
 				000F2C9D2D2E533400871D5E /* Frameworks */,
 				000F2C9E2D2E533400871D5E /* Resources */,
-				00C3561A2D2EA63E00BACCE7 /* Embed Foundation Extensions */,
+				00CCC1932D30D126002D98A1 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				00C356192D2EA63D00BACCE7 /* PBXTargetDependency */,
-				00C3561D2D2EA64000BACCE7 /* PBXTargetDependency */,
-				00C356312D2EEFE000BACCE7 /* PBXTargetDependency */,
+				00681F7C2D30D4A000F9E3F1 /* PBXTargetDependency */,
+				00681F7A2D30D49D00F9E3F1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				000F2CA12D2E533400871D5E /* WebShieldApp */,
+				006FC3F92D30AA590091056F /* WebShieldFilters */,
 			);
 			name = WebShield;
 			packageProductDependencies = (
 				00A76C102D2E835700CE43C4 /* ContentBlockerConverter */,
 			);
 			productName = a;
-			productReference = 000F2CA02D2E533400871D5E /* WebShield.app */;
+			productReference = 00C4EAB62D30C4610008D09D /* WebShield.app */;
 			productType = "com.apple.product-type.application";
 		};
 		000F2CB02D2E533500871D5E /* AppTests */ = {
@@ -269,28 +303,24 @@
 			productReference = 000F2CBB2D2E533500871D5E /* AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		000F2CE32D2E535400871D5E /* WebShield Scripts */ = {
+		006FC39B2D3095DD0091056F /* WebShield Advanced */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 000F2CFE2D2E535500871D5E /* Build configuration list for PBXNativeTarget "WebShield Scripts" */;
+			buildConfigurationList = 006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShield Advanced" */;
 			buildPhases = (
-				000F2CE02D2E535400871D5E /* Sources */,
-				000F2CE12D2E535400871D5E /* Frameworks */,
-				000F2CE22D2E535400871D5E /* Resources */,
+				006FC3982D3095DD0091056F /* Sources */,
+				006FC3992D3095DD0091056F /* Frameworks */,
+				006FC39A2D3095DD0091056F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				000F2CE52D2E535400871D5E /* WebShieldScripts */,
-				008F181A2D2E7228004E312A /* Tests */,
-			);
-			name = "WebShield Scripts";
+			name = "WebShield Advanced";
 			packageProductDependencies = (
-				00C3561E2D2EA93400BACCE7 /* ContentBlockerConverter */,
+				006FC3E32D30A07B0091056F /* ContentBlockerConverter */,
 			);
-			productName = sfe;
-			productReference = 000F2CE42D2E535400871D5E /* WebShield Scripts.appex */;
+			productName = "Extra Extension (iOS)";
+			productReference = 00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		00C356262D2EEFE000BACCE7 /* WebShield Filters */ = {
@@ -305,14 +335,11 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				00C356292D2EEFE000BACCE7 /* WebShieldFilters */,
-			);
 			name = "WebShield Filters";
 			packageProductDependencies = (
 			);
 			productName = Extra;
-			productReference = 00C356272D2EEFE000BACCE7 /* WebShield Filters.appex */;
+			productReference = 00C4EAB72D30C4610008D09D /* WebShield Filters.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -336,7 +363,7 @@
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 000F2C9F2D2E533400871D5E;
 					};
-					000F2CE32D2E535400871D5E = {
+					006FC39B2D3095DD0091056F = {
 						CreatedOnToolsVersion = 16.2;
 					};
 					00C356262D2EEFE000BACCE7 = {
@@ -362,7 +389,7 @@
 			targets = (
 				000F2C9F2D2E533400871D5E /* WebShield */,
 				00C356262D2EEFE000BACCE7 /* WebShield Filters */,
-				000F2CE32D2E535400871D5E /* WebShield Scripts */,
+				006FC39B2D3095DD0091056F /* WebShield Advanced */,
 				000F2CB02D2E533500871D5E /* AppTests */,
 				000F2CBA2D2E533500871D5E /* AppUITests */,
 			);
@@ -391,7 +418,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CE22D2E535400871D5E /* Resources */ = {
+		006FC39A2D3095DD0091056F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -429,7 +456,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CE02D2E535400871D5E /* Sources */ = {
+		006FC3982D3095DD0091056F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -456,20 +483,15 @@
 			target = 000F2C9F2D2E533400871D5E /* WebShield */;
 			targetProxy = 000F2CBC2D2E533500871D5E /* PBXContainerItemProxy */;
 		};
-		00C356192D2EA63D00BACCE7 /* PBXTargetDependency */ = {
+		00681F7A2D30D49D00F9E3F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 00C356262D2EEFE000BACCE7 /* WebShield Filters */;
-			targetProxy = 00C356182D2EA63D00BACCE7 /* PBXContainerItemProxy */;
+			targetProxy = 00681F792D30D49D00F9E3F1 /* PBXContainerItemProxy */;
 		};
-		00C3561D2D2EA64000BACCE7 /* PBXTargetDependency */ = {
+		00681F7C2D30D4A000F9E3F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 000F2CE32D2E535400871D5E /* WebShield Scripts */;
-			targetProxy = 00C3561C2D2EA64000BACCE7 /* PBXContainerItemProxy */;
-		};
-		00C356312D2EEFE000BACCE7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 00C356262D2EEFE000BACCE7 /* WebShield Filters */;
-			targetProxy = 00C356302D2EEFE000BACCE7 /* PBXContainerItemProxy */;
+			target = 006FC39B2D3095DD0091056F /* WebShield Advanced */;
+			targetProxy = 00681F7B2D30D4A000F9E3F1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -480,49 +502,61 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = NO;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShieldApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LD_WARN_DUPLICATE_LIBRARIES = NO;
 				LD_WARN_UNUSED_DYLIBS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_INSTALL_MODULE = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 6;
-				VALIDATE_PRODUCT = NO;
-				XROS_DEPLOYMENT_TARGET = 1;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -532,39 +566,51 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = NO;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShieldApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LD_WARN_DUPLICATE_LIBRARIES = NO;
 				LD_WARN_UNUSED_DYLIBS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -572,9 +618,8 @@
 				SWIFT_INSTALL_MODULE = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 6;
-				VALIDATE_PRODUCT = NO;
-				XROS_DEPLOYMENT_TARGET = 1;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -690,122 +735,23 @@
 			};
 			name = Release;
 		};
-		000F2CFF2D2E535500871D5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = WebShieldScripts/WebShieldScripts.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_DEBUG_DYLIB = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WebShieldScripts/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Scripts";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LD_WARN_UNUSED_DYLIBS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Scripts;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				XROS_DEPLOYMENT_TARGET = 1.3;
-			};
-			name = Debug;
-		};
-		000F2D002D2E535500871D5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = WebShieldScripts/WebShieldScripts.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_DEBUG_DYLIB = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WebShieldScripts/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Scripts";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LD_WARN_UNUSED_DYLIBS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Scripts;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_VERSION = 5.0;
-				VALIDATE_PRODUCT = YES;
-				XROS_DEPLOYMENT_TARGET = 1.3;
-			};
-			name = Release;
-		};
 		0018486F2C2956AD00EE2E7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALLOW_TARGET_PLATFORM_SPECIALIZATION = NO;
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
-				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_COMMA = NO;
-				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = NO;
-				CLANG_WARN_ENUM_CONVERSION = NO;
 				CLANG_WARN_INFINITE_RECURSION = NO;
-				CLANG_WARN_INT_CONVERSION = NO;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = NO;
@@ -815,37 +761,31 @@
 				CLANG_WARN_UNREACHABLE_CODE = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				EAGER_LINKING = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
-				ENABLE_TESTABILITY = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FUSE_BUILD_SCRIPT_PHASES = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = c17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 0.1.0.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CODE_SIGN_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
@@ -854,40 +794,30 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_INSTALL_MODULE = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 				USE_HEADERMAP = NO;
-				VALIDATE_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
 		001848702C2956AD00EE2E7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALLOW_TARGET_PLATFORM_SPECIALIZATION = NO;
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
-				CLANG_WARN_BOOL_CONVERSION = NO;
 				CLANG_WARN_COMMA = NO;
-				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = NO;
-				CLANG_WARN_ENUM_CONVERSION = NO;
 				CLANG_WARN_INFINITE_RECURSION = NO;
-				CLANG_WARN_INT_CONVERSION = NO;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = NO;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = NO;
@@ -897,187 +827,226 @@
 				CLANG_WARN_UNREACHABLE_CODE = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EAGER_LINKING = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FUSE_BUILD_SCRIPT_PHASES = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = c17;
 				GCC_NO_COMMON_BLOCKS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 0.1.0.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_CODE_SIGN_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = me.arjuna.WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "xrsimulator xros macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_INSTALL_MODULE = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 6.0;
 				USE_HEADERMAP = NO;
-				VALIDATE_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		006FC3CD2D3095DD0091056F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WebShieldAdvanced/WebShieldAdvanced.entitlements;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
+				PRODUCT_MODULE_NAME = WebShieldAdvanced;
+				PRODUCT_NAME = "WebShield Advanced";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+		006FC3CE2D3095DD0091056F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WebShieldAdvanced/WebShieldAdvanced.entitlements;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
+				PRODUCT_MODULE_NAME = WebShieldAdvanced;
+				PRODUCT_NAME = "WebShield Advanced";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		00C356342D2EEFE100BACCE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldFilters/WebShieldFilters.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldFilters/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Filters";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
-				ONLY_ACTIVE_ARCH = YES;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Filters;
+				PRODUCT_MODULE_NAME = WebShieldFilters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
 		00C356352D2EEFE100BACCE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
+				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldFilters/WebShieldFilters.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldFilters/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Filters";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Filters;
+				PRODUCT_MODULE_NAME = WebShieldFilters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1111,20 +1080,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		000F2CFE2D2E535500871D5E /* Build configuration list for PBXNativeTarget "WebShield Scripts" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				000F2CFF2D2E535500871D5E /* Debug */,
-				000F2D002D2E535500871D5E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		0018485D2C2956AC00EE2E7A /* Build configuration list for PBXProject "WebShield" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0018486F2C2956AD00EE2E7A /* Debug */,
 				001848702C2956AD00EE2E7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShield Advanced" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				006FC3CD2D3095DD0091056F /* Debug */,
+				006FC3CE2D3095DD0091056F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1152,12 +1121,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		00A76C102D2E835700CE43C4 /* ContentBlockerConverter */ = {
+		006FC3E32D30A07B0091056F /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
 			productName = ContentBlockerConverter;
 		};
-		00C3561E2D2EA93400BACCE7 /* ContentBlockerConverter */ = {
+		00A76C102D2E835700CE43C4 /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
 			productName = ContentBlockerConverter;
