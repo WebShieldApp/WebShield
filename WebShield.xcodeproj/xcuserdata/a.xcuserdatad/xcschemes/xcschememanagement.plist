@@ -17,17 +17,62 @@
 		<key>AppTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>12</integer>
+		</dict>
+		<key>WebShield Ads.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>WebShield Advanced.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>11</integer>
 		</dict>
-		<key>WebShield Filters.xcscheme_^#shared#^_</key>
+		<key>WebShield Annoyances.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>7</integer>
+		</dict>
+		<key>WebShield Cookies.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>WebShield Custom.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>WebShield Experimental.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>WebShield Multipurpose.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>WebShield Privacy.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>WebShield Regional.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>WebShield Security.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>WebShield Social.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>WebShield.xcscheme_^#shared#^_</key>
 		<dict>
@@ -118,6 +163,51 @@
 			<true/>
 		</dict>
 		<key>00C356262D2EEFE000BACCE7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718602D3452EC00FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718742D3453A700FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718882D3453BC00FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E7189C2D3453CF00FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718B02D3453E600FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718C42D3453FF00FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718D82D34542600FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E718EC2D34543F00FD22A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>00E719002D34545D00FD22A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

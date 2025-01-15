@@ -22,17 +22,17 @@ final class FilterListProcessor: Sendable {
     ///
     /// - Parameters:
     ///   - filterList: The SwiftData model object representing this filter
-    ///   - modelContext: The SwiftData context to save updates
-    /// - Returns: A `ProcessedConversionResult` describing the results (or throws on error).
+    /// - Returns: A tuple containing `ProcessedConversionResult` and the `FilterListCategory`.
     func processFilterList(
         _ filterList: FilterList
-    ) async throws -> ProcessedConversionResult {
+    ) async throws -> (ProcessedConversionResult, FilterListCategory) {  // Return category
         guard let urlString = filterList.urlString,
-            let url = URL(string: urlString)
+            let url = URL(string: urlString),
+            let category = filterList.category
         else {
             throw NSError(
                 domain: "FilterListProcessor", code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Invalid or missing URL"])
+                userInfo: [NSLocalizedDescriptionKey: "Invalid or missing URL or category"])
         }
 
         // 1. Download raw text
@@ -41,75 +41,145 @@ final class FilterListProcessor: Sendable {
         // 2. Convert with ContentBlockerConverter
         let conversionResult = await convertRules(rawText: rawText)
 
-        // 3. Update SwiftData model fields: version, homepage, rule counts, etc.
+        // 3. Update SwiftData model fields
         filterList.version = metadata.version
-        if filterList.homepageURL == nil || filterList.homepageURL?.isEmpty == true {
-            filterList.homepageURL = metadata.homepage
-        }
-
-        // "Standard" vs. "Advanced" rule counts
+        filterList.homepageURL = metadata.homepage ?? filterList.homepageURL
         filterList.standardRuleCount = conversionResult.convertedCount
         filterList.advancedRuleCount = conversionResult.advancedBlockingCount
         filterList.downloaded = true
         filterList.lastUpdated = Date()
 
-        return conversionResult
+        // 4. Save to category-specific JSON file immediately after conversion
+        if let groupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Identifiers.groupID) {
+            try await saveContentBlockerFile(result: conversionResult, category: category, directoryURL: groupURL)
+            LogsView.addLog("Saved content blocker file for category: \(category.rawValue)")
+        } else {
+            LogsView.addLog("Failed to get group container URL.")
+        }
+
+        return (conversionResult, category)  // Return result and category
     }
 
     // MARK: - Writing the JSON files
-    /// Saves the aggregated conversion results from all lists into `blockerList.json` + `advancedBlocking.json`.
-    ///
-    /// - Parameters:
-    ///   - results: An array of `ProcessedConversionResult` from multiple filter lists
-    ///   - directoryURL: The URL (in group container) where files should be written
-    func saveContentBlockerFiles(results: [ProcessedConversionResult], directoryURL: URL) async throws {
-        let blockerListURL = directoryURL.appendingPathComponent("blockerList.json")
+    /// Saves the conversion results from all lists into individual category-based JSON files
+    /// and a single combined file for advanced rules.
+    func saveContentBlockerFiles(results: [(ProcessedConversionResult, FilterListCategory)], directoryURL: URL)
+        async throws
+    {
+        // Group results by category
+        let groupedResults = Dictionary(grouping: results, by: { $0.1 })
+
+        // Separate storage for advanced rules
+        var allAdvancedRules: [[String: Any]] = []
+
+        // Save each category's regular rules to a separate file and collect advanced rules
+        for (category, results) in groupedResults {
+            // Skip saving a file for the "all" category
+            guard category != .all else { continue }
+
+            let fileName = "\(category.rawValue.lowercased()).json"
+            let fileURL = directoryURL.appendingPathComponent(fileName)
+
+            // Combine regular rules for this category
+            let regularRules = results.compactMap { $0.0.converted }
+                .flatMap { jsonString -> [[String: Any]] in
+                    if let data = jsonString.data(using: .utf8),
+                        let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+                    {
+                        return array
+                    }
+                    return []
+                }
+
+            // Collect advanced rules for this category
+            let advancedRules = results.compactMap { $0.0.advancedBlocking }
+                .flatMap { jsonString -> [[String: Any]] in
+                    if let data = jsonString.data(using: .utf8),
+                        let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+                    {
+                        return array
+                    }
+                    return []
+                }
+            allAdvancedRules.append(contentsOf: advancedRules)
+
+            // Write regular rules to category file
+            if regularRules.isEmpty {
+                let empty = "[]".data(using: .utf8)!
+                try? empty.write(to: fileURL, options: .atomic)  // Use try? to ignore error if writing empty fails
+                LogsView.addLog("Wrote empty \(fileName)")
+            } else {
+                let data = try JSONSerialization.data(withJSONObject: regularRules, options: .prettyPrinted)
+                if let existingData = try? Data(contentsOf: fileURL),
+                    let existingRules = try? JSONSerialization.jsonObject(with: existingData) as? [[String: Any]]
+                {
+                    // Merge with existing rules
+                    let combinedRules = existingRules + regularRules
+                    let combinedData = try JSONSerialization.data(
+                        withJSONObject: combinedRules, options: .prettyPrinted)
+                    try combinedData.write(to: fileURL, options: .atomic)
+                    LogsView.addLog(
+                        "Appended \(regularRules.count) regular rules to \(fileName), total: \(combinedRules.count)")
+                } else {
+                    // Write new rules
+                    try data.write(to: fileURL, options: .atomic)
+                    LogsView.addLog("Wrote \(regularRules.count) regular rules to \(fileName)")
+                }
+            }
+        }
+
+        // Write all advanced rules to a single file
         let advancedBlockingURL = directoryURL.appendingPathComponent("advancedBlocking.json")
-
-        // 1. Gather all "regular" rules
-        let regularRules = results.compactMap { $0.converted }  // raw JSON strings
-            .flatMap { jsonString -> [[String: Any]] in
-                if let data = jsonString.data(using: .utf8),
-                    let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
-                {
-                    return array
-                }
-                return []
-            }
-
-        // 2. If no regular rules, write an empty array "[]"
-        if regularRules.isEmpty {
+        if allAdvancedRules.isEmpty {
             let empty = "[]".data(using: .utf8)!
-            try empty.write(to: blockerListURL, options: .atomic)
-            LogsView.addLog("Wrote empty blockerList.json to \(blockerListURL.path)")
+            try? empty.write(to: advancedBlockingURL, options: .atomic)  // Use try? to ignore error if writing empty fails
+            LogsView.addLog("Wrote empty advancedBlocking.json")
         } else {
-            // Write combined JSON
-            let data = try JSONSerialization.data(withJSONObject: regularRules, options: .prettyPrinted)
-            try data.write(to: blockerListURL, options: .atomic)
-            LogsView.addLog("Wrote \(regularRules.count) regular rules to \(blockerListURL.path)")
-        }
-
-        // 3. Gather all "advanced" rules
-        let advancedRules = results.compactMap { $0.advancedBlocking }  // raw JSON strings
-            .flatMap { jsonString -> [[String: Any]] in
-                if let data = jsonString.data(using: .utf8),
-                    let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
-                {
-                    return array
-                }
-                return []
-            }
-
-        if advancedRules.isEmpty {
-            // Write an empty file or skip. We'll write empty for consistency.
-            let empty = "[]".data(using: .utf8)!
-            try empty.write(to: advancedBlockingURL, options: .atomic)
-            LogsView.addLog("No advanced rules. Wrote empty advancedBlocking.json to \(advancedBlockingURL.path)")
-        } else {
-            let data = try JSONSerialization.data(withJSONObject: advancedRules, options: .prettyPrinted)
+            let data = try JSONSerialization.data(withJSONObject: allAdvancedRules, options: .prettyPrinted)
             try data.write(to: advancedBlockingURL, options: .atomic)
-            LogsView.addLog("Wrote \(advancedRules.count) advanced rules to \(advancedBlockingURL.path)")
+            LogsView.addLog("Wrote \(allAdvancedRules.count) advanced rules to advancedBlocking.json")
         }
+    }
+
+    // MARK: - Writing the JSON files (for individual filter list)
+    func saveContentBlockerFile(result: ProcessedConversionResult, category: FilterListCategory, directoryURL: URL)
+        async throws
+    {
+        // Skip saving for the "all" category
+        guard category != .all else { return }
+
+        let fileName = "\(category.rawValue.lowercased()).json"
+        let fileURL = directoryURL.appendingPathComponent(fileName)
+
+        // Write regular rules
+        if let regularRulesJSON = result.converted,
+            let regularRulesData = regularRulesJSON.data(using: .utf8),
+            let regularRules = try? JSONSerialization.jsonObject(with: regularRulesData) as? [[String: Any]]
+        {
+            if regularRules.isEmpty {
+                let empty = "[]".data(using: .utf8)!
+                try empty.write(to: fileURL, options: .atomic)
+                LogsView.addLog("Wrote empty \(fileName)")
+            } else {
+                let data = try JSONSerialization.data(withJSONObject: regularRules, options: .prettyPrinted)
+                try data.write(to: fileURL, options: .atomic)
+                LogsView.addLog("Wrote \(regularRules.count) regular rules to \(fileName)")
+            }
+        }
+
+        // Write advanced rules (if any)
+        //        if let advancedRulesJSON = result.advancedBlocking,
+        //            let advancedRulesData = advancedRulesJSON.data(using: .utf8),
+        //            let advancedRules = try? JSONSerialization.jsonObject(with: advancedRulesData) as? [[String: Any]]
+        //        {
+        //            if !advancedRules.isEmpty {
+        //                let advancedFileName = "\(category.rawValue.lowercased())_advanced.json"
+        //                let advancedFileURL = directoryURL.appendingPathComponent(advancedFileName)
+        //                let data = try JSONSerialization.data(withJSONObject: advancedRules, options: .prettyPrinted)
+        //                try data.write(to: advancedFileURL, options: .atomic)
+        //                LogsView.addLog("Wrote \(advancedRules.count) advanced rules to \(advancedFileName)")
+        //            }
+        //        }
     }
 
     // MARK: - Private Helpers

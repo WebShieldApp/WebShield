@@ -1,49 +1,40 @@
 // content.js
 (() => {
     const LOG_PREFIX = '(WebShield Advanced)';
+    const docHead = document.head || document.documentElement; // Cache head element
 
-    const executeScript = async (code) => {
-        const executeViaTextContent = () => {
-            const script = document.createElement("script");
-            script.textContent = code;
-            (document.head || document.documentElement).appendChild(script);
-            script.remove();
-            return !script.parentNode;
-        };
-
-        const executeViaBlob = () => {
-            const blob = new Blob([ code ], {type : "text/javascript"});
-            const url = URL.createObjectURL(blob);
-            const script = document.createElement("script");
-            script.src = url;
-            (document.head || document.documentElement).appendChild(script);
-            URL.revokeObjectURL(url);
-            script.remove();
-            return !script.parentNode;
-        };
-
-        return executeViaTextContent() || executeViaBlob();
+    const executeScript = (code) => {
+        const script = document.createElement("script");
+        script.textContent = code;
+        docHead.appendChild(script);
+        script.remove();
     };
 
-    const executeScripts = async (scripts = []) => {
-        console.log(`${LOG_PREFIX} Executing scripts...`);
-        const code = [
+    const applyScripts = (scripts, scriptletsData) => {
+        if (!scripts?.length && !scriptletsData?.length)
+            return;
+
+        console.log(
+            `${LOG_PREFIX} Applying ${scripts.length} script injections and ${scriptletsData.length} scriptlets...`);
+
+        const scriptletExecutableScripts = scriptletsData.map((s) => {
+            const param = {...JSON.parse(s), engine : "web-extension"};
+            try {
+                return scriptlets?.invoke(param) || "";
+            } catch (e) {
+                console.error(`${LOG_PREFIX} Error in applyScriptlets:`, e);
+                return "";
+            }
+        });
+
+        const combinedCode = [
             "(function () { try {",
-            ...scripts,
-            ";document.currentScript.remove();",
+            ...scripts.reverse(),
+            ...scriptletExecutableScripts,
             "} catch (ex) { console.error('Error executing WebShield js: ' + ex); } })();",
         ].join("\n");
 
-        if (!(await executeScript(code))) {
-            console.log(`${LOG_PREFIX} Unable to inject scripts`);
-        }
-    };
-
-    const applyScripts = async (scripts) => {
-        if (!scripts?.length)
-            return;
-        console.log(`${LOG_PREFIX} Applying ${scripts.length} script injections...`);
-        await executeScripts(scripts.reverse());
+        executeScript(combinedCode);
     };
 
     const protectStyleElementContent = (styleEl) => {
@@ -53,11 +44,12 @@
 
         new MutationObserver((mutations) => {
             for (const m of mutations) {
-                if (styleEl.getAttribute("mod") === "inner") {
-                    styleEl.removeAttribute("mod");
-                    break;
+                // Mutation observer is only used for protection, so if style element is already
+                // modified, then don't modify it
+                if (styleEl.hasAttribute("mod")) {
+                    return;
                 }
-                styleEl.setAttribute("mod", "inner");
+                styleEl.setAttribute("mod", "true");
 
                 if (m.removedNodes.length > 0) {
                     styleEl.append(...m.removedNodes);
@@ -75,56 +67,32 @@
         });
     };
 
-    const applyCss = async (styleSelectors) => {
-        if (!styleSelectors?.length)
+    const applyCss = (styleSelectors, extendedCss) => {
+        if (!styleSelectors?.length && !extendedCss?.length)
             return;
-        console.log(`${LOG_PREFIX} Applying ${styleSelectors.length} CSS stylesheets...`);
+
+        console.log(`${LOG_PREFIX} Applying ${styleSelectors.length} CSS stylesheets and ${
+            extendedCss.length} extended CSS stylesheets...`);
+
+        const combinedCss = [
+            ...styleSelectors,
+            ...extendedCss.filter(Boolean)
+                .map((s) => s.trim())
+                .map((s) => (s.endsWith("}") ? s : `${s} {display:none!important;}`)),
+        ].join("\n");
 
         const styleElement = document.createElement("style");
-        styleElement.textContent = styleSelectors.join("\n");
-        (document.head || document.documentElement).appendChild(styleElement);
+        styleElement.textContent = combinedCss;
+        docHead.appendChild(styleElement);
         protectStyleElementContent(styleElement);
     };
 
-    const applyExtendedCss = async (extendedCss) => {
-        if (!extendedCss?.length)
-            return;
-        console.log(`${LOG_PREFIX} Applying ${extendedCss.length} extended CSS stylesheets...`);
-
-        const cssRules = extendedCss.filter(Boolean)
-                             .map((s) => s.trim())
-                             .map((s) => (s.endsWith("}") ? s : `${s} {display:none!important;}`));
-
-        new ExtendedCss({cssRules}).apply();
-    };
-
-    const applyScriptlets = async (scriptletsData) => {
-        if (!scriptletsData?.length)
-            return;
-        console.log(`${LOG_PREFIX} Applying ${scriptletsData.length} scriptlets...`);
-
-        const scriptletExecutableScripts = scriptletsData.map((s) => {
-            const param = {...JSON.parse(s), engine : "web-extension"};
-            try {
-                return scriptlets?.invoke(param) || "";
-            } catch (e) {
-                console.error(`${LOG_PREFIX} Error in applyScriptlets:`, e);
-                return "";
-            }
-        });
-
-        await executeScripts(scriptletExecutableScripts);
-    };
-
-    const applyAdvancedBlockingData = async (data) => {
+    const applyAdvancedBlockingData = (data) => {
         console.log(`${LOG_PREFIX} Applying scripts and css for ${window.location.href}...`);
 
-        await Promise.all([
-            applyScripts(data.scripts),
-            applyCss(data.cssInject),
-            applyExtendedCss(data.cssExtended),
-            applyScriptlets(data.scriptlets),
-        ]);
+        // These apply functions don't need to wait for each other.
+        applyScripts(data.scripts, data.scriptlets);
+        applyCss(data.cssInject, data.cssExtended);
 
         console.log(`${LOG_PREFIX} Applying scripts and css - done`);
     };
@@ -135,7 +103,7 @@
 
         try {
             const response =
-                await browser.runtime.sendMessage({action : 'getAdvancedBlockingData', url : window.location.href});
+                await chrome.runtime.sendMessage({action : 'getAdvancedBlockingData', url : window.location.href});
 
             console.log(`${LOG_PREFIX} Raw response from background:`, response);
 

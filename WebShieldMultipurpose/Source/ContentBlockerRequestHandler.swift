@@ -1,7 +1,9 @@
 import Foundation
 import os
 
-private let logger = Logger(subsystem: "dev.arjuna.WebShield.Filters", category: "ContentBlockerRequestHandler")
+private let logger = Logger(
+    subsystem: "dev.arjuna.WebShield.DeclarativeBlockList-Multipurpose", category: "ContentBlockerRequestHandler")
+private let specificList = "multipurpose.json"
 
 final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     func beginRequest(with context: NSExtensionContext) {
@@ -22,15 +24,15 @@ final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
         logger.log("Successfully got container URL for group \(requiredPart, privacy: .public)")
 
         let blockerlistURL = containerURL.appendingPathComponent(
-            "blockerList.json")
+            "\(specificList)")
 
         guard FileManager.default.fileExists(atPath: blockerlistURL.path) else {
-            logger.log("Content Blocker Error: blockerList.json does not exist")
+            logger.log("Content Blocker Error: \(specificList) does not exist")
             context.completeRequest(returningItems: nil, completionHandler: nil)
             return
         }
 
-        logger.log("blockerList.json exists")
+        logger.log("\(specificList) exists")
 
         if let attachment = NSItemProvider(contentsOf: blockerlistURL) {
             logger.log("Sending attachment")
