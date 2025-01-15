@@ -2,7 +2,7 @@ import OSLog
 import SafariServices
 
 @available(macOS 13.0, iOS 16.0, *)
-final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling, Sendable {
+final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
     // MARK: - Types
 

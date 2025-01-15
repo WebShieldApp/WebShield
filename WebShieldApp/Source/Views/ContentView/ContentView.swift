@@ -175,18 +175,32 @@ struct ContentView: View {
 
             totalLists = enabledLists.count
 
-            // --- NEW: If totalLists is 0, skip the loop & just finalize. ---
             if totalLists == 0 {
-                LogsView.logProcessingStep("No filters are enabled; writing empty blocklist.", for: "Refresh")
+                LogsView.logProcessingStep(
+                    "No filters are enabled; writing empty blocklist for each category.", for: "Refresh")
 
-                // Write empty files
+                // Write empty files for EACH category
                 do {
                     if let groupURL = GroupContainerURL.groupContainerURL() {
-                        // Save empty .json
-                        try await filterListProcessor.saveContentBlockerFiles(results: [], directoryURL: groupURL)
+                        // Save empty .json for all categories
+                        for category in FilterListCategory.allCases {
+                            guard category != .all else { continue }  // Skip "all"
+                            try await filterListProcessor.saveContentBlockerFile(
+                                result: ProcessedConversionResult(
+                                    converted: "[]", advancedBlocking: nil, convertedCount: 0, advancedBlockingCount: 0,
+                                    errorsCount: 0, overLimit: false, message: nil),
+                                category: category,
+                                directoryURL: groupURL
+                            )
+                            // ALSO, reload each category's content blocker to ensure it's cleared
+                            try await contentBlockerState.reloadContentBlocker(for: category)
+                        }
+                        // Save empty advancedBlocking.json
+                        let advancedBlockingURL = groupURL.appendingPathComponent("advancedBlocking.json")
+                        let emptyData = "[]".data(using: .utf8)!
+                        try emptyData.write(to: advancedBlockingURL, options: .atomic)
+                        LogsView.addLog("Wrote empty advancedBlocking.json")
                     }
-                    // Reload content blocker anyway
-                    await contentBlockerState.reloadContentBlocker()
                 } catch {
                     LogsView.addLog("Failed to handle empty filters: \(error)")
                 }
@@ -194,13 +208,18 @@ struct ContentView: View {
                 return  // short‐circuit
             }
 
-            // Otherwise, proceed as usual
-            var allResults: [ProcessedConversionResult] = []
+            // Keep track of categories to reload
+            var categoriesToReload = Set<FilterListCategory>()
+            var allResults: [(ProcessedConversionResult, FilterListCategory)] = []
 
             for (index, list) in enabledLists.enumerated() {
                 do {
-                    let result = try await filterListProcessor.processFilterList(list)
-                    allResults.append(result)
+                    let (result, category) = try await filterListProcessor.processFilterList(list)
+                    allResults.append((result, category))
+
+                    // Add category to the set
+                    categoriesToReload.insert(category)
+
                     // UI progress
                     currentList = index + 1
                     progress = Double(currentList) / Double(totalLists)
@@ -213,6 +232,7 @@ struct ContentView: View {
 
             do {
                 if let groupURL = GroupContainerURL.groupContainerURL() {
+                    // Save per-category JSON files and a single advancedBlocking.json
                     try await filterListProcessor.saveContentBlockerFiles(results: allResults, directoryURL: groupURL)
                 } else {
                     LogsView.logProcessingStep("Could not find App Group container URL.", for: "System")
@@ -220,14 +240,19 @@ struct ContentView: View {
 
                 LogsView.addLog("Saving Model")
                 try modelContext.save()
-                LogsView.addLog("Reloading Content Blocker")
-                await contentBlockerState.reloadContentBlocker()
+
+                // Reload only necessary content blockers
+                LogsView.addLog("Reloading Content Blockers for \(categoriesToReload.count) categories")
+                for category in categoriesToReload {
+                    try await contentBlockerState.reloadContentBlocker(for: category)
+                }
 
             } catch {
                 LogsView.addLog("Failed to save content blocker files: \(error)")
             }
         }
     }
+
 }
 
 #Preview {

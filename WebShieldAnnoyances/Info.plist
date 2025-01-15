@@ -10,6 +10,6 @@
 		<string>$(PRODUCT_MODULE_NAME).ContentBlockerRequestHandler</string>
 	</dict>
 	<key>NSHumanReadableDescription</key>
-	<string>Declarative wide-spectrum content blocking for WebShield. Blocks ads, trackers, miners, and more.</string>
+	<string>Declarative wide-spectrum content blocking for WebShield for the "annoyances" category.</string>
 </dict>
 </plist>
