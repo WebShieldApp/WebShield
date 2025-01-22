@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E718EC2D34543F00FD22A7"
-               BuildableName = "WebShield Experimental.appex"
-               BlueprintName = "WebShield Experimental"
+               BuildableName = "WebShieldExperimental.appex"
+               BlueprintName = "WebShieldExperimental"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

@@ -11,13 +11,14 @@ final class FilterList: Identifiable, Hashable {
     var categoryString: String = FilterListCategory.custom.rawValue
     var isEnabled: Bool = false
     var order: Int = 0
-    var urlString: String? = "https://example.com"
-    var homepageURL: String? = "https://example.com"
+    var downloadUrl: String? = "https://example.com"
+    var homepageUrl: String? = "https://example.com"
     var standardRuleCount: Int = 0
     var advancedRuleCount: Int = 0
     var lastUpdated: Date = Date()
-    var informationURL: String? = "https://example.com"
+    var informationUrl: String? = "https://example.com"
     var downloaded: Bool = false
+    var needsRefresh: Bool = true
 
     // Initializer
     init(
@@ -27,10 +28,11 @@ final class FilterList: Identifiable, Hashable {
         category: FilterListCategory,
         isEnabled: Bool = false,
         order: Int = 0,
-        urlString: String? = nil,
-        homepageURL: String? = nil,
-        informationURL: String? = nil,
-        downloaded: Bool = false
+        downloadUrl: String? = nil,
+        homepageUrl: String? = nil,
+        informationUrl: String? = nil,
+        downloaded: Bool = false,
+        needsRefresh: Bool = true
     ) {
         self.id = UUID().uuidString
         self.name = name
@@ -39,10 +41,11 @@ final class FilterList: Identifiable, Hashable {
         self.categoryString = category.rawValue
         self.isEnabled = isEnabled
         self.order = order
-        self.urlString = urlString
-        self.homepageURL = homepageURL
-        self.informationURL = informationURL
+        self.downloadUrl = downloadUrl
+        self.homepageUrl = homepageUrl
+        self.informationUrl = informationUrl
         self.downloaded = false
+        self.needsRefresh = true
     }
 
     static func == (lhs: FilterList, rhs: FilterList) -> Bool {

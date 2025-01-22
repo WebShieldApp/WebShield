@@ -1,15 +1,30 @@
-import ContentBlockerConverter
 import SwiftData
 import SwiftUI
+
+class ImportViewState: ObservableObject {
+    @Published var urlStrings: [String] = [""]
+    @Published var isImporting = false
+    @Published var showError = false
+    @Published var error: Error?
+
+    func reset() {
+        urlStrings = [""]
+        isImporting = false
+        showError = false
+        error = nil
+    }
+}
 
 struct ImportView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
-    @State private var urlStrings: [String] = [""]
-    @State private var isImporting = false
-    @State private var showError = false
-    @State private var error: Error?
+    //    @State private var urlStrings: [String] = [""]
+    //    @State private var isImporting = false
+    //    @State private var showError = false
+    //    @State private var error: Error?
+    @StateObject private var state = ImportViewState()
+    @FocusState private var isTextFieldFocused: Bool
 
     let filterListProcessor = FilterListProcessor()
 
@@ -29,13 +44,51 @@ struct ImportView: View {
                     importButton
                 }
             }
-            .disabled(isImporting)
-            .alert("Error", isPresented: $showError, presenting: error) { error in
+            //            .disabled(state.isImporting)
+            .alert("Error", isPresented: $state.showError, presenting: state.error) { error in
                 Button("OK") {}
             } message: { error in
                 Text(error.localizedDescription)
             }
+            // Add this modifier to reset state when view appears
+            .onAppear {
+                state.reset()
+                isTextFieldFocused = true
+            }
+            //            .onDisappear {
+            //                state.reset()
+            //            }
         }
+    }
+
+    private func urlInputRow(for index: Int) -> some View {
+        HStack {
+            TextField("Enter URL", text: $state.urlStrings[index])
+                .autocorrectionDisabled(true)
+                .disabled(state.isImporting)  // Move disabled state here
+                .focused($isTextFieldFocused)
+                .tint(.accentColor)
+            if state.urlStrings.count > 1 {
+                removeUrlButton(at: index)
+                //                    .disabled(state.isImporting)  // And here
+            }
+        }
+    }
+
+    private var addUrlButton: some View {
+        Button {
+            state.urlStrings.append("")
+        } label: {
+            Label("Add URL", systemImage: "plus.circle.fill")
+        }
+        //        .disabled(state.isImporting)  // And here
+    }
+
+    private var cancelButton: some View {
+        Button("Cancel") {
+            dismiss()
+        }
+        //        .disabled(state.isImporting)  // And here
     }
 
     // MARK: - Subviews
@@ -50,26 +103,16 @@ struct ImportView: View {
 
     private var urlsInputSection: some View {
         Section(header: Text("Filter List URLs")) {
-            ForEach(urlStrings.indices, id: \.self) { index in
+            ForEach(state.urlStrings.indices, id: \.self) { index in
                 urlInputRow(for: index)
             }
             addUrlButton
         }
     }
 
-    private func urlInputRow(for index: Int) -> some View {
-        HStack {
-            TextField("Enter URL", text: $urlStrings[index])
-                .autocorrectionDisabled(true)
-            if urlStrings.count > 1 {
-                removeUrlButton(at: index)
-            }
-        }
-    }
-
     private func removeUrlButton(at index: Int) -> some View {
         Button(role: .destructive) {
-            urlStrings.remove(at: index)
+            state.urlStrings.remove(at: index)
         } label: {
             Image(systemName: "minus.circle.fill")
         }
@@ -77,23 +120,9 @@ struct ImportView: View {
         .foregroundColor(.red)
     }
 
-    private var addUrlButton: some View {
-        Button {
-            urlStrings.append("")
-        } label: {
-            Label("Add URL", systemImage: "plus.circle.fill")
-        }
-    }
-
-    private var cancelButton: some View {
-        Button("Cancel") {
-            dismiss()
-        }
-    }
-
     private var importButton: some View {
         Group {
-            if isImporting {
+            if state.isImporting {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
             } else {
@@ -102,7 +131,7 @@ struct ImportView: View {
                         await importFilterLists()
                     }
                 }
-                .disabled(urlStrings.allSatisfy { $0.isEmpty })
+                //                .disabled(state.urlStrings.allSatisfy { $0.isEmpty })
             }
         }
     }
@@ -110,45 +139,51 @@ struct ImportView: View {
     // MARK: - Import Logic
 
     private func importFilterLists() async {
-        let validUrls = urlStrings.compactMap { urlString in
-            URL(string: urlString.trimmingCharacters(in: .whitespaces))
+        await MainActor.run {
+            state.isImporting = true
         }
 
+        let validUrls =
+            state.urlStrings
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .compactMap(URL.init(string:))
+
         guard !validUrls.isEmpty else {
-            self.error = FilterListError.invalidURL
-            showError = true
+            await MainActor.run {
+                state.error = FilterListError.invalidURL
+                state.showError = true
+                state.isImporting = false
+            }
             return
         }
 
-        isImporting = true
-        defer {
-            isImporting = false
-            resetUrlStrings()  // Reset the URLs after import
-        }
-
-        for url in validUrls {
-            do {
-                let data = try await filterListProcessor.downloadFilterList(from: url)
-                let content = try parseFilterListData(data)
-                let filterList = try createFilterList(from: content, url: url)
-                modelContext.insert(filterList)
-                LogsView.logProcessingStep("Added new filter list: \(filterList.name)", for: "Import")
-            } catch {
-                self.error = error
-                showError = true
-                LogsView.logProcessingStep("Failed to import: \(error.localizedDescription)", for: url.absoluteString)
-                return  // Stop importing on the first error
-            }
-        }
-
         do {
+            for url in validUrls {
+                let (data, _) = try await filterListProcessor.downloadFilterList(from: url)
+                let content = try parseFilterListData(data)
+                let filterList = createFilterList(from: content, url: url)
+
+                modelContext.insert(filterList)
+                await WebShieldLogger.shared.logFilterListProcessingStep(
+                    "Added new filter list: \(filterList.name)", for: "Import")
+            }
+
             try modelContext.save()
-            LogsView.logProcessingStep("Successfully imported \(validUrls.count) filter lists", for: "Import")
-            dismiss()
+
+            await MainActor.run {
+                state.urlStrings = [""]  // Reset URLs
+                state.isImporting = false  // Re-enable inputs
+                dismiss()
+            }
+
         } catch {
-            self.error = error
-            showError = true
-            LogsView.logProcessingStep("Failed to save filter lists: \(error.localizedDescription)", for: "Import")
+            await MainActor.run {
+                state.error = error
+                state.showError = true
+                state.isImporting = false
+            }
+            await WebShieldLogger.shared.logFilterListProcessingStep(
+                "Failed to import: \(error.localizedDescription)", for: "Import")
         }
     }
 
@@ -159,36 +194,67 @@ struct ImportView: View {
         return content
     }
 
-    private func createFilterList(from content: String, url: URL) throws -> FilterList {
+    private func createFilterList(from content: String, url: URL) -> FilterList {
         var title = url.lastPathComponent
         var version = "0.0.0"
         var description = "Imported filter list"
 
-        for line in content.components(separatedBy: .newlines) {
-            if line.hasPrefix("! Title:") {
-                title = line.replacingOccurrences(of: "! Title:", with: "")
+        var foundTitle = false
+        var foundVersion = false
+        var foundDescription = false
+
+        // Single pass: split on newlines, trim each line, check prefixes
+        for line in content.split(whereSeparator: \.isNewline) {
+            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
+
+            // Check each known prefix
+            switch true {
+            case trimmedLine.hasPrefix("! Title:"):
+                title =
+                    trimmedLine
+                    .dropFirst("! Title:".count)
                     .trimmingCharacters(in: .whitespaces)
-            } else if line.hasPrefix("! Version:") {
-                version = line.replacingOccurrences(of: "! Version:", with: "")
+                foundTitle = true
+
+            case trimmedLine.hasPrefix("! Version:"):
+                version =
+                    trimmedLine
+                    .dropFirst("! Version:".count)
                     .trimmingCharacters(in: .whitespaces)
-            } else if line.hasPrefix("! Description:") {
-                description = line.replacingOccurrences(of: "! Description:", with: "")
+                foundVersion = true
+
+            case trimmedLine.hasPrefix("! Description:"):
+                description =
+                    trimmedLine
+                    .dropFirst("! Description:".count)
                     .trimmingCharacters(in: .whitespaces)
+                foundDescription = true
+
+            default:
+                break
+            }
+
+            // Early exit once we've found all fields
+            if foundTitle && foundVersion && foundDescription {
+                break
             }
         }
 
+        // Construct and return the FilterList
         return FilterList(
             name: title,
             version: version,
             desc: description,
             category: .custom,
             isEnabled: true,
-            urlString: url.absoluteString,
+            downloadUrl: url.absoluteString,
             downloaded: false
         )
     }
 
     private func resetUrlStrings() {
-        urlStrings = [""]
+        DispatchQueue.main.async {
+            state.urlStrings = [""]
+        }
     }
 }

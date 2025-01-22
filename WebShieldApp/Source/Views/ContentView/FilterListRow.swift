@@ -1,4 +1,3 @@
-import ContentBlockerConverter
 import SwiftData
 import SwiftUI
 
@@ -23,6 +22,7 @@ struct FilterListRow: View {
                         get: { filterList.isEnabled },
                         set: { newValue in
                             filterList.isEnabled = newValue
+                            filterList.needsRefresh = true
                             try? modelContext.save()
                         }
                     )
@@ -70,15 +70,15 @@ struct FilterListRow: View {
     @ViewBuilder
     private func actionButtons() -> some View {
         HStack(spacing: 8) {
-            if let homepage = filterList.homepageURL, let url = URL(string: homepage) {
+            if let homepage = filterList.homepageUrl, let url = URL(string: homepage) {
                 createButton(url: url, systemImage: "house", helpText: "Open Homepage")
             }
 
-            if let urlString = (providerData?.urlString ?? filterList.urlString), let url = URL(string: urlString) {
+            if let downloadUrl = (providerData?.downloadUrl ?? filterList.downloadUrl), let url = URL(string: downloadUrl) {
                 createButton(url: url, systemImage: "eye", helpText: "View Filter Source")
             }
 
-            if let infoURL = providerData?.informationURL, let url = URL(string: infoURL) {
+            if let infoURL = providerData?.informationUrl, let url = URL(string: infoURL) {
                 createButton(url: url, systemImage: "info.circle", helpText: "View Filter Information")
             }
         }

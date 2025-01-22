@@ -15,12 +15,12 @@ final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
                 forSecurityApplicationGroupIdentifier: requiredPart)
         else {
             logger.log(
-                "Error: Could not get container URL for group \(requiredPart, privacy: .public)")
+                "Error: Could not get container URL for group \(requiredPart)")
             context.completeRequest(returningItems: nil, completionHandler: nil)
             return
         }
 
-        logger.log("Successfully got container URL for group \(requiredPart, privacy: .public)")
+        logger.log("Successfully got container URL for group \(requiredPart)")
 
         let blockerlistURL = containerURL.appendingPathComponent(
             "privacy.json")

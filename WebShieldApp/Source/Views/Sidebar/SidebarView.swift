@@ -8,7 +8,8 @@ struct SidebarView: View {
         List(selection: $selectedCategory) {
             Section(header: Text("Categories")) {
                 let categories: [FilterListCategory] = [
-                    .all, .regional, .custom,
+                    .all, .ads, .privacy, .security, .multipurpose, .cookies, .social, .annoyances, .regional,
+                    .experimental, .custom,
                 ]
                 ForEach(categories, id: \.self) { category in
                     NavigationLink(value: category) {
