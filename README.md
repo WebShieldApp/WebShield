@@ -1,8 +1,14 @@
+# Testflight for WebShield
+https://testflight.apple.com/join/1t5HfEGS
+
 > [!TIP]
-> * [Here](https://github.com/arjpar/WebShield-staging/tree/ldev) is my code.
 > * [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
 > * [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
 > * You can [donate](#Donate) to me if you want to support the project. WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever.
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/7800d7a4-2960-4a5b-a2a3-cedeeb65b82c" width="250"/>
+</p>
 
 # WebShield - Safari Adblocker
 
@@ -21,10 +27,17 @@ WebShield can block ads, trackers, cookie notices, and more. You can also import
 
 These requirements are tentative and due to change. I will try to support older OSes as much as I can.
 - macOS 15 or later
-- iOS 18 or later
-- visionOS 2 or later
+- iOS 18 or later (build will come soon)
+- visionOS 2 or later (build will come soon)
 
 ## Installation
+
+### Testflight
+1. Download & install WebShield from [TestFlight](https://testflight.apple.com/join/1t5HfEGS)
+2. Open Safari and navigate to Settings > Extensions
+3. Enable "WebShield Filters" and "WebShield Scripts"
+4. Go to Websites (in Safai Settings) > "WebShield Scripts"
+5. Change "For other websites" to "Allow"
 
 ### App Store (Coming Soon)
 

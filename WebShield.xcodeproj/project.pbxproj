@@ -175,26 +175,169 @@
 		006FC3DE2D3095DD0091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Resources/_locales,
+				Resources/background.js,
+				Resources/content.js,
+				"Resources/extended-css.js",
 				Resources/images,
+				Resources/manifest.json,
+				Resources/popup.css,
+				Resources/popup.html,
+				Resources/popup.js,
+				Resources/scriptlet.js,
+				Source/ChunkFileReader.swift,
+				Source/ContentBlockerEngineWrapper.swift,
+				Source/SafariWebExtensionHandler.swift,
 			);
 			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
+		};
+		006FC3FC2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				blockerList.json,
+				Info.plist,
+				Source/ContentBlockerRequestHandler.swift,
+			);
+			target = 000F2C9F2D2E533400871D5E /* WebShield */;
+		};
+		006FC3FD2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				blockerList.json,
+				Source/ContentBlockerRequestHandler.swift,
+			);
+			target = 00C356262D2EEFE000BACCE7 /* WebShieldAds */;
+		};
+		008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WebShieldAppTests/AppTests.swift,
+			);
+			target = 000F2CB02D2E533500871D5E /* AppTests */;
+		};
+		008F181F2D2E7256004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WebShieldAppUITests/AppUITests.swift,
+				WebShieldAppUITests/AppUITestsLaunchTests.swift,
+			);
+			target = 000F2CBA2D2E533500871D5E /* AppUITests */;
+		};
+		00C356162D2EA48100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				Resources/iOS/AppIcon.appiconset/Contents.json,
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-60@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-60@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-76.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-76@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-83.5@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-1024.png",
+				Resources/macOS/AppIcon.appiconset/Contents.json,
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-16.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-32.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-64.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-128.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-256.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-512.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-1024.png",
+			);
+			platformFiltersByRelativePath = {
+				Resources/LaunchScreen.storyboard = (
+					ios,
+				);
+			};
+			target = 000F2C9F2D2E533400871D5E /* WebShield */;
+		};
+		00E718702D3452ED00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718602D3452EC00FD22A7 /* WebShieldPrivacy */;
+		};
+		00E718842D3453A700FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718742D3453A700FD22A7 /* WebShieldSecurity */;
+		};
+		00E718982D3453BC00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */;
+		};
+		00E718AC2D3453CF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E7189C2D3453CF00FD22A7 /* WebShieldCookies */;
+		};
+		00E718C02D3453E600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718B02D3453E600FD22A7 /* WebShieldSocial */;
+		};
+		00E718D42D3453FF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */;
+		};
+		00E718E82D34542600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718D82D34542600FD22A7 /* WebShieldRegional */;
+		};
+		00E718FC2D34543F00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718EC2D34543F00FD22A7 /* WebShieldExperimental */;
+		};
+		00E719102D34545D00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E719002D34545D00FD22A7 /* WebShieldCustom */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		000F2CA12D2E533400871D5E /* WebShieldApp */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldApp; sourceTree = "<group>"; };
-		006FC3702D3095DD0091056F /* WebShieldAdvanced */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (006FC3DE2D3095DD0091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (Resources/images, ); path = WebShieldAdvanced; sourceTree = "<group>"; };
-		006FC3F92D30AA590091056F /* WebShieldAds */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldAds; sourceTree = "<group>"; };
-		008F181A2D2E7228004E312A /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
-		00E718632D3452ED00FD22A7 /* WebShieldPrivacy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldPrivacy; sourceTree = "<group>"; };
-		00E718772D3453A700FD22A7 /* WebShieldSecurity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldSecurity; sourceTree = "<group>"; };
-		00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldMultipurpose; sourceTree = "<group>"; };
-		00E7189F2D3453CF00FD22A7 /* WebShieldCookies */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldCookies; sourceTree = "<group>"; };
-		00E718B32D3453E600FD22A7 /* WebShieldSocial */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldSocial; sourceTree = "<group>"; };
-		00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldAnnoyances; sourceTree = "<group>"; };
-		00E718DB2D34542600FD22A7 /* WebShieldRegional */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldRegional; sourceTree = "<group>"; };
-		00E718EF2D34543F00FD22A7 /* WebShieldExperimental */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldExperimental; sourceTree = "<group>"; };
-		00E719032D34545D00FD22A7 /* WebShieldCustom */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WebShieldCustom; sourceTree = "<group>"; };
+		000F2CA12D2E533400871D5E /* WebShieldApp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00C356162D2EA48100BACCE7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldApp; sourceTree = "<group>"; };
+		006FC3702D3095DD0091056F /* WebShieldAdvanced */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (006FC3DE2D3095DD0091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (Resources/_locales, Resources/images, ); path = WebShieldAdvanced; sourceTree = "<group>"; };
+		006FC3F92D30AA590091056F /* WebShieldAds */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (006FC3FC2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 006FC3FD2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldAds; sourceTree = "<group>"; };
+		008F181A2D2E7228004E312A /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 008F181F2D2E7256004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
+		00E718632D3452ED00FD22A7 /* WebShieldPrivacy */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718702D3452ED00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldPrivacy; sourceTree = "<group>"; };
+		00E718772D3453A700FD22A7 /* WebShieldSecurity */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718842D3453A700FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldSecurity; sourceTree = "<group>"; };
+		00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718982D3453BC00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldMultipurpose; sourceTree = "<group>"; };
+		00E7189F2D3453CF00FD22A7 /* WebShieldCookies */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718AC2D3453CF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldCookies; sourceTree = "<group>"; };
+		00E718B32D3453E600FD22A7 /* WebShieldSocial */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718C02D3453E600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldSocial; sourceTree = "<group>"; };
+		00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718D42D3453FF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldAnnoyances; sourceTree = "<group>"; };
+		00E718DB2D34542600FD22A7 /* WebShieldRegional */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718E82D34542600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldRegional; sourceTree = "<group>"; };
+		00E718EF2D34543F00FD22A7 /* WebShieldExperimental */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E718FC2D34543F00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldExperimental; sourceTree = "<group>"; };
+		00E719032D34545D00FD22A7 /* WebShieldCustom */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (00E719102D34545D00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WebShieldCustom; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
