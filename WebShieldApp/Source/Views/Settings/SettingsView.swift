@@ -37,7 +37,9 @@ struct SettingsForm: View {
     private func developerSection() -> some View {
         Section(header: Text("Developer").font(.headline)) {
             Button(role: .destructive) {
-                dataManager.resetModel()
+                Task {
+                    await dataManager.resetModel()
+                }
             } label: {
                 Label("Reset Model", systemImage: "arrow.counterclockwise.circle.fill")
             }

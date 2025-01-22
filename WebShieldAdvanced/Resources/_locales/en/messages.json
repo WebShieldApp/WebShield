@@ -1,10 +1,10 @@
 {
-    "extension_name": {
-        "message": "WebShield Advanced",
-        "description": "The display name for the extension."
-    },
-    "extension_description": {
-        "message": "Ad-blocker for complex ads.",
-        "description": "Description of what the extension does."
-    }
+  "extension_name": {
+    "message": "WebShield Advanced",
+    "description": "The display name for the extension."
+  },
+  "extension_description": {
+    "message": "Ad-blocker for complex ads.",
+    "description": "Description of what the extension does."
+  }
 }

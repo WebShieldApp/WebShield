@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "006FC39B2D3095DD0091056F"
-               BuildableName = "WebShield Advanced.appex"
-               BlueprintName = "WebShield Advanced"
+               BuildableName = "WebShieldAdvanced.appex"
+               BlueprintName = "WebShieldAdvanced"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -55,8 +55,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "006FC39B2D3095DD0091056F"
-            BuildableName = "WebShield Advanced.appex"
-            BlueprintName = "WebShield Advanced"
+            BuildableName = "WebShieldAdvanced.appex"
+            BlueprintName = "WebShieldAdvanced"
             ReferencedContainer = "container:WebShield.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

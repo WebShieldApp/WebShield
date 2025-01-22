@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E7189C2D3453CF00FD22A7"
-               BuildableName = "WebShield Cookies.appex"
-               BlueprintName = "WebShield Cookies"
+               BuildableName = "WebShieldCookies.appex"
+               BlueprintName = "WebShieldCookies"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

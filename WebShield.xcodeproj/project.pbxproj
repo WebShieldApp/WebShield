@@ -8,28 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		006FC3E42D30A07B0091056F /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 006FC3E32D30A07B0091056F /* ContentBlockerConverter */; };
+		008A43C82D3A270F003F8B46 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilter = ios; };
 		00A76C112D2E835700CE43C4 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 00A76C102D2E835700CE43C4 /* ContentBlockerConverter */; };
 		00C356282D2EEFE000BACCE7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00CCC1902D30D126002D98A1 /* WebShield Advanced.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00CCC1942D30D128002D98A1 /* WebShield Ads.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB72D30C4610008D09D /* WebShield Ads.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00CCC1902D30D126002D98A1 /* WebShieldAdvanced.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00CCC1942D30D128002D98A1 /* WebShieldAds.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB72D30C4610008D09D /* WebShieldAds.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718622D3452ED00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E7186C2D3452ED00FD22A7 /* WebShield Privacy.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718612D3452EC00FD22A7 /* WebShield Privacy.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E7186C2D3452ED00FD22A7 /* WebShieldPrivacy.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718762D3453A700FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718802D3453A700FD22A7 /* WebShield Security.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718752D3453A700FD22A7 /* WebShield Security.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718802D3453A700FD22A7 /* WebShieldSecurity.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E7188A2D3453BC00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718942D3453BC00FD22A7 /* WebShield Multipurpose.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718892D3453BC00FD22A7 /* WebShield Multipurpose.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718942D3453BC00FD22A7 /* WebShieldMultipurpose.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E7189E2D3453CF00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718A82D3453CF00FD22A7 /* WebShield Cookies.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E7189D2D3453CF00FD22A7 /* WebShield Cookies.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718A82D3453CF00FD22A7 /* WebShieldCookies.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718B22D3453E600FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718BC2D3453E600FD22A7 /* WebShield Social.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718B12D3453E600FD22A7 /* WebShield Social.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718BC2D3453E600FD22A7 /* WebShieldSocial.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718C62D3453FF00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718D02D3453FF00FD22A7 /* WebShield Annoyances.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718C52D3453FF00FD22A7 /* WebShield Annoyances.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718D02D3453FF00FD22A7 /* WebShieldAnnoyances.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718DA2D34542600FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718E42D34542600FD22A7 /* WebShield Regional.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718D92D34542600FD22A7 /* WebShield Regional.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718E42D34542600FD22A7 /* WebShieldRegional.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718D92D34542600FD22A7 /* WebShieldRegional.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E718EE2D34543F00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E718F82D34543F00FD22A7 /* WebShield Experimental.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718ED2D34543F00FD22A7 /* WebShield Experimental.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718F82D34543F00FD22A7 /* WebShieldExperimental.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		00E719022D34545D00FD22A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00E7190C2D34545D00FD22A7 /* WebShield Custom.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E719012D34545D00FD22A7 /* WebShield Custom.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E7190C2D34545D00FD22A7 /* WebShieldCustom.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E719012D34545D00FD22A7 /* WebShieldCustom.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,21 +130,21 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		00CCC1932D30D126002D98A1 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				00E718D02D3453FF00FD22A7 /* WebShield Annoyances.appex in Embed Foundation Extensions */,
-				00CCC1902D30D126002D98A1 /* WebShield Advanced.appex in Embed Foundation Extensions */,
-				00E718E42D34542600FD22A7 /* WebShield Regional.appex in Embed Foundation Extensions */,
-				00E718F82D34543F00FD22A7 /* WebShield Experimental.appex in Embed Foundation Extensions */,
-				00CCC1942D30D128002D98A1 /* WebShield Ads.appex in Embed Foundation Extensions */,
-				00E718BC2D3453E600FD22A7 /* WebShield Social.appex in Embed Foundation Extensions */,
-				00E7186C2D3452ED00FD22A7 /* WebShield Privacy.appex in Embed Foundation Extensions */,
-				00E718A82D3453CF00FD22A7 /* WebShield Cookies.appex in Embed Foundation Extensions */,
-				00E7190C2D34545D00FD22A7 /* WebShield Custom.appex in Embed Foundation Extensions */,
-				00E718942D3453BC00FD22A7 /* WebShield Multipurpose.appex in Embed Foundation Extensions */,
-				00E718802D3453A700FD22A7 /* WebShield Security.appex in Embed Foundation Extensions */,
+				00E718D02D3453FF00FD22A7 /* WebShieldAnnoyances.appex in Embed Foundation Extensions */,
+				00CCC1902D30D126002D98A1 /* WebShieldAdvanced.appex in Embed Foundation Extensions */,
+				00E718E42D34542600FD22A7 /* WebShieldRegional.appex in Embed Foundation Extensions */,
+				00E718F82D34543F00FD22A7 /* WebShieldExperimental.appex in Embed Foundation Extensions */,
+				00CCC1942D30D128002D98A1 /* WebShieldAds.appex in Embed Foundation Extensions */,
+				00E718BC2D3453E600FD22A7 /* WebShieldSocial.appex in Embed Foundation Extensions */,
+				00E7186C2D3452ED00FD22A7 /* WebShieldPrivacy.appex in Embed Foundation Extensions */,
+				00E718A82D3453CF00FD22A7 /* WebShieldCookies.appex in Embed Foundation Extensions */,
+				00E7190C2D34545D00FD22A7 /* WebShieldCustom.appex in Embed Foundation Extensions */,
+				00E718942D3453BC00FD22A7 /* WebShieldMultipurpose.appex in Embed Foundation Extensions */,
+				00E718802D3453A700FD22A7 /* WebShieldSecurity.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,20 +154,21 @@
 /* Begin PBXFileReference section */
 		000F2CB12D2E533500871D5E /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		000F2CBB2D2E533500871D5E /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		008A43C72D3A270F003F8B46 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		00C2BE322D2E327F000B431F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		00C356372D2EF54100BACCE7 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
 		00C4EAB62D30C4610008D09D /* WebShield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShield.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C4EAB72D30C4610008D09D /* WebShield Ads.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Ads.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Advanced.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718612D3452EC00FD22A7 /* WebShield Privacy.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Privacy.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718752D3453A700FD22A7 /* WebShield Security.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Security.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718892D3453BC00FD22A7 /* WebShield Multipurpose.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Multipurpose.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E7189D2D3453CF00FD22A7 /* WebShield Cookies.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Cookies.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718B12D3453E600FD22A7 /* WebShield Social.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Social.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718C52D3453FF00FD22A7 /* WebShield Annoyances.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Annoyances.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718D92D34542600FD22A7 /* WebShield Regional.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Regional.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718ED2D34543F00FD22A7 /* WebShield Experimental.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Experimental.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E719012D34545D00FD22A7 /* WebShield Custom.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WebShield Custom.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C4EAB72D30C4610008D09D /* WebShieldAds.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAds.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAdvanced.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldPrivacy.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldSecurity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldMultipurpose.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldCookies.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldSocial.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAnnoyances.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718D92D34542600FD22A7 /* WebShieldRegional.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldRegional.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldExperimental.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E719012D34545D00FD22A7 /* WebShieldCustom.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldCustom.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -183,10 +185,11 @@
 				Resources/popup.html,
 				Resources/popup.js,
 				Resources/scriptlet.js,
+				Source/ChunkFileReader.swift,
 				Source/ContentBlockerEngineWrapper.swift,
 				Source/SafariWebExtensionHandler.swift,
 			);
-			target = 006FC39B2D3095DD0091056F /* WebShield Advanced */;
+			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
 		};
 		006FC3FC2D30AA590091056F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -203,7 +206,7 @@
 				blockerList.json,
 				Source/ContentBlockerRequestHandler.swift,
 			);
-			target = 00C356262D2EEFE000BACCE7 /* WebShield Ads */;
+			target = 00C356262D2EEFE000BACCE7 /* WebShieldAds */;
 		};
 		008F181D2D2E7251004E312A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -225,29 +228,29 @@
 			membershipExceptions = (
 				Info.plist,
 				Resources/iOS/AppIcon.appiconset/Contents.json,
-				"Resources/iOS/AppIcon.appiconset/Icon-20.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-20@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-20@3x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-29.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-29@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-29@3x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-40.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-40@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-40@3x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-60@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-60@3x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-76.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-76@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-83.5@2x.png",
-				"Resources/iOS/AppIcon.appiconset/Icon-1024.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-20@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-29@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-40@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-60@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-60@3x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-76.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-76@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-83.5@2x.png",
+				"Resources/iOS/AppIcon.appiconset/WebShield Final (No Text)-1024.png",
 				Resources/macOS/AppIcon.appiconset/Contents.json,
-				"Resources/macOS/AppIcon.appiconset/Icon-16.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-32.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-64.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-128.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-256.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-512.png",
-				"Resources/macOS/AppIcon.appiconset/Icon-1024.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-16.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-32.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-64.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-128.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-256.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-512.png",
+				"Resources/macOS/AppIcon.appiconset/WebShield Final (No Text)-1024.png",
 			);
 			platformFiltersByRelativePath = {
 				Resources/LaunchScreen.storyboard = (
@@ -261,63 +264,63 @@
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718602D3452EC00FD22A7 /* WebShield Privacy */;
+			target = 00E718602D3452EC00FD22A7 /* WebShieldPrivacy */;
 		};
 		00E718842D3453A700FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718742D3453A700FD22A7 /* WebShield Security */;
+			target = 00E718742D3453A700FD22A7 /* WebShieldSecurity */;
 		};
 		00E718982D3453BC00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718882D3453BC00FD22A7 /* WebShield Multipurpose */;
+			target = 00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */;
 		};
 		00E718AC2D3453CF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E7189C2D3453CF00FD22A7 /* WebShield Cookies */;
+			target = 00E7189C2D3453CF00FD22A7 /* WebShieldCookies */;
 		};
 		00E718C02D3453E600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718B02D3453E600FD22A7 /* WebShield Social */;
+			target = 00E718B02D3453E600FD22A7 /* WebShieldSocial */;
 		};
 		00E718D42D3453FF00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718C42D3453FF00FD22A7 /* WebShield Annoyances */;
+			target = 00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */;
 		};
 		00E718E82D34542600FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718D82D34542600FD22A7 /* WebShield Regional */;
+			target = 00E718D82D34542600FD22A7 /* WebShieldRegional */;
 		};
 		00E718FC2D34543F00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718EC2D34543F00FD22A7 /* WebShield Experimental */;
+			target = 00E718EC2D34543F00FD22A7 /* WebShieldExperimental */;
 		};
 		00E719102D34545D00FD22A7 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E719002D34545D00FD22A7 /* WebShield Custom */;
+			target = 00E719002D34545D00FD22A7 /* WebShieldCustom */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -373,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00C356282D2EEFE000BACCE7 /* Cocoa.framework in Frameworks */,
+				008A43C82D3A270F003F8B46 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,23 +475,24 @@
 				000F2CB12D2E533500871D5E /* AppTests.xctest */,
 				000F2CBB2D2E533500871D5E /* AppUITests.xctest */,
 				00C4EAB62D30C4610008D09D /* WebShield.app */,
-				00C4EAB72D30C4610008D09D /* WebShield Ads.appex */,
-				00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */,
-				00E718612D3452EC00FD22A7 /* WebShield Privacy.appex */,
-				00E718752D3453A700FD22A7 /* WebShield Security.appex */,
-				00E718892D3453BC00FD22A7 /* WebShield Multipurpose.appex */,
-				00E7189D2D3453CF00FD22A7 /* WebShield Cookies.appex */,
-				00E718B12D3453E600FD22A7 /* WebShield Social.appex */,
-				00E718C52D3453FF00FD22A7 /* WebShield Annoyances.appex */,
-				00E718D92D34542600FD22A7 /* WebShield Regional.appex */,
-				00E718ED2D34543F00FD22A7 /* WebShield Experimental.appex */,
-				00E719012D34545D00FD22A7 /* WebShield Custom.appex */,
+				00C4EAB72D30C4610008D09D /* WebShieldAds.appex */,
+				00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */,
+				00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */,
+				00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */,
+				00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */,
+				00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */,
+				00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */,
+				00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */,
+				00E718D92D34542600FD22A7 /* WebShieldRegional.appex */,
+				00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */,
+				00E719012D34545D00FD22A7 /* WebShieldCustom.appex */,
 			);
 			sourceTree = "<group>";
 		};
 		00333FBB2C3CC6D20031AEC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				008A43C72D3A270F003F8B46 /* UIKit.framework */,
 				00C356372D2EF54100BACCE7 /* SafariServices.framework */,
 				00C2BE322D2E327F000B431F /* Cocoa.framework */,
 			);
@@ -573,9 +578,9 @@
 			productReference = 000F2CBB2D2E533500871D5E /* AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		006FC39B2D3095DD0091056F /* WebShield Advanced */ = {
+		006FC39B2D3095DD0091056F /* WebShieldAdvanced */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShield Advanced" */;
+			buildConfigurationList = 006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShieldAdvanced" */;
 			buildPhases = (
 				006FC3982D3095DD0091056F /* Sources */,
 				006FC3992D3095DD0091056F /* Frameworks */,
@@ -585,17 +590,17 @@
 			);
 			dependencies = (
 			);
-			name = "WebShield Advanced";
+			name = WebShieldAdvanced;
 			packageProductDependencies = (
 				006FC3E32D30A07B0091056F /* ContentBlockerConverter */,
 			);
 			productName = "Extra Extension (iOS)";
-			productReference = 00C4EAB82D30C4610008D09D /* WebShield Advanced.appex */;
+			productReference = 00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00C356262D2EEFE000BACCE7 /* WebShield Ads */ = {
+		00C356262D2EEFE000BACCE7 /* WebShieldAds */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShield Ads" */;
+			buildConfigurationList = 00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldAds" */;
 			buildPhases = (
 				00C356232D2EEFE000BACCE7 /* Sources */,
 				00C356242D2EEFE000BACCE7 /* Frameworks */,
@@ -605,16 +610,16 @@
 			);
 			dependencies = (
 			);
-			name = "WebShield Ads";
+			name = WebShieldAds;
 			packageProductDependencies = (
 			);
 			productName = Extra;
-			productReference = 00C4EAB72D30C4610008D09D /* WebShield Ads.appex */;
+			productReference = 00C4EAB72D30C4610008D09D /* WebShieldAds.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718602D3452EC00FD22A7 /* WebShield Privacy */ = {
+		00E718602D3452EC00FD22A7 /* WebShieldPrivacy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Privacy" */;
+			buildConfigurationList = 00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldPrivacy" */;
 			buildPhases = (
 				00E7185D2D3452EC00FD22A7 /* Sources */,
 				00E7185E2D3452EC00FD22A7 /* Frameworks */,
@@ -627,16 +632,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718632D3452ED00FD22A7 /* WebShieldPrivacy */,
 			);
-			name = "WebShield Privacy";
+			name = WebShieldPrivacy;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Privacy";
-			productReference = 00E718612D3452EC00FD22A7 /* WebShield Privacy.appex */;
+			productReference = 00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718742D3453A700FD22A7 /* WebShield Security */ = {
+		00E718742D3453A700FD22A7 /* WebShieldSecurity */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Security" */;
+			buildConfigurationList = 00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSecurity" */;
 			buildPhases = (
 				00E718712D3453A700FD22A7 /* Sources */,
 				00E718722D3453A700FD22A7 /* Frameworks */,
@@ -649,16 +654,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718772D3453A700FD22A7 /* WebShieldSecurity */,
 			);
-			name = "WebShield Security";
+			name = WebShieldSecurity;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Security";
-			productReference = 00E718752D3453A700FD22A7 /* WebShield Security.appex */;
+			productReference = 00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718882D3453BC00FD22A7 /* WebShield Multipurpose */ = {
+		00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Multipurpose" */;
+			buildConfigurationList = 00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldMultipurpose" */;
 			buildPhases = (
 				00E718852D3453BC00FD22A7 /* Sources */,
 				00E718862D3453BC00FD22A7 /* Frameworks */,
@@ -671,16 +676,16 @@
 			fileSystemSynchronizedGroups = (
 				00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */,
 			);
-			name = "WebShield Multipurpose";
+			name = WebShieldMultipurpose;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Multipurpose";
-			productReference = 00E718892D3453BC00FD22A7 /* WebShield Multipurpose.appex */;
+			productReference = 00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E7189C2D3453CF00FD22A7 /* WebShield Cookies */ = {
+		00E7189C2D3453CF00FD22A7 /* WebShieldCookies */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Cookies" */;
+			buildConfigurationList = 00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCookies" */;
 			buildPhases = (
 				00E718992D3453CF00FD22A7 /* Sources */,
 				00E7189A2D3453CF00FD22A7 /* Frameworks */,
@@ -693,16 +698,16 @@
 			fileSystemSynchronizedGroups = (
 				00E7189F2D3453CF00FD22A7 /* WebShieldCookies */,
 			);
-			name = "WebShield Cookies";
+			name = WebShieldCookies;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Cookies";
-			productReference = 00E7189D2D3453CF00FD22A7 /* WebShield Cookies.appex */;
+			productReference = 00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718B02D3453E600FD22A7 /* WebShield Social */ = {
+		00E718B02D3453E600FD22A7 /* WebShieldSocial */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Social" */;
+			buildConfigurationList = 00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSocial" */;
 			buildPhases = (
 				00E718AD2D3453E600FD22A7 /* Sources */,
 				00E718AE2D3453E600FD22A7 /* Frameworks */,
@@ -715,16 +720,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718B32D3453E600FD22A7 /* WebShieldSocial */,
 			);
-			name = "WebShield Social";
+			name = WebShieldSocial;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Social";
-			productReference = 00E718B12D3453E600FD22A7 /* WebShield Social.appex */;
+			productReference = 00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718C42D3453FF00FD22A7 /* WebShield Annoyances */ = {
+		00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Annoyances" */;
+			buildConfigurationList = 00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldAnnoyances" */;
 			buildPhases = (
 				00E718C12D3453FF00FD22A7 /* Sources */,
 				00E718C22D3453FF00FD22A7 /* Frameworks */,
@@ -737,16 +742,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */,
 			);
-			name = "WebShield Annoyances";
+			name = WebShieldAnnoyances;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Annoyances";
-			productReference = 00E718C52D3453FF00FD22A7 /* WebShield Annoyances.appex */;
+			productReference = 00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718D82D34542600FD22A7 /* WebShield Regional */ = {
+		00E718D82D34542600FD22A7 /* WebShieldRegional */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Regional" */;
+			buildConfigurationList = 00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldRegional" */;
 			buildPhases = (
 				00E718D52D34542600FD22A7 /* Sources */,
 				00E718D62D34542600FD22A7 /* Frameworks */,
@@ -759,16 +764,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718DB2D34542600FD22A7 /* WebShieldRegional */,
 			);
-			name = "WebShield Regional";
+			name = WebShieldRegional;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Regional";
-			productReference = 00E718D92D34542600FD22A7 /* WebShield Regional.appex */;
+			productReference = 00E718D92D34542600FD22A7 /* WebShieldRegional.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718EC2D34543F00FD22A7 /* WebShield Experimental */ = {
+		00E718EC2D34543F00FD22A7 /* WebShieldExperimental */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Experimental" */;
+			buildConfigurationList = 00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldExperimental" */;
 			buildPhases = (
 				00E718E92D34543F00FD22A7 /* Sources */,
 				00E718EA2D34543F00FD22A7 /* Frameworks */,
@@ -781,16 +786,16 @@
 			fileSystemSynchronizedGroups = (
 				00E718EF2D34543F00FD22A7 /* WebShieldExperimental */,
 			);
-			name = "WebShield Experimental";
+			name = WebShieldExperimental;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Experimental";
-			productReference = 00E718ED2D34543F00FD22A7 /* WebShield Experimental.appex */;
+			productReference = 00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E719002D34545D00FD22A7 /* WebShield Custom */ = {
+		00E719002D34545D00FD22A7 /* WebShieldCustom */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Custom" */;
+			buildConfigurationList = 00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCustom" */;
 			buildPhases = (
 				00E718FD2D34545D00FD22A7 /* Sources */,
 				00E718FE2D34545D00FD22A7 /* Frameworks */,
@@ -803,11 +808,11 @@
 			fileSystemSynchronizedGroups = (
 				00E719032D34545D00FD22A7 /* WebShieldCustom */,
 			);
-			name = "WebShield Custom";
+			name = WebShieldCustom;
 			packageProductDependencies = (
 			);
 			productName = "DeclarativeBlockList-Custom";
-			productReference = 00E719012D34545D00FD22A7 /* WebShield Custom.appex */;
+			productReference = 00E719012D34545D00FD22A7 /* WebShieldCustom.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -883,17 +888,17 @@
 			projectRoot = "";
 			targets = (
 				000F2C9F2D2E533400871D5E /* WebShield */,
-				00C356262D2EEFE000BACCE7 /* WebShield Ads */,
-				00E718602D3452EC00FD22A7 /* WebShield Privacy */,
-				00E718742D3453A700FD22A7 /* WebShield Security */,
-				00E718882D3453BC00FD22A7 /* WebShield Multipurpose */,
-				00E7189C2D3453CF00FD22A7 /* WebShield Cookies */,
-				00E718B02D3453E600FD22A7 /* WebShield Social */,
-				00E718C42D3453FF00FD22A7 /* WebShield Annoyances */,
-				00E718D82D34542600FD22A7 /* WebShield Regional */,
-				00E718EC2D34543F00FD22A7 /* WebShield Experimental */,
-				00E719002D34545D00FD22A7 /* WebShield Custom */,
-				006FC39B2D3095DD0091056F /* WebShield Advanced */,
+				00C356262D2EEFE000BACCE7 /* WebShieldAds */,
+				00E718602D3452EC00FD22A7 /* WebShieldPrivacy */,
+				00E718742D3453A700FD22A7 /* WebShieldSecurity */,
+				00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */,
+				00E7189C2D3453CF00FD22A7 /* WebShieldCookies */,
+				00E718B02D3453E600FD22A7 /* WebShieldSocial */,
+				00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */,
+				00E718D82D34542600FD22A7 /* WebShieldRegional */,
+				00E718EC2D34543F00FD22A7 /* WebShieldExperimental */,
+				00E719002D34545D00FD22A7 /* WebShieldCustom */,
+				006FC39B2D3095DD0091056F /* WebShieldAdvanced */,
 				000F2CB02D2E533500871D5E /* AppTests */,
 				000F2CBA2D2E533500871D5E /* AppUITests */,
 			);
@@ -1115,57 +1120,57 @@
 		};
 		00681F7A2D30D49D00F9E3F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00C356262D2EEFE000BACCE7 /* WebShield Ads */;
+			target = 00C356262D2EEFE000BACCE7 /* WebShieldAds */;
 			targetProxy = 00681F792D30D49D00F9E3F1 /* PBXContainerItemProxy */;
 		};
 		00681F7C2D30D4A000F9E3F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 006FC39B2D3095DD0091056F /* WebShield Advanced */;
+			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
 			targetProxy = 00681F7B2D30D4A000F9E3F1 /* PBXContainerItemProxy */;
 		};
 		00E7186B2D3452ED00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718602D3452EC00FD22A7 /* WebShield Privacy */;
+			target = 00E718602D3452EC00FD22A7 /* WebShieldPrivacy */;
 			targetProxy = 00E7186A2D3452ED00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E7187F2D3453A700FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718742D3453A700FD22A7 /* WebShield Security */;
+			target = 00E718742D3453A700FD22A7 /* WebShieldSecurity */;
 			targetProxy = 00E7187E2D3453A700FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718932D3453BC00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718882D3453BC00FD22A7 /* WebShield Multipurpose */;
+			target = 00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */;
 			targetProxy = 00E718922D3453BC00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718A72D3453CF00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E7189C2D3453CF00FD22A7 /* WebShield Cookies */;
+			target = 00E7189C2D3453CF00FD22A7 /* WebShieldCookies */;
 			targetProxy = 00E718A62D3453CF00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718BB2D3453E600FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718B02D3453E600FD22A7 /* WebShield Social */;
+			target = 00E718B02D3453E600FD22A7 /* WebShieldSocial */;
 			targetProxy = 00E718BA2D3453E600FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718CF2D3453FF00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718C42D3453FF00FD22A7 /* WebShield Annoyances */;
+			target = 00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */;
 			targetProxy = 00E718CE2D3453FF00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718E32D34542600FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718D82D34542600FD22A7 /* WebShield Regional */;
+			target = 00E718D82D34542600FD22A7 /* WebShieldRegional */;
 			targetProxy = 00E718E22D34542600FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718F72D34543F00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718EC2D34543F00FD22A7 /* WebShield Experimental */;
+			target = 00E718EC2D34543F00FD22A7 /* WebShieldExperimental */;
 			targetProxy = 00E718F62D34543F00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E7190B2D34545D00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E719002D34545D00FD22A7 /* WebShield Custom */;
+			target = 00E719002D34545D00FD22A7 /* WebShieldCustom */;
 			targetProxy = 00E7190A2D34545D00FD22A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1175,63 +1180,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShieldApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Arjun P";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				LD_WARN_DUPLICATE_LIBRARIES = NO;
-				LD_WARN_UNUSED_DYLIBS = NO;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.3;
 			};
 			name = Debug;
 		};
@@ -1239,62 +1212,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = WebShieldApp/WebShieldApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Arjun P";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				LD_WARN_DUPLICATE_LIBRARIES = NO;
-				LD_WARN_UNUSED_DYLIBS = NO;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.3;
 			};
 			name = Release;
 		};
@@ -1413,63 +1355,29 @@
 		0018486F2C2956AD00EE2E7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
-				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
-				CLANG_WARN_COMMA = NO;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
-				CLANG_WARN_EMPTY_BODY = NO;
-				CLANG_WARN_INFINITE_RECURSION = NO;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = NO;
-				CLANG_WARN_STRICT_PROTOTYPES = NO;
-				CLANG_WARN_SUSPICIOUS_MOVE = NO;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES;
-				CLANG_WARN_UNREACHABLE_CODE = NO;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = c17;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = NO;
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 0.1.0.0.1;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
-				RUN_CLANG_STATIC_ANALYZER = NO;
+				PRODUCT_NAME = WebShield;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "xrsimulator xros macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_INSTALL_MODULE = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 				USE_HEADERMAP = NO;
 				VALIDATE_PRODUCT = YES;
@@ -1479,51 +1387,21 @@
 		001848702C2956AD00EE2E7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
-				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = NO;
-				CLANG_WARN_COMMA = NO;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
-				CLANG_WARN_EMPTY_BODY = NO;
-				CLANG_WARN_INFINITE_RECURSION = NO;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = NO;
-				CLANG_WARN_STRICT_PROTOTYPES = NO;
-				CLANG_WARN_SUSPICIOUS_MOVE = NO;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES;
-				CLANG_WARN_UNREACHABLE_CODE = NO;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = c17;
-				GCC_NO_COMMON_BLOCKS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = NO;
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 0.1.0.0.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
 				PRODUCT_MODULE_NAME = WebShield;
-				RUN_CLANG_STATIC_ANALYZER = NO;
+				PRODUCT_NAME = WebShield;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "xrsimulator xros macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
@@ -1538,1511 +1416,575 @@
 		006FC3CD2D3095DD0091056F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAdvanced/WebShieldAdvanced.entitlements;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				MARKETING_VERSION = 0.1.2;
+				INFOPLIST_KEY_CFBundleDisplayName = Advanced;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
 				PRODUCT_MODULE_NAME = WebShieldAdvanced;
-				PRODUCT_NAME = "WebShield Advanced";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
 		006FC3CE2D3095DD0091056F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAdvanced/WebShieldAdvanced.entitlements;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				MARKETING_VERSION = 0.1.2;
+				INFOPLIST_KEY_CFBundleDisplayName = Advanced;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
 				PRODUCT_MODULE_NAME = WebShieldAdvanced;
-				PRODUCT_NAME = "WebShield Advanced";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		00C356342D2EEFE100BACCE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAds/WebShieldAds.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAds/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Ads";
+				INFOPLIST_KEY_CFBundleDisplayName = Ads;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Ads";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
 		00C356352D2EEFE100BACCE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++23";
-				CLANG_ENABLE_MODULES = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_TIDY_BUGPRONE_REDUNDANT_BRANCH_CONDITION = YES;
-				CLANG_TIDY_MISC_REDUNDANT_EXPRESSION = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER = YES;
-				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAds/WebShieldAds.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FUSE_BUILD_SCRIPT_PHASES = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAds/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Ads";
+				INFOPLIST_KEY_CFBundleDisplayName = Ads;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Ads";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		00E7186E2D3452ED00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldPrivacy/WebShieldPrivacy.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldPrivacy/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Privacy";
+				INFOPLIST_KEY_CFBundleDisplayName = Privacy;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Privacy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E7186F2D3452ED00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldPrivacy/WebShieldPrivacy.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldPrivacy/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Privacy";
+				INFOPLIST_KEY_CFBundleDisplayName = Privacy;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Privacy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718822D3453A700FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldSecurity/WebShieldSecurity.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldSecurity/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Security";
+				INFOPLIST_KEY_CFBundleDisplayName = Security;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Security";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718832D3453A700FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldSecurity/WebShieldSecurity.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldSecurity/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Security";
+				INFOPLIST_KEY_CFBundleDisplayName = Security;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Security";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718962D3453BC00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldMultipurpose/WebShieldMultipurpose.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldMultipurpose/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Multipurpose";
+				INFOPLIST_KEY_CFBundleDisplayName = Multipurpose;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Multipurpose";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718972D3453BC00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldMultipurpose/WebShieldMultipurpose.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldMultipurpose/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Multipurpose";
+				INFOPLIST_KEY_CFBundleDisplayName = Multipurpose;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Multipurpose";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718AA2D3453CF00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldCookies/WebShieldCookies.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldCookies/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Cookies";
+				INFOPLIST_KEY_CFBundleDisplayName = Cookies;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Cookies";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718AB2D3453CF00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldCookies/WebShieldCookies.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldCookies/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Cookies";
+				INFOPLIST_KEY_CFBundleDisplayName = Cookies;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Cookies";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718BE2D3453E600FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldSocial/WebShieldSocial.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldSocial/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Social";
+				INFOPLIST_KEY_CFBundleDisplayName = Social;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Social";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718BF2D3453E600FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldSocial/WebShieldSocial.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldSocial/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Social";
+				INFOPLIST_KEY_CFBundleDisplayName = Social;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Social";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718D22D3453FF00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAnnoyances/WebShieldAnnoyances.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAnnoyances/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Annoyances";
+				INFOPLIST_KEY_CFBundleDisplayName = Annoyances;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Annoyances";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718D32D3453FF00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldAnnoyances/WebShieldAnnoyances.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldAnnoyances/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Annoyances";
+				INFOPLIST_KEY_CFBundleDisplayName = Annoyances;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Annoyances";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718E62D34542600FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldRegional/WebShieldRegional.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldRegional/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Regional";
+				INFOPLIST_KEY_CFBundleDisplayName = Regional;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Regional";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718E72D34542600FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldRegional/WebShieldRegional.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldRegional/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Regional";
+				INFOPLIST_KEY_CFBundleDisplayName = Regional;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Regional";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E718FA2D34543F00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldExperimental/WebShieldExperimental.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldExperimental/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Experimental";
+				INFOPLIST_KEY_CFBundleDisplayName = Experimental;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Experimental";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E718FB2D34543F00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldExperimental/WebShieldExperimental.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldExperimental/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Experimental";
+				INFOPLIST_KEY_CFBundleDisplayName = Experimental;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Experimental";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
 		00E7190E2D34545D00FD22A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldCustom/WebShieldCustom.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldCustom/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Custom";
+				INFOPLIST_KEY_CFBundleDisplayName = Custom;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Custom";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		00E7190F2D34545D00FD22A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WebShieldCustom/WebShieldCustom.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = FP48FZ5499;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = WebShieldCustom/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Custom";
+				INFOPLIST_KEY_CFBundleDisplayName = Custom;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 0.1.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MACOSX_DEPLOYMENT_TARGET = 14;
+				MARKETING_VERSION = 1.0.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Custom";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = "$(PLATFORM_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -3085,7 +2027,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShield Advanced" */ = {
+		006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShieldAdvanced" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				006FC3CD2D3095DD0091056F /* Debug */,
@@ -3094,7 +2036,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShield Ads" */ = {
+		00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldAds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00C356342D2EEFE100BACCE7 /* Debug */,
@@ -3103,7 +2045,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Privacy" */ = {
+		00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldPrivacy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E7186E2D3452ED00FD22A7 /* Debug */,
@@ -3112,7 +2054,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Security" */ = {
+		00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSecurity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718822D3453A700FD22A7 /* Debug */,
@@ -3121,7 +2063,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Multipurpose" */ = {
+		00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldMultipurpose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718962D3453BC00FD22A7 /* Debug */,
@@ -3130,7 +2072,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Cookies" */ = {
+		00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCookies" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718AA2D3453CF00FD22A7 /* Debug */,
@@ -3139,7 +2081,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Social" */ = {
+		00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSocial" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718BE2D3453E600FD22A7 /* Debug */,
@@ -3148,7 +2090,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Annoyances" */ = {
+		00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldAnnoyances" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718D22D3453FF00FD22A7 /* Debug */,
@@ -3157,7 +2099,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Regional" */ = {
+		00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldRegional" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718E62D34542600FD22A7 /* Debug */,
@@ -3166,7 +2108,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Experimental" */ = {
+		00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldExperimental" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E718FA2D34543F00FD22A7 /* Debug */,
@@ -3175,7 +2117,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShield Custom" */ = {
+		00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCustom" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E7190E2D34545D00FD22A7 /* Debug */,

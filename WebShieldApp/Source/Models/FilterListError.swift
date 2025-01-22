@@ -6,6 +6,7 @@ enum FilterListError: LocalizedError {
     case downloadFailed
     case parsingFailed
     case invalidURL
+    case invalidServerResponse
 
     var errorDescription: String? {
         switch self {
@@ -19,6 +20,8 @@ enum FilterListError: LocalizedError {
             return "Failed to download filter list"
         case .parsingFailed:
             return "Failed to parse filter list"
+            case .invalidServerResponse:
+                return "Failed to receive filter list from URL due to invalid server response"
         }
     }
 }

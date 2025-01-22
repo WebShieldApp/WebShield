@@ -1,6 +1,10 @@
 {
   "colors" : [
     {
+      "color" : {
+        "platform" : "universal",
+        "reference" : "secondaryLabelColor"
+      },
       "idiom" : "universal"
     },
     {
@@ -10,6 +14,10 @@
           "value" : "dark"
         }
       ],
+      "color" : {
+        "platform" : "universal",
+        "reference" : "secondaryLabelColor"
+      },
       "idiom" : "universal"
     }
   ],

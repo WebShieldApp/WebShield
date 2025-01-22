@@ -1,6 +1,4 @@
-import ContentBlockerConverter
 import Foundation
-import SafariServices
 import SwiftData
 import SwiftUI
 
@@ -12,12 +10,28 @@ struct ContentView: View {
     @State private var showingLogs = false
     @State private var showingImport = false
     @State private var showingSettings = false
+    @State private var showingHelp = false
     @State private var progress: Double = 0
     @State private var currentList: Int = 0
     private let filterListProcessor = FilterListProcessor()
     @State private var totalLists: Int = 0
     @State private var columnVisibility = NavigationSplitViewVisibility.automatic
-    @State private var contentBlockerState = ContentBlockerState()
+    @EnvironmentObject private var contentBlockerState: ContentBlockerState
+    @EnvironmentObject private var advancedExtensionState: WebExtensionState
+    @EnvironmentObject private var refreshErrorViewModel: RefreshErrorViewModel
+    @StateObject private var extensionVM: ExtensionCheckViewModel
+
+    init(contentBlockerState: ContentBlockerState? = nil, advancedExtensionState: WebExtensionState? = nil) {
+        let refreshErrorViewModel = RefreshErrorViewModel()
+        _extensionVM = StateObject(
+            wrappedValue: ExtensionCheckViewModel(
+                contentBlockerState: contentBlockerState
+                    ?? ContentBlockerState(
+                        refreshErrorViewModel: refreshErrorViewModel),
+                advancedExtensionState: advancedExtensionState ?? WebExtensionState()
+            )
+        )
+    }
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -25,6 +39,20 @@ struct ContentView: View {
         } detail: {
             detailView
         }
+        .onAppear {
+            Task {
+                await extensionVM.checkExtensions()
+            }
+        }
+        .sheet(isPresented: $extensionVM.showEnablePrompt) {
+            EnableExtensionsSheet(missingExtensions: extensionVM.missingExtensions)
+                // visionOS specific modifiers
+                #if os(visionOS)
+                    .glassBackgroundEffect()
+                    .padding(32)
+                #endif
+        }
+
     }
 
     private var detailView: some View {
@@ -49,18 +77,32 @@ struct ContentView: View {
                 .sheet(isPresented: $showingSettings) {
                     SettingsView()
                 }
+                .sheet(isPresented: $showingHelp) {
+                    HelpSheet()
+                }
+                .sheet(isPresented: $refreshErrorViewModel.showErrorView) {
+                    ErrorView()
+                        .environmentObject(refreshErrorViewModel)
+                }
+
         }
     }
 
     @ToolbarContentBuilder
     private func toolbarContent() -> some ToolbarContent {
         ToolbarItemGroup(placement: .automatic) {
+
+            Button(action: { showingHelp.toggle() }) {
+                Label("Help", systemImage: "questionmark")
+            }
+            .help("Help")
+
             Button(action: { showingSettings.toggle() }) {
                 Label("Settings", systemImage: "gear")
             }
             .help("Settings")
 
-            PulsatingCircleButton()
+            //            PulsatingCircleButton()
 
             Button(action: { refreshFilters() }) {
                 Label("Refresh", systemImage: "arrow.2.circlepath")
@@ -152,115 +194,224 @@ struct ContentView: View {
 
     func refreshFilters() {
         Task {
+            await WebShieldLogger.shared.log("🕒 Refresh process started")
+
+            // Initial setup
+            await WebShieldLogger.shared.log("🧹 Clearing previous errors")
+            refreshErrorViewModel.clearErrors()
+
+            await WebShieldLogger.shared.logRefreshStart()
             isUpdating = true
             progress = 0
             currentList = 0
+
+            var refreshErrors: [RefreshError] = []
 
             defer {
                 isUpdating = false
                 progress = 0
                 currentList = 0
                 totalLists = 0
+                // Determine and set the final refresh state
+                // Show error view only if errors occurred
+                if !refreshErrors.isEmpty {
+                    refreshErrors.forEach { error in
+                        refreshErrorViewModel.addError(error)
+                    }
+
+                    refreshErrorViewModel.showErrorView = !refreshErrors.isEmpty
+                }
+
             }
 
-            LogsView.logRefreshStart()
-
+            // 1. Fetch all enabled filter lists
             let fetchDescriptor = FetchDescriptor<FilterList>(
                 predicate: #Predicate { $0.isEnabled == true }
             )
+            await WebShieldLogger.shared.log("🔍 Fetching enabled filter lists")
             guard let enabledLists = try? modelContext.fetch(fetchDescriptor) else {
-                LogsView.logProcessingStep("Failed to fetch enabled filter lists", for: "System")
+                await WebShieldLogger.shared.log(
+                    "❌ Failed to fetch enabled filter lists")
                 return
             }
 
             totalLists = enabledLists.count
 
+            // 2. If no filters at all, handle empty across every category
             if totalLists == 0 {
-                LogsView.logProcessingStep(
-                    "No filters are enabled; writing empty blocklist for each category.", for: "Refresh")
+                await WebShieldLogger.shared.log(
+                    "No filters are enabled; writing empty blocklist for each category."
+                )
+                await writeEmptyBlockersForAllCategories()
 
-                // Write empty files for EACH category
-                do {
-                    if let groupURL = GroupContainerURL.groupContainerURL() {
-                        // Save empty .json for all categories
-                        for category in FilterListCategory.allCases {
-                            guard category != .all else { continue }  // Skip "all"
-                            try await filterListProcessor.saveContentBlockerFile(
-                                result: ProcessedConversionResult(
-                                    converted: "[]", advancedBlocking: nil, convertedCount: 0, advancedBlockingCount: 0,
-                                    errorsCount: 0, overLimit: false, message: nil),
-                                category: category,
-                                directoryURL: groupURL
-                            )
-                            // ALSO, reload each category's content blocker to ensure it's cleared
-                            try await contentBlockerState.reloadContentBlocker(for: category)
-                        }
-                        // Save empty advancedBlocking.json
-                        let advancedBlockingURL = groupURL.appendingPathComponent("advancedBlocking.json")
-                        let emptyData = "[]".data(using: .utf8)!
-                        try emptyData.write(to: advancedBlockingURL, options: .atomic)
-                        LogsView.addLog("Wrote empty advancedBlocking.json")
-                    }
-                } catch {
-                    LogsView.addLog("Failed to handle empty filters: \(error)")
-                }
-
-                return  // short‐circuit
-            }
-
-            // Keep track of categories to reload
-            var categoriesToReload = Set<FilterListCategory>()
-            var allResults: [(ProcessedConversionResult, FilterListCategory)] = []
-
-            for (index, list) in enabledLists.enumerated() {
-                do {
-                    let (result, category) = try await filterListProcessor.processFilterList(list)
-                    allResults.append((result, category))
-
-                    // Add category to the set
-                    categoriesToReload.insert(category)
-
-                    // UI progress
-                    currentList = index + 1
-                    progress = Double(currentList) / Double(totalLists)
-
-                } catch {
-                    LogsView.logProcessingStep(
-                        "Failed to process \(list.name): \(error.localizedDescription)", for: list.name)
-                }
-            }
-
-            do {
-                if let groupURL = GroupContainerURL.groupContainerURL() {
-                    // Save per-category JSON files and a single advancedBlocking.json
-                    try await filterListProcessor.saveContentBlockerFiles(results: allResults, directoryURL: groupURL)
-                } else {
-                    LogsView.logProcessingStep("Could not find App Group container URL.", for: "System")
-                }
-
-                LogsView.addLog("Saving Model")
-                try modelContext.save()
-
-                // Reload only necessary content blockers
-                LogsView.addLog("Reloading Content Blockers for \(categoriesToReload.count) categories")
-                for category in categoriesToReload {
+                // Reload all content blockers
+                for category in FilterListCategory.allCases where category != .all {
                     try await contentBlockerState.reloadContentBlocker(for: category)
                 }
 
+                await WebShieldLogger.shared.log("📋 Found \(totalLists) enabled lists")
+
+                // Persist changes to SwiftData
+                await WebShieldLogger.shared.log("Saving Model")
+                try modelContext.save()
+
+                AppSettings.shared.hasPerformedInitialRefresh = true
+                AppSettings.shared.lastRefreshedEnabledFilters =
+                    filterLists
+                    .filter { $0.isEnabled }
+                    .map { $0.id }
+                    .reduce(into: Set<String>()) { $0.insert($1) }
+
+                return
+            }
+
+            // 3. Process each filter list and collect results by category
+            var resultsByCategory: [FilterListCategory: [ProcessedConversionResult]] = [:]
+            for (index, filterList) in enabledLists.enumerated() {
+                await WebShieldLogger.shared.log(
+                    """
+                    🛠 Processing list \(index + 1)/\(totalLists):
+                    - Name: \(filterList.name)
+                    - Category: \(filterList.category?.rawValue ?? "Unknown")
+                    """)
+                do {
+                    // Use MainActor.run to access main-actor isolated properties
+                    let (result, category) = try await filterListProcessor.processFilterList(filterList)
+
+                    resultsByCategory[category, default: []].append(result)
+
+                    // Update progress
+                    currentList = index + 1
+                    progress = Double(currentList) / Double(totalLists)
+                } catch {
+                    await WebShieldLogger.shared.log(
+                        "Failed to process \(filterList.name): \(error.localizedDescription)"
+                    )
+                    // Decide whether to return immediately or continue processing the rest
+                    // Add error to the ViewModel
+                    let refreshError = RefreshError.localizedError(for: error, in: filterList.name)
+                    refreshErrors.append(refreshError)
+
+                }
+            }
+
+            // 4. Aggregate all results into a single list
+            var combinedResults: [(ProcessedConversionResult, FilterListCategory)] = []
+            for (category, results) in resultsByCategory {
+                combinedResults.append(contentsOf: results.map { ($0, category) })
+            }
+
+            // 5. Write all category JSON files once
+            await WebShieldLogger.shared.log("📤 Beginning file write operations")
+            do {
+                guard let groupURL = GroupContainerURL.groupContainerURL() else {
+                    await WebShieldLogger.shared
+                        .log("❌ Could not find App Group container URL.")
+                    return
+                }
+
+                // Save all content blocker files at once
+                try await filterListProcessor.saveContentBlockerFiles(
+                    results: combinedResults,
+                    directoryURL: groupURL
+                )
+
+                // Reload all content blockers
+                for category in FilterListCategory.allCases where category != .all {
+                    try await contentBlockerState.reloadContentBlocker(for: category)
+                }
+
+                // Persist changes to SwiftData
+                await WebShieldLogger.shared.log("Saving Model")
+                try modelContext.save()
+
+                AppSettings.shared.hasPerformedInitialRefresh = true
+
+                // Reset needsRefresh for all filter lists
+                for list in filterLists {
+                    list.needsRefresh = false
+                }
+
+                AppSettings.shared.hasPerformedInitialRefresh = true  // Mark initial refresh as complete
+                AppSettings.shared.lastRefreshedEnabledFilters =
+                    filterLists
+                    .filter { $0.isEnabled }
+                    .map { $0.id }
+                    .reduce(into: Set<String>()) { $0.insert($1) }
             } catch {
-                LogsView.addLog("Failed to save content blocker files: \(error)")
+                await WebShieldLogger.shared.log("Failed to save content blocker files: \(error)")
             }
         }
     }
 
-}
+    /// Returns a minimal “do-nothing” content-blocker rule as JSON.
+    private func minimalRuleJSON() -> String {
+        """
+        [
+          {
+            "trigger": {
+              "url-filter": ".*"
+            },
+            "action": {
+              "type": "ignore-previous-rules"
+            }
+          }
+        ]
+        """
+    }
 
-#Preview {
-    @Previewable var dataManager = DataManager()
-    ContentView()
-        .modelContainer(dataManager.container)
-        .environmentObject(dataManager)
-        .onAppear {
-            dataManager.seedDataIfNeeded()
+    // MARK: - Helper: Write empty JSON for all categories
+    private func writeEmptyBlockersForAllCategories() async {
+        do {
+            guard let groupURL = GroupContainerURL.groupContainerURL() else { return }
+
+            // Write minimal rule for each category except .all
+            for category in FilterListCategory.allCases where category != .all {
+                let fileName = "\(category.rawValue.lowercased()).json"
+                let fileURL = groupURL.appendingPathComponent(fileName)
+
+                // Prepare minimal rule
+                let minimalRule = [
+                    [
+                        "trigger": [
+                            "url-filter": ".*"
+                        ],
+                        "action": [
+                            "type": "ignore-previous-rules"
+                        ],
+                    ]
+                ]
+                let data = try JSONSerialization.data(withJSONObject: minimalRule, options: [])
+                try data.write(to: fileURL, options: .atomic)
+                await WebShieldLogger.shared.log("Wrote minimal rule to \(fileName)")
+            }
+
+            // Overwrite advancedBlocking.json with empty array
+            let advancedBlockingURL = groupURL.appendingPathComponent("advancedBlocking.json")
+            try Data("[]".utf8).write(to: advancedBlockingURL, options: .atomic)
+            await WebShieldLogger.shared.log("Wrote empty advancedBlocking.json")
+
+        } catch {
+            await WebShieldLogger.shared.log("Failed to handle empty filters: \(error)")
         }
+    }
+    // MARK: - Helper: Write empty JSON for a single category
+    private func writeEmptyBlocker(for category: FilterListCategory, at directoryURL: URL) async throws {
+        let emptyResult = ProcessedConversionResult(
+            converted: minimalRuleJSON(),
+            advancedBlocking: nil,
+            convertedCount: 0,
+            advancedBlockingCount: 0,
+            errorsCount: 0,
+            overLimit: false,
+            message: nil
+        )
+        try await filterListProcessor.saveContentBlockerFile(
+            result: emptyResult,
+            category: category,
+            directoryURL: directoryURL
+        )
+        await WebShieldLogger.shared.log("Wrote empty \(category.rawValue.lowercased()).json")
+    }
+
 }

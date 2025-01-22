@@ -9,58 +9,36 @@ struct FilterListView: View {
 
     var body: some View {
         List {
+            let filteredLists = getFilteredLists()
+
             if !filteredLists.isEmpty {
                 StatsView(filteredLists: filteredLists)
             }
 
-            ForEach(groupedFilterLists, id: \.id) { section in
-                Section {
-                    ForEach(section.filterLists) { filterList in
-                        FilterListRow(filterList: filterList)
-                            .swipeActions(
-                                edge: .trailing, allowsFullSwipe: true
-                            ) {
-                                if filterList.category == .custom {
-                                    Button(role: .destructive) {
-                                        withAnimation {
-                                            deleteFilterList(filterList)
-                                        }
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                            }
-                            .padding()
-
-                    }
-                } header: {
-                    Text(section.title)
-                        .font(.headline)
-                        .textCase(.none)
-                        .foregroundStyle(.primary)
-                }
+            let groupedLists = getGroupedFilterLists(filteredLists: filteredLists)
+            ForEach(groupedLists, id: \.id) { section in
+                filterListSectionView(section: section)
             }
         }
         .listStyle(.automatic)
         .searchable(text: $searchText)
     }
 
-    private var filteredLists: [FilterList] {
+    // MARK: - Helper Methods
+
+    private func getFilteredLists() -> [FilterList] {
         filterLists.filter { filterList in
-            // Match category if it's not `.all`
-            let categoryMatches =
-                (category == .all || filterList.category == category)
+            let categoryMatches = (category == .all || filterList.category == category)
 
-            // Match name if user typed something in search bar
-            let nameMatches =
-                searchText.isEmpty
-                || filterList.name.localizedCaseInsensitiveContains(searchText)
+            let searchTextLowercased = searchText.lowercased()
+            let nameMatches = searchText.isEmpty || filterList.name.lowercased().contains(searchTextLowercased)
+            let descMatches = searchText.isEmpty || filterList.desc.lowercased().contains(searchTextLowercased)
 
-            return categoryMatches && nameMatches
+            return categoryMatches && (nameMatches || descMatches)
         }
     }
 
-    private var groupedFilterLists: [FilterListSection] {
+    private func getGroupedFilterLists(filteredLists: [FilterList]) -> [FilterListSection] {
         let sortedLists = filteredLists.sorted { $0.order < $1.order }
         var sections: [FilterListCategory: [FilterList]] = [:]
 
@@ -70,25 +48,18 @@ struct FilterListView: View {
             }
         }
 
-        // Define category order with custom at the end
         let categoryOrder: [FilterListCategory] = [
-            .ads, .privacy, .security, .multipurpose,
-            .social, .cookies, .annoyances, .regional,
-            .experimental,
+            .ads, .privacy, .security, .multipurpose, .social,
+            .cookies, .annoyances, .regional, .experimental,
         ]
 
         var orderedSections = categoryOrder.compactMap { category in
             if let lists = sections[category], !lists.isEmpty {
-                return FilterListSection(
-                    title: category.rawValue,
-                    filterLists: lists,
-                    category: category
-                )
+                return FilterListSection(title: category.rawValue, filterLists: lists, category: category)
             }
             return nil
         }
 
-        // Add custom section at the end if it exists
         if let customLists = sections[.custom], !customLists.isEmpty {
             orderedSections.append(
                 FilterListSection(
@@ -102,12 +73,41 @@ struct FilterListView: View {
         return orderedSections
     }
 
-    private func deleteFilterList(_ filterList: FilterList) {
+    @ViewBuilder
+    private func filterListSectionView(section: FilterListSection) -> some View {
+        Section(header: Text(section.title).font(.headline).textCase(.none)) {
+            ForEach(section.filterLists) { filterList in
+                filterListRowView(filterList: filterList)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func filterListRowView(filterList: FilterList) -> some View {
+        FilterListRow(filterList: filterList)
+            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                if filterList.category == .custom {
+                    Button(role: .destructive) {
+                        withAnimation {
+                            _ = Task<Void, Never> {
+                                await deleteFilterList(filterList)
+                            }
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            }
+            .padding()
+    }
+
+    @MainActor
+    private func deleteFilterList(_ filterList: FilterList) async {
         modelContext.delete(filterList)
         do {
             try modelContext.save()
         } catch {
-            print("Failed to delete filter list: \(error)")
+            await WebShieldLogger.shared.log("Failed to delete filter list: \(error)")
         }
     }
 }

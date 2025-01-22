@@ -31,4 +31,5 @@ enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
         case .custom: return "slider.horizontal.3"
         }
     }
+
 }

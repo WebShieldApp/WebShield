@@ -30,20 +30,20 @@ final class DataManager: ObservableObject, Sendable {
     }
 
     /// Resets the data model by deleting all records and reseeding.
-    func resetModel() {  // Marked as async
+    func resetModel() async {  // Marked as async
         do {
             // Use await when calling container.mainContext
             try container.mainContext.delete(model: FilterList.self)
             // Call seedData with await
-            seedData()
-            print("Model reset successfully.")
+            await seedData()
+            await WebShieldLogger.shared.log("Model reset successfully.")
         } catch {
-            print("Failed to reset model: \(error)")
+            await WebShieldLogger.shared.log("Failed to reset model: \(error)")
         }
     }
 
     /// Seeds initial data into the database.
-    func seedData() {
+    func seedData() async {
 
         // For each pre-defined filter list in FilterListProvider:
         for (index, data) in FilterListProvider.filterListData.enumerated() {
@@ -57,23 +57,24 @@ final class DataManager: ObservableObject, Sendable {
                 category: data.category,
                 isEnabled: data.isSelected,
                 order: index,
-                urlString: data.urlString,
-                homepageURL: data.homepageURL,
-                downloaded: false
+                downloadUrl: data.downloadUrl,
+                homepageUrl: data.homepageUrl,
+                downloaded: false,
+                needsRefresh: true
             )
         }
 
         // Save the inserted records to SwiftData
         do {
             try container.mainContext.save()
-            print("Seed data saved successfully.")
+            await WebShieldLogger.shared.log("Seed data saved successfully.")
         } catch {
-            print("Failed to save seed data: \(error)")
+            await WebShieldLogger.shared.log("Failed to save seed data: \(error)")
         }
     }
 
     /// Seeds data only if the database is empty.
-    func seedDataIfNeeded() {
+    func seedDataIfNeeded() async {
         // Use the mainContext from the container
         let context = container.mainContext
 
@@ -82,13 +83,13 @@ final class DataManager: ObservableObject, Sendable {
             let results = try context.fetch(fetchRequest)
             if results.isEmpty {
                 // Call seedData with await
-                seedData()
-                print("Seed data inserted.")
+                await seedData()
+                await WebShieldLogger.shared.log("Seed data inserted.")
             } else {
-                print("Database is not empty.")
+                await WebShieldLogger.shared.log("Database is not empty.")
             }
         } catch {
-            print("Error fetching or saving data: \(error)")
+            await WebShieldLogger.shared.log("Error fetching or saving data: \(error)")
         }
     }
 }
